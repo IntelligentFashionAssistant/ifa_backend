@@ -14,12 +14,14 @@ namespace domain.Entitys
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public ICollection<Garment> Garments { get; set; }
         public ICollection<PropertyDesign> PropertyDesigns { get; set; }
+        public ICollection<PropertyFeedback> PropertyFeedbacks { get; set; }
 
         //Constracter
         public Property()
         {
             Garments = new HashSet<Garment>();
             PropertyDesigns = new HashSet<PropertyDesign>();
+            PropertyFeedbacks = new HashSet<PropertyFeedback>();
         }
     }
 }
