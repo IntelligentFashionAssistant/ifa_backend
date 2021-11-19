@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace domain.Entitys
 {
@@ -10,8 +7,8 @@ namespace domain.Entitys
     {
         //TODO
         public int ID { get; set; }
-        public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
         public int PropertyId { get; set; }
         public Property Property { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;

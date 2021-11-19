@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace domain.Entitys
 {
@@ -13,15 +11,17 @@ namespace domain.Entitys
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public ICollection<Garment> Garments { get; set; }
-        public ICollection<PropertyDesign> PropertyDesigns { get; set; }
+        public ICollection<Image> Images { get; set; }
         public ICollection<PropertyFeedback> PropertyFeedbacks { get; set; }
+        public ICollection<Shape_Property> Shape_Properties { get; set; }
 
         //Constracter
         public Property()
         {
             Garments = new HashSet<Garment>();
-            PropertyDesigns = new HashSet<PropertyDesign>();
+            Images = new HashSet<Image>();
             PropertyFeedbacks = new HashSet<PropertyFeedback>();
+            Shape_Properties = new HashSet<Shape_Property>();
         }
     }
 }

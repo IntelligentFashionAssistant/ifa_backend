@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace domain.Entitys
 {
@@ -17,5 +15,12 @@ namespace domain.Entitys
         public string Street { get; set; }
         public int HouseNumber { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public ICollection<PropertyFeedback> PropertyFeedbacks { get; set; }
+
+        //Constracter
+        public User()
+        {
+            PropertyFeedbacks = new HashSet<PropertyFeedback>();
+        }
     }
 }

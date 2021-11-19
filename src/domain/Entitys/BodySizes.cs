@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace domain.Entitys
 {
-   public class Customer
+   public class BodySizes
     {
         public int ID { get; set; }
         public float ShoulderRange { get; set; }

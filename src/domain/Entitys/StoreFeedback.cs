@@ -15,8 +15,8 @@ namespace domain.Entitys
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public int StoreId { get; set; }
         public Store Store { get; set; }
-        public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
 
     }
 }

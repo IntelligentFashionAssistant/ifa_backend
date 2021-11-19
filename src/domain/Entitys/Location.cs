@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace domain.Entitys
 {
@@ -13,7 +10,6 @@ namespace domain.Entitys
         public string City { get; set; }
         public string Street { get; set; }   
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-
         public int StoreId { get; set; }
         public Store Store { get; set; }
     }
