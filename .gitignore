@@ -235,3 +235,7 @@ _Pvt_Extensions
 /NDependOut
 /CleanArchitecture.ndproj
 /.mfractor
+
+# my modification
+ifa_backend.sln.DotSettings.user
+

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace domain.Entitys
 {
-    public class User
+    public class User : IdentityUser
     {
         public int ID { get; set; }
         public string FirstName { get; set; }
@@ -17,7 +18,6 @@ namespace domain.Entitys
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public ICollection<PropertyFeedback> PropertyFeedbacks { get; set; }
 
-        //Constracter
         public User()
         {
             PropertyFeedbacks = new HashSet<PropertyFeedback>();

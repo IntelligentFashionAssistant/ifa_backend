@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace repository
+{
+    public class AppDbContext : IdentityDbContext
     {
-    public class AppDbContext 
-    {
-      
-
+        public AppDbContext(DbContextOptions<AppDbContext> optionsBuilderOptions)
+        {
+            throw new System.NotImplementedException();
+        }
 
         public DbSet<Color> Colors { get; set; }
         public DbSet<Garment> Garments { get; set; }

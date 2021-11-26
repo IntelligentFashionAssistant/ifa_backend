@@ -2,17 +2,13 @@
 
 this is an api for the Intelligent Fashion Assistant
 
---- 
+## rules : 
 
-## project architecture 
+### crud order 
+- BL end points 
+- get (specialized)
+- get (generalized)
+- post 
+- put 
+- delete
 
-![architecture](./docs/IFA_Diagrams-component.drawio.png)
-
-### Business Logic component
-
-![architecture](./docs/IFA_Diagrams-BL.drawio.png)
-
---- 
-
-## TODOs : 
-- add docker support 
