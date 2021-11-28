@@ -7,10 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="contracts\repository" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\domain\domain.csproj" />
     </ItemGroup>
 

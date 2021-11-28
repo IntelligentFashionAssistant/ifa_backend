@@ -5,9 +5,8 @@ using Microsoft.AspNetCore.Identity;
 
 namespace domain.Entitys
 {
-    public class User : IdentityUser
+    public class User : IdentityUser<long>
     {
-        public int ID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }

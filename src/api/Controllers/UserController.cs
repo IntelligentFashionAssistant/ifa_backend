@@ -23,18 +23,6 @@ namespace api.Controllers
         
         
         //*************************************** CRUD ************************************// 
-        
-        /// <summary>
-        /// create new user on register 
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost("/")]
-        public IActionResult createUser()
-        {
-            return null; 
-        }
-        
-        
         [HttpGet("/{id}")]
         public IActionResult GetUserById()
         {
@@ -47,6 +35,15 @@ namespace api.Controllers
             return null;
         }
 
+        /// <summary>
+        /// create new user on register 
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("/")]
+        public IActionResult CreateUser()
+        {
+            return null; 
+        }
 
         [HttpPut("/")]
         public IActionResult EditUser()
@@ -59,7 +56,5 @@ namespace api.Controllers
         {
             return null;
         }
-
-
     }
 }

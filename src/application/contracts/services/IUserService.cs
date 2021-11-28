@@ -1,7 +1,11 @@
+using System.Collections.Generic;
+using application.DTOs;
+
 namespace application.services
 {
-    public interface IUserService
+    public interface IUserService : IService<UserDto, long>
     {
-        //*************************************** CRUD ************************************// 
+        ICollection<UserDto> SearchUser(UserDto searchObj);
+        // TODO : login 
     }
 }
