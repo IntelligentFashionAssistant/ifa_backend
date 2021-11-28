@@ -1,6 +1,8 @@
-namespace application.contracts.persistence
+using domain.Entitys;
+
+namespace application.persistence
 {
-    public interface IGarmentRepository
+    public interface IGarmentRepository : IRepository<Garment, long>
     {
         
     }

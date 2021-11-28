@@ -8,10 +8,10 @@ namespace domain.Entitys
 {
     public class Shape_Garment
     {
-        public int ID { get; set; }
-        public int ShapeId { get; set; }
+        public long Id { get; set; }
+        public long ShapeId { get; set; }
         public Shape Shape { get; set; }
-        public int GarmentId { get; set; }
+        public long GarmentId { get; set; }
         public Garment Garment { get; set; }
         public float CompatibilityRatio { get; set; }
     }

@@ -6,7 +6,7 @@ namespace domain.Entitys
 {
     public class Shape
     {
-        public int ID { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public float Shoulder_range { get; set; }
         public float BustRange { get; set; }

@@ -5,13 +5,13 @@ namespace domain.Entitys
 {
     public class Garment
     {
-        public int ID { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Brand { get; set; }
         public decimal Price { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public int CategoryId { get; set; }
+        public long CategoryId { get; set; }
         public Category Category { get; set; }
         public ICollection<Color> Colors { get; set; }
         public ICollection<Property> Properties { get; set; }

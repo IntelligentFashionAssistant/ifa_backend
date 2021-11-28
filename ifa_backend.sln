@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0AD91C2B-4CD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "domain", "src\domain\domain.csproj", "{6554F6B8-2B78-4BBF-85E8-521575329A95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "repository", "src\repository\repository.csproj", "{E8EE5C02-FDC7-4734-87D5-2A7975E63D23}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "persistence", "src\persistence\persistence.csproj", "{E8EE5C02-FDC7-4734-87D5-2A7975E63D23}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api", "src\api\api.csproj", "{ECA46F61-5E6D-48D5-883A-E354C5A37211}"
 EndProject

@@ -6,7 +6,7 @@ namespace domain.Entitys
 {
     public class Color
     {
-        public int ID { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public ICollection<Garment> Garments { get; set; }

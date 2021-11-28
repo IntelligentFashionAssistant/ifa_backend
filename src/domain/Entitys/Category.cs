@@ -8,7 +8,7 @@ namespace domain.Entitys
 {
     public class Category
     {
-        public int ID { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public ICollection<Property> Properties { get; set; }

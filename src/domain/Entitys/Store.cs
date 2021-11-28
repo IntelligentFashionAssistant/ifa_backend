@@ -6,10 +6,10 @@ namespace domain.Entitys
 {
    public class Store
     {
-        public int ID { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public int UserId { get; set; }
+        public long UserId { get; set; }
         public User User { get; set; }
         public ICollection<Location> Locations { get; set; }
         public ICollection<StoreFeedback> StoreFeedbacks { get; set; }

@@ -6,13 +6,13 @@ namespace domain.Entitys
 {
     public class Property
     {
-        public int ID { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public int CategoryId { get; set; }
+        public long CategoryId { get; set; }
         public Category Category { get; set; }
-        public int GroupId { get; set; }
+        public long GroupId { get; set; }
         public Group Group { get; set; }
         public ICollection<Garment> Garments { get; set; }
         public ICollection<Image> Images { get; set; }
