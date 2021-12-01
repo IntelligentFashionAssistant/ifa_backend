@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using application.DTOs;
 using application.persistence;
 using domain.Entitys;
 
@@ -29,6 +30,11 @@ namespace repository.Repositories
         public void DeleteById(long id)
         {
             throw new System.NotImplementedException();
+        }
+
+        public void RateGarment(GarmentRatingDto garmentRatingDto)
+        {
+            throw new NotImplementedException();
         }
     }
 }

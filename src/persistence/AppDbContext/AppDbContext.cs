@@ -11,6 +11,7 @@ namespace repository
             throw new System.NotImplementedException();
         }
 
+        public DbSet<Category> Categorys { get; set; }
         public DbSet<Color> Colors { get; set; }
         public DbSet<Garment> Garments { get; set; }
         public DbSet<BodySizes> BodySizes { get; set; }

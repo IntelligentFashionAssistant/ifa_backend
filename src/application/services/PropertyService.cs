@@ -1,0 +1,109 @@
+﻿using application.DTOs;
+using application.persistence;
+using domain.Entitys;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace application.services
+{
+    public class PropertyService : IPropertyService
+    {
+        private readonly IPropertyRepository _propertyRepository;
+
+        public PropertyService(IPropertyRepository propertyRepository)
+        {
+            _propertyRepository = propertyRepository;
+        }
+        public PropertyDto Create(PropertyDto obj)
+        {
+            var property = _propertyRepository.Create(new Property
+            {
+                Name = obj.Name,
+                Description = obj.Description,
+                CategoryId = obj.CategoryId,
+                GroupId = obj.GroupId,
+                Images = obj.Images.Select(photo => new Image
+                {
+                    Path = photo
+                }).ToList(),
+            }) ;
+
+            return new PropertyDto { 
+              Id = property.Id,
+              Description = property.Description,
+              Category = property.Category.Name,
+              Group = property.Group.Name,
+              CreatedAt = property.CreatedAt,
+              Name = property.Name,
+              Images = property.Images.Select(photo => photo.Path).ToList(),
+            };
+        }
+
+        public void DeleteById(long id)
+        {
+            _propertyRepository.DeleteById(id);
+        }
+
+        public PropertyDto Edit(PropertyDto obj)
+        {
+            var property = _propertyRepository.Update(new Property
+            {
+                Id = obj.Id,
+                Name = obj.Name,
+                Description = obj.Description,
+                CategoryId = obj.CategoryId,
+                GroupId = obj.GroupId,
+                Images = obj.Images.Select(photo => new Image
+                {
+                    Path = photo
+                }).ToList(),
+            });
+
+            return new PropertyDto
+            {
+                Id = property.Id,
+                Description = property.Description,
+                Category = property.Category.Name,
+                Group = property.Group.Name,
+                CreatedAt = property.CreatedAt,
+                Name = property.Name,
+                Images = property.Images.Select(photo => photo.Path).ToList(),
+            };
+        }
+
+        public ICollection<PropertyDto> GetAll()
+        {
+            var propertys = _propertyRepository.GetAll();
+
+            return propertys.Select(property => new PropertyDto
+            {
+                Id = property.Id,
+                Description = property.Description,
+                Category = property.Category.Name,
+                Group = property.Group.Name,
+                CreatedAt = property.CreatedAt,
+                Name = property.Name,
+                Images = property.Images.Select(photo => photo.Path).ToList(),
+            }).ToList();
+        }
+
+        public PropertyDto GetById(long id)
+        {
+            var property = _propertyRepository.GetById(id);
+
+            return new PropertyDto
+            {
+                Id = property.Id,
+                Description = property.Description,
+                Category = property.Category.Name,
+                Group = property.Group.Name,
+                CreatedAt = property.CreatedAt,
+                Name = property.Name,
+                Images = property.Images.Select(photo => photo.Path).ToList(),
+            };
+        }
+    }
+}

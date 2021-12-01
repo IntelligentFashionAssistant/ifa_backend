@@ -5,6 +5,6 @@ namespace application.services
 {
     public interface IGarmentServices : IService<GarmentDto, long>
     {
-        long RateGarment(GarmentRatingDto garmentRatingDto);
+        void RateGarment(GarmentRatingDto garmentRatingDto);
     }
 }

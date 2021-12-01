@@ -13,6 +13,6 @@ namespace application.DTOs
     {
         public long PropertyId { get; set; }
         // TODO : find better name 
-        public int CompatibilityRatio { get; set; }
+        public float CompatibilityRatio { get; set; }
     }
 }

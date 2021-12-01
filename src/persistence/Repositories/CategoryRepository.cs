@@ -6,19 +6,29 @@ namespace repository.Repositories
 {
     public class CategoryRepository : ICategoryRepository
     {
+        private readonly AppDbContext _appDbContext;
+
+        public CategoryRepository(AppDbContext appDbContext)
+        {
+            _appDbContext = appDbContext;
+        }
         public Category GetById(long id)
         {
-            throw new System.NotImplementedException();
+             
+            return _appDbContext.Categorys.SingleOrDefault(category => category.Id == id);
         }
 
         public ICollection<Category> GetAll()
         {
-            throw new System.NotImplementedException();
+            return _appDbContext.Categorys.ToList();
         }
 
         public Category Create(Category obj)
         {
-            throw new System.NotImplementedException();
+            var category = _appDbContext.Add(obj);
+            _appDbContext.SaveChanges();
+            //_appDbContext.Entry(obj).State = System.Data.Entity.EntityState.Detached;
+            return new Category();
         }
 
         public Category Update(Category obj)
