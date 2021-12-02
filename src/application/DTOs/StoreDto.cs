@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace application.DTOs
 {
     public class StoreDto

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using application.persistence;
 using domain.Entitys;
 using Microsoft.EntityFrameworkCore;
@@ -19,14 +20,15 @@ namespace repository.Repositories
 
             return property;
         }
-
-        public ICollection<Property> GetAllPropertyWithGroup()
+        
+        // g1 s1
+        // g1 s2 
+        public IDictionary<string, ICollection<Property>> GetAllPropertyWithGroup()
         {
-            var propertys = _appDbContext.Properties.Include(g => g.Group).
-                  GroupBy(p => p.Group.Name)
-                 .Select(group => new {key = group.Key, data = group.ToList() }).ToList();
-
-            return (ICollection<Property>)propertys;             
+            // return  _appDbContext.Properties.Include(property => property.Group)
+            //     .GroupBy(property => property.Group.Name)
+            //     .ToDictionary(el => el.Key, el => el.ToList());
+            return null;
         }
 
         public ICollection<Property> GetAll()

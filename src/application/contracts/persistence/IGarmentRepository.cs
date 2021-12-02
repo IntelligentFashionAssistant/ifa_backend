@@ -5,6 +5,5 @@ namespace application.persistence
 {
     public interface IGarmentRepository : IRepository<Garment, long>
     {
-        void RateGarment(PropertyFeedback obj);
     }
 }

@@ -33,8 +33,10 @@ namespace application.services
                 StoreId = obj.StoreId,
                 Colors = obj.Colors.Select(color => new Color { Name = color }).ToList(),
                 Images = obj.Images.Select(photo => new Image { Path = photo }).ToList(),
+                // TODO : IDs 
                 Properties = obj.Properties.Select(property => new Property
                 {
+                    Id = property.Id,
                     Name = property.Name,
                     Description = property.Description,
                     GroupId = property.GroupId,
@@ -59,6 +61,7 @@ namespace application.services
         {
             _garmentRepository.DeleteById(id);
         }
+
 
         public GarmentDto Edit(GarmentDto obj)
         {
@@ -131,20 +134,5 @@ namespace application.services
             };
         }
 
-        public void RateGarment(GarmentRatingDto garmentRatingDto)
-        {   
-            foreach(var item in garmentRatingDto.PropertyRatings)
-            {
-                _garmentRepository.RateGarment(new PropertyFeedback
-                {
-                    UserId = garmentRatingDto.UserId,
-                    GarmentId = garmentRatingDto.GarmentId,
-                    PropertyId = item.PropertyId,
-                    Rating = item.CompatibilityRatio
-                });
-            }
-        }
-
-       
     }
 }

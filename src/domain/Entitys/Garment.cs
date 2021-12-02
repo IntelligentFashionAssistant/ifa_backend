@@ -19,14 +19,14 @@ namespace domain.Entitys
         public ICollection<Property> Properties { get; set; }
         public ICollection<Image> Images { get; set; }
         
-        public ICollection<Shape_Garment> Shape_Garments { get; set; }
+        public ICollection<Shape> Shapes { get; set; }
         //Constracter
         public Garment()
         {
             Colors = new HashSet<Color>();
             Properties = new HashSet<Property>();
             Images = new HashSet<Image>();
-            Shape_Garments = new HashSet<Shape_Garment>();
+            Shapes = new HashSet<Shape>();
         }
     }
 }

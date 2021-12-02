@@ -13,13 +13,13 @@ namespace domain.Entitys
         public float HipRange { get; set; }
         public float WaistRange { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public ICollection<Shape_Property> Shape_Properties { get; set; }
-        public ICollection<Shape_Garment> Shape_Garments { get; set; }
+        public ICollection<Property> Properties { get; set; }
+        public ICollection<Garment> Garments { get; set; }
         //Constracter
         public Shape()
         {
-            Shape_Properties = new HashSet<Shape_Property>();
-            Shape_Garments = new HashSet<Shape_Garment>();
+            Properties = new HashSet<Property>();
+            Garments = new HashSet<Garment>();
         }
     }
 }

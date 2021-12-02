@@ -16,16 +16,14 @@ namespace domain.Entitys
         public Group Group { get; set; }
         public ICollection<Garment> Garments { get; set; }
         public ICollection<Image> Images { get; set; }
-        public ICollection<PropertyFeedback> PropertyFeedbacks { get; set; }
-        public ICollection<Shape_Property> Shape_Properties { get; set; }
+        public ICollection<Shape> Shapes { get; set; }
 
         //Constracter
         public Property()
         {
             Garments = new HashSet<Garment>();
             Images = new HashSet<Image>();
-            PropertyFeedbacks = new HashSet<PropertyFeedback>();
-            Shape_Properties = new HashSet<Shape_Property>();
+            Shapes = new HashSet<Shape>();
         }
     }
 }

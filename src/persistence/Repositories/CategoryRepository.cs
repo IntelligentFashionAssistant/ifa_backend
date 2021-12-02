@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using application.persistence;
 using domain.Entitys;
 

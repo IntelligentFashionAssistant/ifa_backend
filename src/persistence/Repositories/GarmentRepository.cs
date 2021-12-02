@@ -1,4 +1,6 @@
 
+using System.Collections.Generic;
+using System.Linq;
 using application.persistence;
 using domain.Entitys;
 using Microsoft.EntityFrameworkCore;
@@ -50,10 +52,5 @@ namespace repository.Repositories
             _appDbContext.SaveChanges();
         }
 
-        public void RateGarment(PropertyFeedback obj)
-        {
-            _appDbContext.Add(obj);
-            _appDbContext.SaveChanges();
-        }
     }
 }

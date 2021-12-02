@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using api.ApiDTOs;
 using application.services;
 using Microsoft.AspNetCore.Mvc;
@@ -18,44 +20,45 @@ namespace api.Controllers
         [HttpGet("/{id:int}")]
         public IActionResult GetCategoryById(long id)
         {
-            var respons = new ResponsApiDto<CateogryApiDTO>();
+            var response = new ResponsApiDto<CateogryApiDTO>();
             var data = _categoryService.GetById(id);
 
             if (data != null)
             {
-                respons.Data = new CateogryApiDTO
+                response.Data = new CateogryApiDTO
                 {
                     Id = data.Id,
                     Name = data.Name,
                     Description = data.Description
                 };
-                respons.Status = "Success";
-                return Ok(respons);
+                response.Status = "Success";
+                return Ok(response);
             }
 
-            respons.Status = "Failed";
-            return Ok(respons);
+            response.Status = "Failed";
+            // TODO : change ok to appropriate result 
+            return Ok(response);
         }
         
         [HttpGet("/")]
         public IActionResult GetAllCategories()
         {
-            var respons = new ResponsApiDto<ICollection<CateogryApiDTO>>();
+            var response = new ResponsApiDto<ICollection<CateogryApiDTO>>();
             var data = _categoryService.GetAll();
 
             if (data != null)
             {
-                respons.Data = data.Select(c => new CateogryApiDTO
+                response.Data = data.Select(c => new CateogryApiDTO
                 {
                     Id = c.Id,
                     Name = c.Name,
                     Description = c.Description
                 }).ToList();
-                respons.Status = "Success";
-                return Ok(respons);
+                response.Status = "Success";
+                return Ok(response);
             }
-            respons.Status = "Failed";
-            return Ok(respons);
+            response.Status = "Failed";
+            return Ok(response);
         }
 
         [HttpPost("/")]
@@ -115,7 +118,6 @@ namespace api.Controllers
         public IActionResult DeleteCategory(long id)
         {
             _categoryService.DeleteById(id);
-
             return Ok();
         }
     }

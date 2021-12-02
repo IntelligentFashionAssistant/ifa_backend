@@ -1,4 +1,7 @@
-﻿namespace api.ApiDTOs
+﻿using System;
+using System.Collections.Generic;
+
+namespace api.ApiDTOs
 {
     public class GarmentApiDto
     {
