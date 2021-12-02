@@ -25,20 +25,24 @@ namespace repository.Repositories
 
         public Category Create(Category obj)
         {
-            var category = _appDbContext.Add(obj);
+             _appDbContext.Add(obj);
             _appDbContext.SaveChanges();
-            //_appDbContext.Entry(obj).State = System.Data.Entity.EntityState.Detached;
-            return new Category();
+            
+            return obj;
         }
 
         public Category Update(Category obj)
         {
-            throw new System.NotImplementedException();
+            _appDbContext.Update(obj);
+            _appDbContext.SaveChanges();
+
+            return obj ;
         }
 
         public void DeleteById(long id)
         {
-            throw new System.NotImplementedException();
+            _appDbContext.Remove(new Category {Id = id});
+            _appDbContext.SaveChanges();
         }
     }
 }

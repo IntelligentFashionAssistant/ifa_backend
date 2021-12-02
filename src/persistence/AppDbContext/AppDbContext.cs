@@ -13,6 +13,7 @@ namespace repository
 
         public DbSet<Category> Categorys { get; set; }
         public DbSet<Color> Colors { get; set; }
+        public DbSet<Group> Groups { get; set; }
         public DbSet<Garment> Garments { get; set; }
         public DbSet<BodySizes> BodySizes { get; set; }
         public DbSet<Image> Images { get; set; }

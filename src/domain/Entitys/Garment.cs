@@ -26,7 +26,6 @@ namespace domain.Entitys
             Colors = new HashSet<Color>();
             Properties = new HashSet<Property>();
             Images = new HashSet<Image>();
-            Stores = new HashSet<Store>();
             Shape_Garments = new HashSet<Shape_Garment>();
         }
     }

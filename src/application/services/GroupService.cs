@@ -62,7 +62,8 @@ namespace application.services
             {
                 Id = group.Id,
                 Name = group.Name,
-                Description = group.Description
+                Description = group.Description,
+                Propertys = group.Properties.Select(p => p.Name).ToList(),
             }).ToList();
         }
 
@@ -74,7 +75,8 @@ namespace application.services
             {
                 Id = group.Id,
                 Name = group.Name,
-                Description = group.Description
+                Description = group.Description,
+                Propertys = group.Properties.Select(p => p.Name).ToList(),
             };
         }
     }

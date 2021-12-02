@@ -33,7 +33,7 @@ namespace application.services
 
             return new PropertyDto { 
               Id = property.Id,
-              Description = property.Description,
+              Description = property.Description != null ? property.Description : "",
               Category = property.Category.Name,
               Group = property.Group.Name,
               CreatedAt = property.CreatedAt,
@@ -88,6 +88,19 @@ namespace application.services
                 Name = property.Name,
                 Images = property.Images.Select(photo => photo.Path).ToList(),
             }).ToList();
+        }
+
+        public ICollection<PropertyDto> GetAllPropertyWithGroup()
+        {
+            //var data = _propertyRepository.GetAllPropertyWithGroup();
+            // foreach(var item in data)
+            //{
+            //    foreach (var j in item.)
+            //    {
+
+            //    }
+            //}
+            return null;
         }
 
         public PropertyDto GetById(long id)

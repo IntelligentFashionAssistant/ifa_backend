@@ -5,5 +5,6 @@ namespace application.services
 {
     public interface IPropertyService : IService<PropertyDto, long>
     {
+        ICollection<PropertyDto> GetAllPropertyWithGroup();
     }
 }

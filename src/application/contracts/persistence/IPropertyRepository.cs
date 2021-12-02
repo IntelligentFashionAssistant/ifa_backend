@@ -4,6 +4,6 @@ namespace application.persistence
 {
     public interface IPropertyRepository : IRepository<Property, long>
     {
-        
+        ICollection<Property> GetAllPropertyWithGroup();
     }
 }

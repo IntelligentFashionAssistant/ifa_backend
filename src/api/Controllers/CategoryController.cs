@@ -1,3 +1,5 @@
+using api.ApiDTOs;
+using application.services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -6,36 +8,115 @@ namespace api.Controllers
     [Route("/category")]
     public class CategoryController : Controller
     {
-        
-        [HttpGet("/{id}")]
-        public IActionResult GetCategoryById()
+        private ICategoryService _categoryService;
+
+        public CategoryController(ICategoryService categoryService)
         {
-            return null;
+            _categoryService = categoryService;
+        }
+
+        [HttpGet("/{id:int}")]
+        public IActionResult GetCategoryById(long id)
+        {
+            var respons = new ResponsApiDto<CateogryApiDTO>();
+            var data = _categoryService.GetById(id);
+
+            if (data != null)
+            {
+                respons.Data = new CateogryApiDTO
+                {
+                    Id = data.Id,
+                    Name = data.Name,
+                    Description = data.Description
+                };
+                respons.Status = "Success";
+                return Ok(respons);
+            }
+
+            respons.Status = "Failed";
+            return Ok(respons);
         }
         
         [HttpGet("/")]
         public IActionResult GetAllCategories()
         {
-            return null;
+            var respons = new ResponsApiDto<ICollection<CateogryApiDTO>>();
+            var data = _categoryService.GetAll();
+
+            if (data != null)
+            {
+                respons.Data = data.Select(c => new CateogryApiDTO
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Description = c.Description
+                }).ToList();
+                respons.Status = "Success";
+                return Ok(respons);
+            }
+            respons.Status = "Failed";
+            return Ok(respons);
         }
-        
-        
+
         [HttpPost("/")]
-        public IActionResult CreateCategory()
-        {
-            return null;
+        public IActionResult CreateCategory(CateogryApiDTO cateogryApiDto)
+        {  
+            var respons = new ResponsApiDto<CateogryApiDTO>();
+            var data = _categoryService.Create(new CategoryDto
+            {
+                Description = cateogryApiDto.Description,
+                Name = cateogryApiDto.Name,
+            });
+             
+            if(data != null)
+            {
+                respons.Data = new CateogryApiDTO
+                {
+                    Id = data.Id,
+                    Name = data.Name,
+                    Description = data.Description
+                };
+                respons.Status = "Success";
+                return Ok(respons);
+            }
+           
+            respons.Status ="Failed";
+            return Ok(respons);
         }
         
         [HttpPut("/")]
-        public IActionResult EditCategory()
+        public IActionResult EditCategory(CateogryApiDTO cateogryApiDto)
         {
-            return null;
+            var respons = new ResponsApiDto<CateogryApiDTO>();
+            var data = _categoryService.Edit(new CategoryDto
+            {
+                Id = cateogryApiDto.Id,
+                Description = cateogryApiDto.Description,
+                Name = cateogryApiDto.Name,
+            });
+
+            if (data != null)
+            {
+                respons.Data = new CateogryApiDTO
+                {
+                    Id = data.Id,
+                    Name = data.Name,
+                    Description = data.Description
+                };
+                respons.Status = "Success";
+                return Ok(respons);
+            }
+
+            respons.Status = "Failed";
+            return Ok(respons);
         }
         
-        [HttpDelete("/")]
-        public IActionResult DeleteCategory()
+        [HttpDelete("/{id:int}")]
+        public IActionResult DeleteCategory(long id)
         {
-            return null;
+            _categoryService.DeleteById(id);
+
+            return Ok();
         }
     }
 }
