@@ -1,40 +1,59 @@
-using System.Collections.Generic;
-using application.DTOs;
+
 using application.persistence;
 using domain.Entitys;
+using Microsoft.EntityFrameworkCore;
 
 namespace repository.Repositories
 {
     public class GarmentRepository : IGarmentRepository
     {
+        private readonly AppDbContext _appDbContext;
+
+        public GarmentRepository(AppDbContext appDbContext)
+        {
+            _appDbContext = appDbContext;
+        }
+
         public Garment GetById(long id)
         {
-            throw new System.NotImplementedException();
+            var garment = _appDbContext.Garments.SingleOrDefault(garment => garment.Id == id);
+
+            return garment;
         }
 
         public ICollection<Garment> GetAll()
         {
-            throw new System.NotImplementedException();
+            var garments = _appDbContext.Garments
+                            .Include(g => g.Images).AsNoTracking().ToList();
+            return garments;
         }
 
         public Garment Create(Garment obj)
         {
-            throw new System.NotImplementedException();
+            _appDbContext.Add(obj);
+            _appDbContext.SaveChanges();
+
+            return obj;
         }
 
         public Garment Update(Garment obj)
         {
-            throw new System.NotImplementedException();
+            _appDbContext.Update(obj);
+            _appDbContext.SaveChanges();
+
+            return obj;
         }
 
         public void DeleteById(long id)
         {
-            throw new System.NotImplementedException();
+            _appDbContext.Remove(new Garment { Id = id });
+            _appDbContext.SaveChanges();
         }
 
-        public void RateGarment(GarmentRatingDto garmentRatingDto)
+        public void RateGarment(PropertyFeedback obj)
         {
-            throw new NotImplementedException();
+            _appDbContext.Add(obj);
+            _appDbContext.SaveChanges();
         }
     }
 }

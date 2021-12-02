@@ -18,6 +18,7 @@ namespace application.services
         {
             _garmentRepository = garmentRepository;
         }
+
         public GarmentDto Create(GarmentDto obj)
         {
             //TODO Properties of list int or propertieDto and insert to shape_garment table
@@ -32,7 +33,13 @@ namespace application.services
                 StoreId = obj.StoreId,
                 Colors = obj.Colors.Select(color => new Color { Name = color }).ToList(),
                 Images = obj.Images.Select(photo => new Image { Path = photo }).ToList(),
-            });
+                Properties = obj.Properties.Select(property => new Property
+                {
+                    Name = property.Name,
+                    Description = property.Description,
+                    GroupId = property.GroupId,
+                }).ToList(),
+            }) ;
 
             return new GarmentDto {
                 Id = garment.Id,
@@ -43,7 +50,8 @@ namespace application.services
                 Category = garment.Category.Name,
                 CreatedAt = garment.CreatedAt,
                 Colors = garment.Colors.Select(color => color.Name).ToList(),
-                Images = garment.Images.Select(photo => photo.Path).ToList()
+                Images = garment.Images.Select(photo => photo.Path).ToList(),
+
               };
         }
 
@@ -65,6 +73,12 @@ namespace application.services
                 StoreId = obj.StoreId,
                 Colors = obj.Colors.Select(color => new Color { Name = color }).ToList(),
                 Images = obj.Images.Select(photo => new Image { Path = photo }).ToList(),
+                Properties = obj.Properties.Select(property => new Property
+                {
+                    Name = property.Name,
+                    Description = property.Description,
+                    GroupId = property.GroupId,
+                }).ToList(),
             });
 
             return new GarmentDto

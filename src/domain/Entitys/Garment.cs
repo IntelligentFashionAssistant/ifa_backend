@@ -10,7 +10,7 @@ namespace domain.Entitys
         public string Description { get; set; }
         public string Brand { get; set; }
         public decimal Price { get; set; }
-        public int StoreId { get; set; }
+        public long StoreId { get; set; }
         public Store Store { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public long CategoryId { get; set; }
