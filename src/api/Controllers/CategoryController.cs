@@ -17,30 +17,30 @@ namespace api.Controllers
             _categoryService = categoryService;
         }
 
-        [HttpGet("/{id:int}")]
-        public IActionResult GetCategoryById(long id)
-        {
-            var response = new ResponsApiDto<CateogryApiDTO>();
-            var data = _categoryService.GetById(id);
+        //[HttpGet("/{id:int}")]
+        //public IActionResult GetCategoryById(long id)
+        //{
+        //    var response = new ResponsApiDto<CateogryApiDTO>();
+        //    var data = _categoryService.GetById(id);
 
-            if (data != null)
-            {
-                response.Data = new CateogryApiDTO
-                {
-                    Id = data.Id,
-                    Name = data.Name,
-                    Description = data.Description
-                };
-                response.Status = "Success";
-                return Ok(response);
-            }
+        //    if (data != null)
+        //    {
+        //        response.Data = new CateogryApiDTO
+        //        {
+        //            Id = data.Id,
+        //            Name = data.Name,
+        //            Description = data.Description
+        //        };
+        //        response.Status = "Success";
+        //        return Ok(response);
+        //    }
 
-            response.Status = "Failed";
-            // TODO : change ok to appropriate result 
-            return Ok(response);
-        }
+        //    response.Status = "Failed";
+        //    // TODO : change ok to appropriate result 
+        //    return Ok(response);
+        //}
         
-        [HttpGet("/")]
+        [HttpGet]
         public IActionResult GetAllCategories()
         {
             var response = new ResponsApiDto<ICollection<CateogryApiDTO>>();
@@ -61,7 +61,7 @@ namespace api.Controllers
             return Ok(response);
         }
 
-        [HttpPost("/")]
+        [HttpPost]
         public IActionResult CreateCategory(CateogryApiDTO cateogryApiDto)
         {  
             var respons = new ResponsApiDto<CateogryApiDTO>();
@@ -87,7 +87,7 @@ namespace api.Controllers
             return Ok(respons);
         }
         
-        [HttpPut("/")]
+        [HttpPut]
         public IActionResult EditCategory(CateogryApiDTO cateogryApiDto)
         {
             var respons = new ResponsApiDto<CateogryApiDTO>();
@@ -114,7 +114,7 @@ namespace api.Controllers
             return Ok(respons);
         }
         
-        [HttpDelete("/{id:int}")]
+        [HttpDelete]
         public IActionResult DeleteCategory(long id)
         {
             _categoryService.DeleteById(id);

@@ -3,7 +3,7 @@ using System.Linq;
 using application.persistence;
 using domain.Entitys;
 
-namespace repository.Repositories
+namespace persistence.Repositories
 {
     public class CategoryRepository : ICategoryRepository
     {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace application.services
 {
-    public class GarmentService : IGarmentServices
+    public class GarmentService : IGarmentService
 
     {
         private readonly IGarmentRepository _garmentRepository;
@@ -30,7 +30,7 @@ namespace application.services
                 Description = obj.Description,
                 Name = obj.Name,
                 Price = obj.Price,
-                StoreId = obj.StoreId,
+                //StoreId = obj.StoreId,
                 Colors = obj.Colors.Select(color => new Color { Name = color }).ToList(),
                 Images = obj.Images.Select(photo => new Image { Path = photo }).ToList(),
                 // TODO : IDs 
@@ -73,7 +73,7 @@ namespace application.services
                 Description = obj.Description,
                 Name = obj.Name,
                 Price = obj.Price,
-                StoreId = obj.StoreId,
+                //StoreId = obj.StoreId,
                 Colors = obj.Colors.Select(color => new Color { Name = color }).ToList(),
                 Images = obj.Images.Select(photo => new Image { Path = photo }).ToList(),
                 Properties = obj.Properties.Select(property => new Property

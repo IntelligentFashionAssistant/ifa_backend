@@ -23,22 +23,21 @@ namespace application.services
             {
                 Name = obj.Name,
                 Description = obj.Description,
-                CategoryId = obj.CategoryId,
+                //CategoryId = obj.CategoryId,
                 GroupId = obj.GroupId,
-                Images = obj.Images.Select(photo => new Image
-                {
-                    Path = photo
-                }).ToList(),
+                //Images = obj.Images.Select(photo => new Image
+                //{
+                //    Path = photo
+                //}).ToList(),
             }) ;
 
             return new PropertyDto { 
               Id = property.Id,
               Description = property.Description != null ? property.Description : "",
-              Category = property.Category.Name,
-              Group = property.Group.Name,
-              CreatedAt = property.CreatedAt,
               Name = property.Name,
-              Images = property.Images.Select(photo => photo.Path).ToList(),
+              //CategoryId = property.CategoryId ,
+              GroupId= property.GroupId == null ?0:0,
+              //Images = property.Images.Select(photo => photo.Path).ToList(),
             };
         }
 
@@ -54,23 +53,23 @@ namespace application.services
                 Id = obj.Id,
                 Name = obj.Name,
                 Description = obj.Description,
-                CategoryId = obj.CategoryId,
+                //CategoryId = obj.CategoryId,
                 GroupId = obj.GroupId,
-                Images = obj.Images.Select(photo => new Image
-                {
-                    Path = photo
-                }).ToList(),
+                //Images = obj.Images.Select(photo => new Image
+                //{
+                //    Path = photo
+                //}).ToList(),
             });
 
             return new PropertyDto
             {
                 Id = property.Id,
                 Description = property.Description,
-                Category = property.Category.Name,
-                Group = property.Group.Name,
                 CreatedAt = property.CreatedAt,
                 Name = property.Name,
-                Images = property.Images.Select(photo => photo.Path).ToList(),
+                //Images = property.Images.Select(photo => photo.Path).ToList(),
+                //CategoryId = property.CategoryId,
+                GroupId = property.GroupId == null ?0:0,
             };
         }
 
@@ -82,11 +81,11 @@ namespace application.services
             {
                 Id = property.Id,
                 Description = property.Description,
-                Category = property.Category.Name,
+                //Category = property.Category.Name,
                 Group = property.Group.Name,
                 CreatedAt = property.CreatedAt,
                 Name = property.Name,
-                Images = property.Images.Select(photo => photo.Path).ToList(),
+                //Images = property.Images.Select(photo => photo.Path).ToList(),
             }).ToList();
         }
 
@@ -111,7 +110,7 @@ namespace application.services
             {
                 Id = property.Id,
                 Description = property.Description,
-                Category = property.Category.Name,
+                //Category = property.Category.Name,
                 Group = property.Group.Name,
                 CreatedAt = property.CreatedAt,
                 Name = property.Name,

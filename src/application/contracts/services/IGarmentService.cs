@@ -3,7 +3,7 @@ using application.DTOs;
 
 namespace application.services
 {
-    public interface IGarmentServices : IService<GarmentDto, long>
+    public interface IGarmentService : IService<GarmentDto, long>
     {
     }
 }

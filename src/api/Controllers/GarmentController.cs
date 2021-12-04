@@ -11,56 +11,56 @@ namespace api.Controllers
     [Route("/garment")]
     public class GarmentController : Controller
     { 
-       private readonly IGarmentServices _garmentServices;
+       private readonly IGarmentService _garmentServices;
 
-        public GarmentController(IGarmentServices garmentServices)
+        public GarmentController(IGarmentService garmentServices)
         {
             _garmentServices = garmentServices;
         }
 
-        [HttpPost("/rate")]
+        [HttpPost("rate")]
         public IActionResult RateGarment()
         {
             return null;
         }
         
         
-        [HttpGet("/{id:int}")]
-        public IActionResult GetGarmentById(long id)
-        {
-            var respons = new ResponsApiDto<GarmentApiDto>();
-            var data = _garmentServices.GetById(id);
+        //[HttpGet("/{id:int}")]
+        //public IActionResult GetGarmentById(long id)
+        //{
+        //    var respons = new ResponsApiDto<GarmentApiDto>();
+        //    var data = _garmentServices.GetById(id);
 
-            if (data != null)
-            {
-                respons.Data = new GarmentApiDto
-                {
-                    Name = data.Name,
-                    Description = data.Description,
-                    Brand = data.Brand,
-                    Price = data.Price,
-                    CategoryId = data.CategoryId,
-                    StoreId = data.StoreId,
-                    Images = data.Images,
-                    Colors = data.Colors,
-                    Properties = data.Properties.Select(p => new PropertyApiDto
-                    {
-                        Name = p.Name,
-                        Description = p.Description,
-                        GroupId = p.GroupId,
-                        CategoryId = p.CategoryId,
-                    }).ToList(),
-                };
-                respons.Status = "Success";
-                return Ok(respons);
-            }
+        //    if (data != null)
+        //    {
+        //        respons.Data = new GarmentApiDto
+        //        {
+        //            Name = data.Name,
+        //            Description = data.Description,
+        //            Brand = data.Brand,
+        //            Price = data.Price,
+        //            CategoryId = data.CategoryId,
+        //            StoreId = data.StoreId,
+        //            Images = data.Images,
+        //            Colors = data.Colors,
+        //            Properties = data.Properties.Select(p => new PropertyApiDto
+        //            {
+        //                Name = p.Name,
+        //                Description = p.Description,
+        //                GroupId = p.GroupId,
+        //                CategoryId = p.CategoryId,
+        //            }).ToList(),
+        //        };
+        //        respons.Status = "Success";
+        //        return Ok(respons);
+        //    }
 
-            respons.Status = "Failed";
-            return Ok(respons);
-        }
+        //    respons.Status = "Failed";
+        //    return Ok(respons);
+        //}
         
         
-        [HttpGet("/")]
+        [HttpGet]
         public IActionResult GetAllGaremnts()
         {
             var respons = new ResponsApiDto<ICollection<GarmentApiDto>>();
@@ -93,7 +93,7 @@ namespace api.Controllers
             return Ok(respons);
         }
 
-        [HttpPost("/")]
+        [HttpPost]
         public IActionResult CreateGarment(GarmentApiDto garmentApiDto)
         {
             var respons = new ResponsApiDto<GarmentApiDto>();
@@ -108,7 +108,8 @@ namespace api.Controllers
                 Images = garmentApiDto.Images,
                 Colors = garmentApiDto.Colors,
                 Properties = garmentApiDto.Properties.Select(p => new PropertyDto
-                {
+                {    
+                    Id = p.Id,
                     Name = p.Name,
                     Description = p.Description,
                     GroupId = p.GroupId,
@@ -144,7 +145,7 @@ namespace api.Controllers
             return Ok(respons);
         }
 
-        [HttpPut("/")]
+        [HttpPut]
         public IActionResult EditGarment(GarmentApiDto garmentApiDto)
         {
             var respons = new ResponsApiDto<GarmentApiDto>();
@@ -194,7 +195,7 @@ namespace api.Controllers
             return Ok(respons);
         }
 
-         [HttpDelete("/{id:int}")]
+        [HttpDelete]
         public IActionResult DeleteGarmentById(long id)
         {
             _garmentServices.DeleteById(id);

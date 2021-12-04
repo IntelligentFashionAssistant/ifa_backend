@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace repository.Repositories
+namespace persistence.Repositories
 {
     public class GroupRepository : IGroupRepository
     {
@@ -44,7 +44,7 @@ namespace repository.Repositories
 
         public Group Update(Group obj)
         {
-            _appDbContext.Add(obj);
+            _appDbContext.Update(obj);
             _appDbContext.SaveChanges();
 
             return obj;

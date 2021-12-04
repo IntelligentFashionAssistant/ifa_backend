@@ -13,8 +13,8 @@ namespace domain.Entitys
         public string Body { get; set; }
         public float Rate { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public long StoreId { get; set; }
-        public Store Store { get; set; }
+        //public long StoreId { get; set; }
+        //public Store Store { get; set; }
         public long UserId { get; set; }
         public User User { get; set; }
 

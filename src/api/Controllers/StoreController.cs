@@ -6,38 +6,38 @@ namespace api.Controllers
     [Route("/store")]
     public class StoreController : Controller
     {
-        [HttpPost("/rate")]
-        public IActionResult RateStore()
-        {
-            return null;
-        }
+        //[HttpPost]
+        //public IActionResult RateStore()
+        //{
+        //    return null;
+        //}
         
-        [HttpGet("/{id}")]
-        public IActionResult GetStoreById()
-        {
-            return null;
-        }
+        //[HttpGet("/{id}")]
+        //public IActionResult GetStoreById()
+        //{
+        //    return null;
+        //}
         
-        [HttpGet("/")]
+        [HttpGet]
         public IActionResult GetAllStores()
         {
             return null;
         }
         
         
-        [HttpPost("/")]
+        [HttpPost]
         public IActionResult CreateStore()
         {
             return null;
         }
         
-        [HttpPut("/")]
+        [HttpPut]
         public IActionResult EditStore()
         {
             return null;
         }
         
-        [HttpDelete("/")]
+        [HttpDelete]
         public IActionResult DeleteStore()
         {
             return null;

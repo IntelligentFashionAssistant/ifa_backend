@@ -22,13 +22,15 @@ namespace application.services
             {
                 Description = obj.Description,
                 Name = obj.Name,
+                CategoryId = obj.CategoryId,
             });
 
             return new GroupDto
             {
                 Id = group.Id,
                 Name = group.Name,
-                Description = group.Description
+                Description = group.Description,
+                CategoryId = group.CategoryId,
             };
         }
 
@@ -44,13 +46,15 @@ namespace application.services
                 Id = obj.Id,
                 Description = obj.Description,
                 Name = obj.Name,
+                CategoryId = obj.CategoryId,
             });
 
             return new GroupDto
             {
                 Id = group.Id,
                 Name = group.Name,
-                Description = group.Description
+                Description = group.Description,
+                CategoryId = obj.CategoryId,
             };
         }
 
@@ -64,6 +68,7 @@ namespace application.services
                 Name = group.Name,
                 Description = group.Description,
                 Propertys = group.Properties.Select(p => p.Name).ToList(),
+                CategoryId = group.CategoryId,
             }).ToList();
         }
 
@@ -77,6 +82,7 @@ namespace application.services
                 Name = group.Name,
                 Description = group.Description,
                 Propertys = group.Properties.Select(p => p.Name).ToList(),
+                CategoryId = group.CategoryId,
             };
         }
     }

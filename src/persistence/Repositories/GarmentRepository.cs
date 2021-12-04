@@ -5,7 +5,7 @@ using application.persistence;
 using domain.Entitys;
 using Microsoft.EntityFrameworkCore;
 
-namespace repository.Repositories
+namespace persistence.Repositories
 {
     public class GarmentRepository : IGarmentRepository
     {

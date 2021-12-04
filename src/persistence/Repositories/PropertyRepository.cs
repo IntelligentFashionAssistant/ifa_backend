@@ -4,7 +4,7 @@ using application.persistence;
 using domain.Entitys;
 using Microsoft.EntityFrameworkCore;
 
-namespace repository.Repositories
+namespace persistence.Repositories
 {
     public class PropertyRepository : IPropertyRepository
     {
@@ -20,9 +20,7 @@ namespace repository.Repositories
 
             return property;
         }
-        
-        // g1 s1
-        // g1 s2 
+      
         public IDictionary<string, ICollection<Property>> GetAllPropertyWithGroup()
         {
             // return  _appDbContext.Properties.Include(property => property.Group)
@@ -33,7 +31,8 @@ namespace repository.Repositories
 
         public ICollection<Property> GetAll()
         {
-            return _appDbContext.Properties.Include(g => g.GroupId).ToList();
+
+            return _appDbContext.Properties.Include(g => g.Group).ToList(); 
         }
         public Property Create(Property obj)
         {
