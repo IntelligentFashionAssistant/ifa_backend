@@ -1,0 +1,83 @@
+﻿@model ifa_front.Models.Property
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Property</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method = "post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           @* <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>*@
+            <br />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <br />
+              <div class=" mb-2">
+                <label asp-for="Category" for="inputGroupSelect01"></label>
+                <select asp-for="CategoryId" id="ddltype" asp-items="@(new SelectList(Model.Categories,"Id","Name"))" class="form-control" onchange="document.getElementById('btnSubmit').click();" ></select>
+            </div>
+            <br />
+            @if ((Model.Groups != null) && Model.Groups.Any())
+            {
+                <div class=" mb-2">
+                <label asp-for="Group" for="inputGroupSelect01"></label>
+                <select asp-for="GroupId" id="ddltype" asp-items="@(new SelectList(Model.Groups,"Id","Name"))" class="form-control" ></select>
+            </div>
+            }
+
+            <div class="form-group">
+                <input type="submit" id="btnSubmit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+
+@section Scripts{ 
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+@*<script>  
+    var gruops  = document.getElementById('gruopId');
+    $(function () {
+        $("#ddltype").change(function () {
+             console.log("kenan hassan"+$(this).val());
+            $.ajax({
+                type: "Get",
+                url: "/Property/GetAllGroups?id=" + $(this).val(),  
+                success: function (data) {
+                    $("#productcontainer").html("");
+                    $("#gruopId").html(data);
+                    console.log("dddn:"+data);
+                    gruops.innerHTML = data;
+                },
+                error: function (response) {
+                    console.log(response.responseText);
+                }
+            });
+        });
+    });*@
+</script>
+}

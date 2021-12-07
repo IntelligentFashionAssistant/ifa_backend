@@ -32,7 +32,9 @@ namespace persistence.Repositories
         public ICollection<Property> GetAll()
         {
 
-            return _appDbContext.Properties.Include(g => g.Group).ToList(); 
+            return _appDbContext.Properties
+                   .Include(g => g.Group)
+                   .ToList(); 
         }
         public Property Create(Property obj)
         {

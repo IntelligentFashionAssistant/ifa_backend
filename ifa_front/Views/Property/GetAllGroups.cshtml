@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Group>
+
+     @{
+         Layout = null;
+     }
+ <div class=" mb-2">
+        <label for="inputGroupSelect01">Gruop</label>
+      <select  asp-items="@(new SelectList(Model,"Id","Name"))" class="form-control"></select>
+ 
+</div>

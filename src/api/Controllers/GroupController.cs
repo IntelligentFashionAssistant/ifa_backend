@@ -28,11 +28,12 @@ namespace api.Controllers
                     Id = gruop.Id,
                     Name = gruop.Name,
                     Description = gruop.Description,
+                    Category = gruop.Category,
                     CategoryId = gruop.CategoryId,
                     
                 }).ToList();
                 response.Status = "Success";
-                return Ok(response);
+                return Ok(response.Data);
 
         }
 

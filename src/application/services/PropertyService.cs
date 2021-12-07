@@ -23,7 +23,7 @@ namespace application.services
             {
                 Name = obj.Name,
                 Description = obj.Description,
-                //CategoryId = obj.CategoryId,
+                CategoryId = obj.CategoryId,
                 GroupId = obj.GroupId,
                 //Images = obj.Images.Select(photo => new Image
                 //{
@@ -85,6 +85,7 @@ namespace application.services
                 Group = property.Group.Name,
                 CreatedAt = property.CreatedAt,
                 Name = property.Name,
+                //CategoryId = (long)property.CategoryId,
                 //Images = property.Images.Select(photo => photo.Path).ToList(),
             }).ToList();
         }

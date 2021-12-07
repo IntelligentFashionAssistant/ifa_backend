@@ -55,10 +55,10 @@ namespace api.Controllers
                     Description = c.Description
                 }).ToList();
                 response.Status = "Success";
-                return Ok(response);
+                return Ok(response.Data);
             }
             response.Status = "Failed";
-            return Ok(response);
+            return Ok(response.Data);
         }
 
         [HttpPost]

@@ -38,7 +38,7 @@ namespace api.Controllers
 
             }).ToList();
             respons.Status = "Success";
-                return Ok(respons);
+                return Ok(respons.Data);
         }
         
         

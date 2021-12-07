@@ -68,7 +68,8 @@ namespace application.services
                 Name = group.Name,
                 Description = group.Description,
                 Propertys = group.Properties.Select(p => p.Name).ToList(),
-                CategoryId = group.CategoryId,
+                Category = group.Category.Name,
+                CategoryId = group.CategoryId
             }).ToList();
         }
 
