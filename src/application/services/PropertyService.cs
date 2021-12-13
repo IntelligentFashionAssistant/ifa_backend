@@ -118,5 +118,16 @@ namespace application.services
                 Images = property.Images.Select(photo => photo.Path).ToList(),
             };
         }
+
+        public ICollection<PropertyDto> GetPropertysByGroupId(long groupId)
+        {
+            var data = _propertyRepository.GetPropertysByGroupId(groupId)
+                       .Select(p => new PropertyDto
+                       {
+                           Id = p.Id,
+                           Name = p.Name,
+                       }).ToList();
+            return data;
+        }
     }
 }

@@ -10,5 +10,8 @@ namespace ifa_front.Models
         public long CategoryId { get; set; }
         public string? Category { get; set; }
         public ICollection<Category>? Categorys { get; set; }
+        public ICollection<Property> Properties { get; set; }
+      
+
     }
 }

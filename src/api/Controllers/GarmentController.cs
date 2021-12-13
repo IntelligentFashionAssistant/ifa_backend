@@ -75,17 +75,12 @@ namespace api.Controllers
                     Brand = garmet.Brand,
                     Price = garmet.Price,
                     CategoryId = garmet.CategoryId,
-                    StoreId = garmet.StoreId,
+                    Category = garmet.Category,
+                    //StoreId = garmet.StoreId,
                     Images = garmet.Images,
                     Colors = garmet.Colors,
-                    Properties = garmet.Properties.Select(p => new PropertyApiDto
-                    {
-                        Name = p.Name,
-                        Description = p.Description,
-                        GroupId = p.GroupId,
-                        CategoryId = p.CategoryId,
-                    }).ToList(),
-                    }).ToList();
+                    //Properties = garmet.Properties.Select(p => p).ToList(),
+                }).ToList();
                 respons.Status = "Success";
                 return Ok(respons);
             }
@@ -107,35 +102,23 @@ namespace api.Controllers
                 StoreId = garmentApiDto.StoreId,
                 Images = garmentApiDto.Images,
                 Colors = garmentApiDto.Colors,
-                Properties = garmentApiDto.Properties.Select(p => new PropertyDto
-                {    
-                    Id = p.Id,
-                    Name = p.Name,
-                    Description = p.Description,
-                    GroupId = p.GroupId,
-                    CategoryId = p.CategoryId,
-                }).ToList(),
+                Properties = garmentApiDto.Properties.Select(p => p).ToList(),
             });
 
             if(data != null)
             {
                 respons.Data = new GarmentApiDto
                 {
+                    Id = data.Id,
                     Name = data.Name,
                     Description = data.Description,
                     Brand = data.Brand,
                     Price = data.Price,
                     CategoryId = data.CategoryId,
-                    StoreId = data.StoreId,
+                    //StoreId = data.StoreId,
                     Images = data.Images,
                     Colors = data.Colors,
-                    Properties = data.Properties.Select(p => new PropertyApiDto
-                    {
-                        Name = p.Name,
-                        Description = p.Description,
-                        GroupId = p.GroupId,
-                        CategoryId = p.CategoryId,
-                    }).ToList(),
+                    //Properties = data.Properties.Select(p => p).ToList(),
                 };
                 respons.Status = "Success";
                 return Ok(respons);
@@ -151,6 +134,7 @@ namespace api.Controllers
             var respons = new ResponsApiDto<GarmentApiDto>();
             var data = _garmentServices.Edit(new GarmentDto
             {
+                Id = garmentApiDto.Id,
                 Name = garmentApiDto.Name,
                 Description = garmentApiDto.Description,
                 Brand = garmentApiDto.Brand,
@@ -159,13 +143,7 @@ namespace api.Controllers
                 StoreId = garmentApiDto.StoreId,
                 Images = garmentApiDto.Images,
                 Colors = garmentApiDto.Colors,
-                Properties = garmentApiDto.Properties.Select(p => new PropertyDto
-                {   Id = p.Id,
-                    Name = p.Name,
-                    Description = p.Description,
-                    GroupId = p.GroupId,
-                    CategoryId = p.CategoryId,
-                }).ToList(),
+                Properties = garmentApiDto.Properties.Select(p => p).ToList(),
             });
 
             if (data != null)
@@ -180,13 +158,7 @@ namespace api.Controllers
                     StoreId = data.StoreId,
                     Images = data.Images,
                     Colors = data.Colors,
-                    Properties = data.Properties.Select(p => new PropertyApiDto
-                    {
-                        Name = p.Name,
-                        Description = p.Description,
-                        GroupId = p.GroupId,
-                        CategoryId = p.CategoryId,
-                    }).ToList(),
+                    Properties = data.Properties.Select(p => p).ToList(),
                 };
                 respons.Status = "Success";
                 return Ok(respons);

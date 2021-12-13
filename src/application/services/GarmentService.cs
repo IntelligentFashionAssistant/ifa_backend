@@ -36,10 +36,7 @@ namespace application.services
                 // TODO : IDs 
                 Properties = obj.Properties.Select(property => new Property
                 {
-                    Id = property.Id,
-                    Name = property.Name,
-                    Description = property.Description,
-                    GroupId = property.GroupId,
+                    Id = property
                 }).ToList(),
             }) ;
 
@@ -49,7 +46,7 @@ namespace application.services
                 Description = garment.Description,
                 Name = garment.Name,
                 Price = garment.Price,
-                Category = garment.Category.Name,
+                CategoryId = garment.CategoryId,
                 CreatedAt = garment.CreatedAt,
                 Colors = garment.Colors.Select(color => color.Name).ToList(),
                 Images = garment.Images.Select(photo => photo.Path).ToList(),
@@ -76,12 +73,7 @@ namespace application.services
                 //StoreId = obj.StoreId,
                 Colors = obj.Colors.Select(color => new Color { Name = color }).ToList(),
                 Images = obj.Images.Select(photo => new Image { Path = photo }).ToList(),
-                Properties = obj.Properties.Select(property => new Property
-                {
-                    Name = property.Name,
-                    Description = property.Description,
-                    GroupId = property.GroupId,
-                }).ToList(),
+                Properties = obj.Properties.Select(property => new Property { Id = property}).ToList(),
             });
 
             return new GarmentDto

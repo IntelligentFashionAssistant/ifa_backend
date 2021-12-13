@@ -34,12 +34,23 @@ namespace persistence.Repositories
 
         public ICollection<Group> GetAll()
         {
-            return _appDbContext.Groups
+            var data = _appDbContext.Groups
                    .Include(group => group.Properties)
                     .Include(group => group.Category)
                    .ToList();
+
+            return data;
         }
 
+        public ICollection<Group> GetGroupByCategory(long id)
+        {
+            var data = _appDbContext.Groups.Where(g => g.CategoryId == id)
+                   .Include(group => group.Properties)
+                   .AsNoTracking()
+                   .ToList();
+
+            return data;
+        }
         public Group GetById(long id)
         {
            return _appDbContext.Groups.SingleOrDefault(group => group.Id == id);

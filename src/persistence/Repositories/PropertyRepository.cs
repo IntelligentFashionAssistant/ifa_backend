@@ -58,6 +58,12 @@ namespace persistence.Repositories
             _appDbContext.SaveChanges();
         }
 
-       
+        public ICollection<Property> GetPropertysByGroupId(long groupId)
+        {
+            var data = _appDbContext.Properties.
+                     Where(p => p.GroupId == groupId).
+                     AsNoTracking().ToList();
+            return data;
+        }
     }
 }

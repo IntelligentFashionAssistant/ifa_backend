@@ -7,5 +7,7 @@ namespace application.persistence
     public interface IPropertyRepository : IRepository<Property, long>
     {
         IDictionary<string, ICollection<Property>> GetAllPropertyWithGroup();
+
+        ICollection<Property> GetPropertysByGroupId(long groupId);
     }
 }

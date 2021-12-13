@@ -4,6 +4,6 @@ namespace application.persistence
 {
     public interface IGroupRepository : IRepository<Group, long>
     {
-        
+        ICollection<Group> GetGroupByCategory(long id);
     }
 }

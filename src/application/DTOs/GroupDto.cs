@@ -9,6 +9,6 @@ namespace application.DTOs
         public string? Description { get; set; }
         public long CategoryId { get; set; }
         public string Category { get; set; }
-        public ICollection<string> Propertys { get; set; }
+        public ICollection<PropertyDto>? Propertys { get; set; }
     }
 }

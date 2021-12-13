@@ -1,21 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace api.ApiDTOs
+﻿namespace ifa_front.Models
 {
-    public class GarmentApiDto
+    public class Garment
     {
         public long Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Brand { get; set; }
         public decimal Price { get; set; }
-        public DateTime CreatedAt { get; set; }
         public long StoreId { get; set; }
         public long CategoryId { get; set; }
-        public string? Category { get; set; }
+        public ICollection<Category> Categorys { get; set; }
         public ICollection<string> Colors { get; set; }
         public ICollection<string> Images { get; set; }
-        public ICollection<int> Properties { get; set; }
+        public ICollection<Group> Groups { get; set; }
+        public ICollection<long> PropertyIds { get; set; }
+
+       
     }
+
+   
+    //public class GroupProperty
+    //{
+    //    public long GroupId { get; set; }
+    //    public long 
+    //}
 }

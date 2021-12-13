@@ -12,9 +12,13 @@ namespace application.services
     public class GroupService : IGroupService
     {
         private readonly IGroupRepository _groupRepository;
-        public GroupService(IGroupRepository groupRepository)
+        private readonly IPropertyService _propertyService;
+
+        public GroupService(IGroupRepository groupRepository,
+                            IPropertyService propertyService)
         {
             _groupRepository = groupRepository;
+            _propertyService = propertyService;
         }
         public GroupDto Create(GroupDto obj)
         {
@@ -67,12 +71,13 @@ namespace application.services
                 Id = group.Id,
                 Name = group.Name,
                 Description = group.Description,
-                Propertys = group.Properties.Select(p => p.Name).ToList(),
+                
                 Category = group.Category.Name,
                 CategoryId = group.CategoryId
             }).ToList();
         }
 
+      
         public GroupDto GetById(long id)
         {
             var group = _groupRepository.GetById(id);
@@ -82,9 +87,22 @@ namespace application.services
                 Id = group.Id,
                 Name = group.Name,
                 Description = group.Description,
-                Propertys = group.Properties.Select(p => p.Name).ToList(),
+                Propertys = _propertyService.GetPropertysByGroupId(group.Id),
                 CategoryId = group.CategoryId,
             };
+        }
+
+        public ICollection<GroupDto> GetGroupByCategory(long id)
+        {
+            var data = _groupRepository.GetGroupByCategory(id);
+
+            return data.Select(group => new GroupDto()
+            {
+                Id = group.Id,
+                Name = group.Name,
+                Propertys = _propertyService.GetPropertysByGroupId(group.Id),
+                CategoryId = group.CategoryId,
+            }).ToList();
         }
     }
 }

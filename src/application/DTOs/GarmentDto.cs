@@ -17,7 +17,7 @@ namespace application.DTOs
         public string Category { get; set; }
         public ICollection<string> Colors { get; set; }
         public ICollection<string> Images { get; set; }
-        public ICollection<PropertyDto> Properties { get; set; }
+        public ICollection<int> Properties { get; set; }
 
     }
 }

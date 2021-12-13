@@ -26,24 +26,75 @@ namespace persistence.Repositories
         public ICollection<Garment> GetAll()
         {
             var garments = _appDbContext.Garments
-                            .Include(g => g.Images).AsNoTracking().ToList();
+                            .Include(g => g.Images)
+                            .Include(g => g.Category)
+                            .Include(g => g.Colors)
+                            .AsNoTracking().ToList();
             return garments;
         }
 
         public Garment Create(Garment obj)
         {
-            _appDbContext.Add(obj);
+            var garment = new Garment()
+            {
+                Brand = obj.Brand,
+                CategoryId = obj.CategoryId,
+                Description = obj.Description,
+                Name = obj.Name,
+                Price = obj.Price,
+                //StoreId = obj.StoreId,
+                Colors = obj.Colors.Select(color => new Color { Name = color.Name }).ToList(),
+            };
+
+             var listProperts = new List<Property>();
+            foreach (var prop in obj.Properties)
+            {
+                var property = _appDbContext.Properties.Where(p => p.Id == prop.Id).Include(p => p.Category).SingleOrDefault();
+                listProperts.Add(property);
+            }
+
+            foreach (var i in obj.Images)
+            {
+                garment.Images.Add(new Image() { Path =  i.Path,PropertyId = 1});
+            }
+            garment.Properties = listProperts;
+
+            _appDbContext.Add(garment);
             _appDbContext.SaveChanges();
 
-            return obj;
+            return garment;
         }
 
         public Garment Update(Garment obj)
         {
-            _appDbContext.Update(obj);
+            var garment = new Garment()
+            {
+                Id = obj.Id,
+                Brand = obj.Brand,
+                CategoryId = obj.CategoryId,
+                Description = obj.Description,
+                Name = obj.Name,
+                Price = obj.Price,
+                //StoreId = obj.StoreId,
+                Colors = obj.Colors.Select(color => new Color { Name = color.Name }).ToList(),
+            };
+
+            var listProperts = new List<Property>();
+            foreach (var prop in obj.Properties)
+            {
+                var property = _appDbContext.Properties.Where(p => p.Id == prop.Id).Include(p => p.Category).SingleOrDefault();
+                listProperts.Add(property);
+            }
+
+            foreach (var i in obj.Images)
+            {
+                garment.Images.Add(new Image() { Path = i.Path, PropertyId = 1 });
+            }
+            garment.Properties = listProperts;
+            _appDbContext.Update(garment);
             _appDbContext.SaveChanges();
 
-            return obj;
+            return garment;
         }
 
         public void DeleteById(long id)
