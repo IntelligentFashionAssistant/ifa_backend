@@ -1,4 +1,5 @@
-﻿using application.services;
+﻿using application.DTOs;
+using application.services;
 using ifa_front.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,13 +11,16 @@ namespace ifa_front.Controllers
         private readonly IGroupService _groupService;
         private readonly ICategoryService _categoryService;
         private readonly IGarmentService _garmentService;
+        private readonly IWebHostEnvironment _wepHostEnvironment;
         public GarmentController(IGroupService groupService, 
                                 ICategoryService categoryService,
-                                IGarmentService garmentService)
+                                IGarmentService garmentService,
+                                IWebHostEnvironment wepHostEnvironment)
         {
             _groupService = groupService;
             _categoryService = categoryService;
             _garmentService = garmentService;
+            _wepHostEnvironment = wepHostEnvironment;
         }
         // GET: GarmentController
         public ActionResult Index()
@@ -45,7 +49,7 @@ namespace ifa_front.Controllers
         // POST: GarmentController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Garment garment)
+        public async Task<ActionResult> Create(Garment garment)
         {
             if (garment.CategoryId > 0)
             {
@@ -62,12 +66,42 @@ namespace ifa_front.Controllers
                                    }).ToList();
             }
 
-                garment.Categorys = _categoryService.GetAll().Select(c => new Category
+            garment.Categorys = _categoryService.GetAll().Select(c => new Category
             {
                 Id = c.Id,
                 Name = c.Name
             }).ToList();
 
+            if(garment.PropertyIds != null && garment.PropertyIds.Count() > 0)
+            {
+                var model = new GarmentDto
+                {
+                    Name = garment.Name,
+                    Description = garment.Description,
+                    Price = garment.Price,
+                    Brand = garment.Brand,
+                    CategoryId = garment.CategoryId,
+
+                };
+                var imageList = new List<string>();
+                var colorList = new List<string>() { "red","green"};
+                if (garment.Photo != null)
+                {
+                    var FillFilePath = $"{_wepHostEnvironment.WebRootPath}\\images\\{Path.GetFileName(garment.Photo.FileName)}";
+                    using (var stream = new FileStream(FillFilePath, FileMode.Create))
+                    {
+                        await garment.Photo.CopyToAsync(stream);
+                        imageList.Add($"{ Path.GetFileName(garment.Photo.FileName)}");
+                        model.Images=imageList;
+                        model.Properties = garment.PropertyIds;
+                        model.Colors = colorList;
+                    }
+                }
+
+
+
+                _garmentService.Create(model);
+            }  
             return View(garment);
         }
 

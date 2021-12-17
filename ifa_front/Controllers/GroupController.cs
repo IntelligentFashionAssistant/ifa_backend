@@ -76,7 +76,7 @@ namespace ifa_front.Controllers
             //{
             //    return RedirectToAction("Index");
             //}
-            if (ModelState.IsValid)
+            if (model.CategoryId > 0 && model.Name != null && model.Description != null)
             {
                 _groupService.Create(new GroupDto
                 {
