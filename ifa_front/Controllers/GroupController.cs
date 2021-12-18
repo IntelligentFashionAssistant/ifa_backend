@@ -65,17 +65,7 @@ namespace ifa_front.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateAsync(Group model)
         {
-            //model.Description = "Description";
-            //HttpClient client = _api.Intial();
-            //var postCateg = client.PostAsJsonAsync<Group>("api/Group", model);
-            //postCateg.Wait();
-
-            //var result = postCateg.Result;
-
-            //if (result.IsSuccessStatusCode)
-            //{
-            //    return RedirectToAction("Index");
-            //}
+            
             if (model.CategoryId > 0 && model.Name != null && model.Description != null)
             {
                 _groupService.Create(new GroupDto
@@ -90,73 +80,14 @@ namespace ifa_front.Controllers
             //Group group = await GatAllCategory();
             return View(model);
         }
-
-        // GET: GroupController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult DeleteG(int id)
         {
-            return View();
+
+            _groupService.DeleteById(id);
+            return RedirectToAction(nameof(Index));
+
         }
 
-        // POST: GroupController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: GroupController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: GroupController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-
-        //public  async Task<Group> GatAllCategory()
-        //{
-        //    var categorys = new List<Category>();
-        //    var respones = new Respones<Category>();
-
-        //    HttpClient client = _api.Intial();
-        //    HttpResponseMessage res = await client.GetAsync("category");
-
-        //    if (res.IsSuccessStatusCode)
-        //    {
-        //        var result = res.Content.ReadAsStringAsync().Result;
-        //        categorys = JsonConvert.DeserializeObject<List<Category>>(result);
-        //    }
-
-        //    var groupList = categorys.Select(c => new Category
-        //    {
-        //        Id = c.Id,
-        //        Name = c.Name,
-        //    });
-        //    Group group = new Group();
-        //    group.Categorys = groupList.ToList();
-
-        //    return group;
-        //}
+        
     }
 }

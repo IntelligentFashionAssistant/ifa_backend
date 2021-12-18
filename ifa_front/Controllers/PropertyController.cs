@@ -82,6 +82,15 @@ namespace ifa_front.Controllers
 ;            return View(model);
         }
 
+        
+        public ActionResult DeleteP(int id)
+        {
+            
+             _propertyService.DeleteById(id);
+             return RedirectToAction(nameof(Index));
+           
+        }
+
         public async Task<List<Category>> GetAllCategoryes()
         {
 

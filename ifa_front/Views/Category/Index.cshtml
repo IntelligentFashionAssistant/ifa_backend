@@ -4,11 +4,13 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create" class= "btn btn-info">Create New</a>
+<div class="d-flex justify-content-between ">
+    <h1 class="text-success">Categorys</h1>
+    <p>
+    <a asp-action="Create" class="btn btn-outline-primary">Create Category</a>
 </p>
+</div>
+<hr />
 <table class="table">
     <thead>
         <tr>
@@ -37,9 +39,8 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            <a asp-action="DeleteC" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+
             </td>
         </tr>
 }

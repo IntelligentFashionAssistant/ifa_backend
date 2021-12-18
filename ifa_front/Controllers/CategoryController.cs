@@ -58,9 +58,15 @@ namespace ifa_front.Controllers
             return View(model);
         }
 
-        
 
-        
-        
+        public ActionResult DeleteC(int id)
+        {
+
+            _categoryService.DeleteById(id);
+            return RedirectToAction(nameof(Index));
+
+        }
+
+
     }
 }
