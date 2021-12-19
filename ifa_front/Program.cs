@@ -2,6 +2,7 @@
 
 using ifa_front;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,7 +25,13 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+Console.WriteLine("path kenan :" + Path.Combine(builder.Environment.ContentRootPath,".."));
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider("c:\\Images" ),
 
+    RequestPath = "/StaticFiles"
+});
 app.UseRouting();
 
 app.UseAuthorization();

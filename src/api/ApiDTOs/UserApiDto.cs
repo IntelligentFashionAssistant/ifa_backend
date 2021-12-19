@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Identity;
-
-
-namespace domain.Entitys
+﻿namespace api.ApiDTOs
 {
-    public class User : IdentityUser<long>
+    public class UserApiDto
     {
+        public long Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
         public DateTime BirthDate { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
         public string Street { get; set; }
         public string HouseNumber { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public long? BodySizesId { get; set; }
-        public BodySizes? BodySizes { get; set; }
+        public string Username { get; set; }
     }
 }

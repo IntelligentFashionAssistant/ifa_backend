@@ -8,92 +8,129 @@
 
 <hr />
 <div class="row">
-        <form asp-action="Create"  class="w-100 m-auto" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-           @* <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>*@
-            <div class="row ">
-                <div class="col-6">
-                 <div class="form-group mb-2">
-                <label  for="inputGroupSelect01">Ctegory</label>
-                <select asp-for="CategoryId"  class="form-control"  onchange="document.getElementById('btnSubmit').click()">
-                    <option value ="" disabled selected>Choose Category</option>
-                    @foreach( var i in Model.Categorys)
-                    {
-                       <option value =@i.Id>@i.Name</option>
-                    }
-                </select>
-                <span asp-validation-for="CategoryId" class="text-danger"></span>
-            </div>
+    <form asp-action="Create" class="w-100 m-auto" enctype="multipart/form-data">
+
+        <div class="row ">
+            <div class="col-6">
                 <div class="form-group mb-2">
-                <label asp-for="Photo" class="control-label"></label>
-                <input asp-for="Photo" type="file" class="form-control" />
-                <span asp-validation-for="Photo" class="text-danger"></span>
-               </div>
-                 <div class="form-group mb-2">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                    <label for="inputGroupSelect01">Ctegory</label>
+                    <select asp-for="CategoryId" class="form-control" onchange="document.getElementById('btnSubmit').click()">
+                        <option value="" disabled selected>Choose Category</option>
+                        @foreach (var i in Model.Categorys)
+                        {
+                            <option value=@i.Id>@i.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-2">
+                    <label asp-for="Photo" class="control-label"></label>
+                    <input asp-for="Photo" type="file" class="form-control" onchange="previewFile()" />
+                    <span asp-validation-for="Photo" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group mb-2">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-2">
+                    <label asp-for="Brand" class="control-label"></label>
+                    <input asp-for="Brand" class="form-control" />
+                    <span asp-validation-for="Brand" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="col-6 ">
+                @* @if(Model.PhotoName != null)
+                    {*@
+                <img src="" id="im" width=200 style="display:none" alt="Image preview..." />
+                @*}*@
+                <div class="form-group mb-2">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-2">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-2">
+                <label>Colors</label>
+                <select asp-for="Colors" class="form-control">
+                    <option value="" disabled selected>Choose Colors</option>
+                    <option value="White">White</option>
+                    <option value="Black">Black</option>
+                    <option value="Beige">Beige</option>
+                    <option value="Red">Red</option>
+                    <option value="Blue">Blue</option>
+                    <option value="Yellow">Yellow</option>
+                    <option value="Green">Green</option>
+                    <option value="Orange">Orange</option>
+                    <option value="Pink">Pink</option>
+                </select>
             </div>
 
-            
-            
-                </div>
-                <div class="col-6 ">
-                    <div class="form-group mb-2">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-                    <div class="form-group mb-2">
-                <label asp-for="Brand" class="control-label"></label>
-                <input asp-for="Brand" class="form-control" />
-                <span asp-validation-for="Brand" class="text-danger"></span>
-            </div>
-                     <div class="form-group mb-2">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-             
-          
-                </div>
-            </div>
-           
-           
-            <div class="row">
-               
-                     @if((Model.Groups != null) && Model.Groups.Any()){
-               
-                foreach(var item in Model.Groups)
-                {  <div class="col-6 mb-3">
-                    <label>@item.Name</label>
-                    <select asp-for="PropertyIds"  class="form-control"  >
-                    <option value ="" disabled selected>Choose property</option>
-                    @foreach( var i in item.Properties)
-                    {
-                       <option value =@i.Id>@i.Name</option>
-                    } 
-                </select>
-                </div>
+        </div>
+
+
+        <div class="row">
+
+            @if ((Model.Groups != null) && Model.Groups.Any())
+            {
+
+                foreach (var item in Model.Groups)
+                {
+                    <div class="col-6 mb-3">
+                        <label>@item.Name</label>
+                        <select asp-for="PropertyIds" class="form-control">
+                            <option value="" disabled selected>Choose property</option>
+                            @foreach (var i in item.Properties)
+                            {
+                                <option value=@i.Id>@i.Name</option>
+                            }
+                        </select>
+                    </div>
                 }
             }
-                
-            </div>
             
-           
-            <div class="form-group">
-                <input id="btnSubmit" type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    
+        </div>
+
+
+        <div class="form-group">
+            <input id="btnSubmit" type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </form>
+
 </div>
 
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+
+<script>
+        const preview =document.getElementById('im');
+    function previewFile() {
+       $('#im').toggle();
+      var file    = document.querySelector('input[type=file]').files[0];
+      var reader  = new FileReader();
+       console.log('kenan :' + file);
+      reader.onloadend = function () {
+        preview.src = reader.result;
+      }
+
+      if (file) {
+        reader.readAsDataURL(file);
+      } else {
+        preview.src = "";
+      }
+    }
+
+</script>
 }

@@ -42,20 +42,24 @@ namespace persistence.Repositories
                 Description = obj.Description,
                 Name = obj.Name,
                 Price = obj.Price,
-                //StoreId = obj.StoreId,
+                StoreId = obj.StoreId,
                 Colors = obj.Colors.Select(color => new Color { Name = color.Name }).ToList(),
             };
 
-             var listProperts = new List<Property>();
+            var listProperts = new List<Property>();
             foreach (var prop in obj.Properties)
             {
-                var property = _appDbContext.Properties.Where(p => p.Id == prop.Id).Include(p => p.Category).SingleOrDefault();
+                var property = _appDbContext.Properties
+                              .Where(p => p.Id == prop.Id)
+                              .Include(p => p.Category)
+                              .SingleOrDefault();
+
                 listProperts.Add(property);
             }
 
             foreach (var i in obj.Images)
             {
-                garment.Images.Add(new Image() { Path =  i.Path,PropertyId = 1});
+                garment.Images.Add(new Image() { Path =  i.Path});
             }
             garment.Properties = listProperts;
 

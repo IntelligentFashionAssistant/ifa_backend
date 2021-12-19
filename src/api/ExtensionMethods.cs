@@ -14,8 +14,8 @@ namespace api
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IGarmentRepository, GarmentRepository>();
             services.AddScoped<IGroupRepository, GroupRepository>();
-            services.AddScoped<IPropertyRepository, PropertyRepository>();
-
+            services.AddScoped<IPropertyRepository, PropertyRepository>();//
+            services.AddScoped<IUserService, UserService>();
             //Repository
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IGarmentService, GarmentService>();

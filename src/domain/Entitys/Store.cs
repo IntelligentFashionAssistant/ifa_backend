@@ -13,14 +13,14 @@ namespace domain.Entitys
         public User User { get; set; }
         public ICollection<Location> Locations { get; set; }
         //public ICollection<StoreFeedback> StoreFeedbacks { get; set; }
-        //public ICollection<Garment> Garments { get; set; }
+        public ICollection<Garment> Garments { get; set; }
 
         //Constracter
         public Store()
         {
             Locations = new HashSet<Location>();
             //StoreFeedbacks = new HashSet<StoreFeedback>();
-            //Garments = new HashSet<Garment>();
+            Garments = new HashSet<Garment>();
         }
     }
 }

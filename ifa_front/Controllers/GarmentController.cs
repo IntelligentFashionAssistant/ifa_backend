@@ -38,6 +38,7 @@ namespace ifa_front.Controllers
         public ActionResult Create()
         {
             var model = new Garment();
+            
             model.Categorys = _categoryService.GetAll().Select(c => new Category
             {
                 Id = c.Id,
@@ -51,28 +52,21 @@ namespace ifa_front.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Garment garment)
         {
-            if (garment.CategoryId > 0)
+            Random rnd = new Random();
+            var img = "";
+
+            if (garment.Photo != null)
             {
-                garment.Groups = _groupService.GetGroupByCategory(garment.CategoryId)
-                                   .Select(g => new Group
-                                   {
-                                       Id = g.Id,
-                                       Name = g.Name,
-                                       Properties  = g.Propertys.Select(p => new Property
-                                       {
-                                            Name = p.Name,
-                                            Id = p.Id,
-                                       }).ToList(),
-                                   }).ToList();
+                var FillFilePath = $"c:\\Images\\{Path.GetFileName(garment.Photo.FileName)}";
+                using (var stream = new FileStream(FillFilePath, FileMode.Create))
+                {
+                    await garment.Photo.CopyToAsync(stream);
+                  img =$"{ Path.GetFileName(garment.Photo.FileName)}";
+                  
+                }
             }
-
-            garment.Categorys = _categoryService.GetAll().Select(c => new Category
-            {
-                Id = c.Id,
-                Name = c.Name
-            }).ToList();
-
-            if(garment.PropertyIds != null && garment.PropertyIds.Count() > 0)
+            
+            if (garment.PropertyIds != null && garment.PropertyIds.Count() > 0 )
             {
                 var model = new GarmentDto
                 {
@@ -81,27 +75,41 @@ namespace ifa_front.Controllers
                     Price = garment.Price,
                     Brand = garment.Brand,
                     CategoryId = garment.CategoryId,
-
+                    StoreId = rnd.Next(5, 7),
                 };
                 var imageList = new List<string>();
-                var colorList = new List<string>() { "red","green"};
-                if (garment.Photo != null)
-                {
-                    var FillFilePath = $"{_wepHostEnvironment.WebRootPath}\\images\\{Path.GetFileName(garment.Photo.FileName)}";
-                    using (var stream = new FileStream(FillFilePath, FileMode.Create))
-                    {
-                        await garment.Photo.CopyToAsync(stream);
-                        imageList.Add($"{ Path.GetFileName(garment.Photo.FileName)}");
-                        model.Images=imageList;
-                        model.Properties = garment.PropertyIds;
-                        model.Colors = colorList;
-                    }
-                }
+                imageList.Add(img);
+                //var colorList = new List<string>() { "red","green"};
 
-
+                model.Images = imageList;
+                model.Properties = garment.PropertyIds;
+                model.Colors = garment.Colors;
 
                 _garmentService.Create(model);
-            }  
+                
+                return RedirectToAction();
+            }
+
+            if (garment.CategoryId > 0)
+            {
+                garment.Groups = _groupService.GetGroupByCategory(garment.CategoryId)
+                                   .Select(g => new Group
+                                   {
+                                       Id = g.Id,
+                                       Name = g.Name,
+                                       Properties = g.Propertys.Select(p => new Property
+                                       {
+                                           Name = p.Name,
+                                           Id = p.Id,
+                                       }).ToList(),
+                                   }).ToList();
+            }
+            garment.Categorys = _categoryService.GetAll().Select(c => new Category
+            {
+                Id = c.Id,
+                Name = c.Name
+            }).ToList();
+
             return View(garment);
         }
 

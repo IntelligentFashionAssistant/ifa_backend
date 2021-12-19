@@ -30,10 +30,9 @@ namespace application.services
                 Description = obj.Description,
                 Name = obj.Name,
                 Price = obj.Price,
-                //StoreId = obj.StoreId,
+                StoreId = obj.StoreId,
                 Colors = obj.Colors.Select(color => new Color { Name = color }).ToList(),
                 Images = obj.Images.Select(photo => new Image { Path = photo }).ToList(),
-                // TODO : IDs 
                 Properties = obj.Properties.Select(property => new Property
                 {
                     Id = property
@@ -50,7 +49,7 @@ namespace application.services
                 CreatedAt = garment.CreatedAt,
                 Colors = garment.Colors.Select(color => color.Name).ToList(),
                 Images = garment.Images.Select(photo => photo.Path).ToList(),
-
+                StoreId = garment.StoreId,
               };
         }
 
@@ -103,6 +102,7 @@ namespace application.services
                 Price = garment.Price,
                 Category = garment.Category.Name,
                 CreatedAt = garment.CreatedAt,
+                StoreId = garment.StoreId,
                 Colors = garment.Colors.Select(color => color.Name).ToList(),
                 Images = garment.Images.Select(photo => photo.Path).ToList()
             }).ToList();
