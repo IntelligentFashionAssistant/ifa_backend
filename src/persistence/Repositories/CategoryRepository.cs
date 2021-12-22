@@ -16,7 +16,7 @@ namespace persistence.Repositories
         public Category GetById(long id)
         {
              
-            return _appDbContext.Categorys.SingleOrDefault(category => category.Id == id);
+            return _appDbContext.Categorys.Single(category => category.Id == id);
         }
 
         public ICollection<Category> GetAll()
