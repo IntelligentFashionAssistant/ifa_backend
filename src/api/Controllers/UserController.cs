@@ -33,11 +33,42 @@ namespace api.Controllers
 
 
         //*************************************** CRUD ************************************// 
-        //[HttpGet("/{id}")]
-        //public IActionResult GetUserById()
-        //{
-        //    return null;
-        //}
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserById(long id)
+        {
+            var respons = new ResponsApiDto<UserApiDto>();
+            try
+            {
+                var data = await _userService.GetUserById(id);
+                if (data != null)
+                {
+                    respons.Data = new UserApiDto
+                    {
+                        Id = data.Id,
+                        FirstName = data.FirstName,
+                        LastName = data.LastName,
+                        Email = data.Email,
+                        City = data.City,
+                        Country = data.Country,
+                        BirthDate = data.BirthDate,
+                        Street = data.Street,
+                        HouseNumber = data.HouseNumber,
+                        Username = data.Username,
+                        PhoneNumber = data.PhoneNumber,
+                    };
+                    respons.Status = "Success";
+                    return Ok(respons);
+                }
+            }
+            catch (Exception ex)
+            {
+                respons.Status =ex.Message;
+            }
+
+          
+           
+            return NotFound(respons);
+        }
 
         [HttpGet]
         public IActionResult GetAllUsers()
@@ -60,6 +91,10 @@ namespace api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUser(UserApiDto userApiDto)
         {
+            if (!ModelState.IsValid)
+            {
+                BadRequest(userApiDto);
+            }
             var respons = new ResponsApiDto<UserApiDto>();
             try
             {
@@ -103,16 +138,76 @@ namespace api.Controllers
             return Ok(respons);
         }
 
-        //[HttpPut]
-        //public IActionResult EditUser()
-        //{
-        //    return null;
-        //}
+        [HttpPut]
+        public async Task<IActionResult> EditUser(UserApiDto userApiDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                BadRequest(userApiDto);
+            }
+            var respons = new ResponsApiDto<UserApiDto>();
+            try
+            {
+                var data = await _userService.EditUser(new UserDto
+                { 
+                    
+                    Id = userApiDto.Id,
+                    FirstName = userApiDto.FirstName,
+                    LastName = userApiDto.LastName,
+                    City = userApiDto.City,
+                    Country = userApiDto.Country,
+                    BirthDate = userApiDto.BirthDate,
+                    Street = userApiDto.Street,
+                    HouseNumber = userApiDto.HouseNumber,
+                    Username = userApiDto.Username,
+                    PhoneNumber = userApiDto.PhoneNumber,
+                });
+                if (data != null)
+                {
+                    respons.Data = new UserApiDto
+                    {
+                        Id = data.Id,
+                        FirstName = data.FirstName,
+                        LastName = data.LastName,
+                        Email = data.Email,
+                        City = data.City,
+                        Country = data.Country,
+                        BirthDate = data.BirthDate,
+                        Password = data.Password,
+                        Street = data.Street,
+                        HouseNumber = data.HouseNumber,
+                        Username = data.Username,
+                        PhoneNumber = data.PhoneNumber,
+                    };
+                    respons.Status = "Success";
+                    return Ok(respons);
+                }
+            }
+            catch (Exception ex)
+            {
+                respons.Status = ex.Message;
+            }
+            return Ok(respons);
+        }
 
-        //[HttpDelete]
-        //public IActionResult DeleteUser(long id)
-        //{
-        //    return null;
-        //}
+        [HttpDelete]
+        public IActionResult DeleteUser(long id)
+        {
+            var respons = new ResponsApiDto<long>();
+
+            try
+            {
+                _userService.DeleteUserById(id);
+                respons.Data = id;
+                respons.Status = "Success";
+                return Ok(respons);
+            }
+            catch (Exception ex)
+            {
+                respons.Status = ex.Message;
+            }
+
+            return BadRequest(respons);
+        }
     }
 }

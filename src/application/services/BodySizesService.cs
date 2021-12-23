@@ -92,5 +92,43 @@ namespace application.services
                 BustRange = bodySizes.BustRange,
             };
         }
+
+        public string CreateBody(BodySizesDto obj)
+        {
+            if (obj != null)
+            {
+                var bodySizes = _bodySizesRepository.Create(new BodySizes
+                {
+                    ShoulderRange = obj.ShoulderRange,
+                    BustRange = obj.BustRange,
+                    HipRange = obj.HipRange,
+                    WaistRange = obj.WaistRange,
+                });
+
+                return "shap";
+            }
+
+
+            return null;
+        }
+        public string EditBody(BodySizesDto obj)
+        {
+            if (obj != null)
+            {
+                var bodySizes = _bodySizesRepository.Create(new BodySizes
+                {
+                    Id = obj.Id,
+                    ShoulderRange = obj.ShoulderRange,
+                    BustRange = obj.BustRange,
+                    HipRange = obj.HipRange,
+                    WaistRange = obj.WaistRange,
+                });
+
+                return "shap";
+            }
+
+
+            return null;
+        }
     }
 }

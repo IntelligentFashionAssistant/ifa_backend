@@ -7,6 +7,9 @@ namespace application.services
     {
         ICollection<UserDto> SearchUser(UserDto searchObj);
         Task<UserDto> CreateUser(UserDto obj);
+        Task<UserDto> EditUser(UserDto obj);
+        Task<UserDto> GetUserById(long id);
+        Task DeleteUserById(long id);
         // TODO : login 
     }
 }
