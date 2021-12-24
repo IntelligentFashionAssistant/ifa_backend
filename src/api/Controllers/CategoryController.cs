@@ -39,11 +39,11 @@ namespace api.Controllers
         //    // TODO : change ok to appropriate result 
         //    return Ok(response);
         //}
-        
+
         [HttpGet]
         public IActionResult GetAllCategories()
         {
-            var response = new ResponsApiDto<ICollection<CateogryApiDTO>>();
+            var response = new ResponsApiDto<ICollection<CateogryApiDTO>,string>();
             var data = _categoryService.GetAll();
 
             if (data != null)
@@ -54,43 +54,41 @@ namespace api.Controllers
                     Name = c.Name,
                     Description = c.Description
                 }).ToList();
-                response.Status = "Success";
                 return Ok(response.Data);
             }
-            response.Status = "Failed";
-            return Ok(response.Data);
+            response.AddError("Not found");
+            return BadRequest(response.Data);
         }
 
         [HttpPost]
         public IActionResult CreateCategory(CateogryApiDTO cateogryApiDto)
-        {  
-            var respons = new ResponsApiDto<CateogryApiDTO>();
+        {
+            var respons = new ResponsApiDto<CateogryApiDTO,string>();
             var data = _categoryService.Create(new CategoryDto
             {
                 Description = cateogryApiDto.Description,
                 Name = cateogryApiDto.Name,
             });
-             
-            if(data != null)
+
+            if (data != null)
             {
                 respons.Data = new CateogryApiDTO
                 {
                     Id = data.Id,
                     Name = data.Name,
                     Description = data.Description
-                };
-                respons.Status = "Success";
+                };    
                 return Ok(respons);
             }
-           
-            respons.Status ="Failed";
-            return Ok(respons);
+
+            respons.AddError("Failed");
+            return BadRequest(respons);
         }
-        
+
         [HttpPut]
         public IActionResult EditCategory(CateogryApiDTO cateogryApiDto)
         {
-            var respons = new ResponsApiDto<CateogryApiDTO>();
+            var respons = new ResponsApiDto<CateogryApiDTO,string>();
             var data = _categoryService.Edit(new CategoryDto
             {
                 Id = cateogryApiDto.Id,
@@ -106,19 +104,21 @@ namespace api.Controllers
                     Name = data.Name,
                     Description = data.Description
                 };
-                respons.Status = "Success";
                 return Ok(respons);
             }
 
-            respons.Status = "Failed";
+            respons.AddError("Failed");
             return Ok(respons);
         }
-        
+
         [HttpDelete]
         public IActionResult DeleteCategory(long id)
         {
+            //TODO throu exption
+            var respons = new ResponsApiDto<string, string>();
             _categoryService.DeleteById(id);
-            return Ok();
+            respons.Data = "deleted category";
+            return Ok(respons);
         }
     }
 }

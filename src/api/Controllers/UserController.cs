@@ -36,7 +36,7 @@ namespace api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(long id)
         {
-            var respons = new ResponsApiDto<UserApiDto>();
+            var respons = new ResponsApiDto<UserApiDto,string>();
             try
             {
                 var data = await _userService.GetUserById(id);
@@ -56,13 +56,14 @@ namespace api.Controllers
                         Username = data.Username,
                         PhoneNumber = data.PhoneNumber,
                     };
-                    respons.Status = "Success";
+                   // respons.Status = "Success";
                     return Ok(respons);
                 }
             }
             catch (Exception ex)
             {
-                respons.Status =ex.Message;
+               // respons.Status =ex.Message;
+                respons.AddError(ex.Message);
             }
 
           
@@ -95,7 +96,7 @@ namespace api.Controllers
             {
                 BadRequest(userApiDto);
             }
-            var respons = new ResponsApiDto<UserApiDto>();
+            var respons = new ResponsApiDto<UserApiDto,string>();
             try
             {
                 var data = await _userService.CreateUser(new UserDto
@@ -127,13 +128,13 @@ namespace api.Controllers
                         HouseNumber = data.HouseNumber,
                         Username = data.Username,
                     };
-                    respons.Status = "Success";
+                    
                     return Ok(respons);
                 }
             }
             catch(Exception ex)
             {
-                respons.Status = ex.Message;
+                respons.AddError(ex.Message);
             }   
             return Ok(respons);
         }
@@ -145,7 +146,7 @@ namespace api.Controllers
             {
                 BadRequest(userApiDto);
             }
-            var respons = new ResponsApiDto<UserApiDto>();
+            var respons = new ResponsApiDto<UserApiDto,string>();
             try
             {
                 var data = await _userService.EditUser(new UserDto
@@ -179,13 +180,12 @@ namespace api.Controllers
                         Username = data.Username,
                         PhoneNumber = data.PhoneNumber,
                     };
-                    respons.Status = "Success";
                     return Ok(respons);
                 }
             }
             catch (Exception ex)
             {
-                respons.Status = ex.Message;
+                respons.AddError(ex.Message);
             }
             return Ok(respons);
         }
@@ -193,18 +193,17 @@ namespace api.Controllers
         [HttpDelete]
         public IActionResult DeleteUser(long id)
         {
-            var respons = new ResponsApiDto<long>();
+            var respons = new ResponsApiDto<long,string>();
 
             try
             {
                 _userService.DeleteUserById(id);
                 respons.Data = id;
-                respons.Status = "Success";
                 return Ok(respons);
             }
             catch (Exception ex)
             {
-                respons.Status = ex.Message;
+                respons.AddError(ex.Message);
             }
 
             return BadRequest(respons);

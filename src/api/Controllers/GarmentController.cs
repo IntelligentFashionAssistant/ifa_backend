@@ -10,8 +10,8 @@ namespace api.Controllers
     [ApiController]
     [Route("/garment")]
     public class GarmentController : Controller
-    { 
-       private readonly IGarmentService _garmentServices;
+    {
+        private readonly IGarmentService _garmentServices;
 
         public GarmentController(IGarmentService garmentServices)
         {
@@ -23,50 +23,42 @@ namespace api.Controllers
         {
             return null;
         }
-        
-        
-        //[HttpGet("/{id:int}")]
-        //public IActionResult GetGarmentById(long id)
-        //{
-        //    var respons = new ResponsApiDto<GarmentApiDto>();
-        //    var data = _garmentServices.GetById(id);
 
-        //    if (data != null)
-        //    {
-        //        respons.Data = new GarmentApiDto
-        //        {
-        //            Name = data.Name,
-        //            Description = data.Description,
-        //            Brand = data.Brand,
-        //            Price = data.Price,
-        //            CategoryId = data.CategoryId,
-        //            StoreId = data.StoreId,
-        //            Images = data.Images,
-        //            Colors = data.Colors,
-        //            Properties = data.Properties.Select(p => new PropertyApiDto
-        //            {
-        //                Name = p.Name,
-        //                Description = p.Description,
-        //                GroupId = p.GroupId,
-        //                CategoryId = p.CategoryId,
-        //            }).ToList(),
-        //        };
-        //        respons.Status = "Success";
-        //        return Ok(respons);
-        //    }
 
-        //    respons.Status = "Failed";
-        //    return Ok(respons);
-        //}
-        
-        
+        [HttpGet("/{id:int}")]
+        public IActionResult GetGarmentById(long id)
+        {
+            var respons = new ResponsApiDto<GarmentApiDto,string>();
+            var data = _garmentServices.GetById(id);
+
+            if (data != null)
+            {
+                respons.Data = new GarmentApiDto
+                {
+                    Name = data.Name,
+                    Description = data.Description,
+                    Brand = data.Brand,
+                    Price = data.Price,
+                    CategoryId = data.CategoryId,
+                    StoreId = data.StoreId,
+                    Images = data.Images,
+                    Colors = data.Colors,
+                };
+                return Ok(respons);
+            }
+
+            respons.AddError("Not found");
+            return NotFound(respons);
+        }
+
+
         [HttpGet]
         public IActionResult GetAllGaremnts()
         {
-            var respons = new ResponsApiDto<ICollection<GarmentApiDto>>();
+            var respons = new ResponsApiDto<ICollection<GarmentApiDto>,string>();
             var data = _garmentServices.GetAll();
 
-            if(data != null)
+            if (data != null)
             {
                 respons.Data = data.Select(garmet => new GarmentApiDto
                 {
@@ -81,17 +73,17 @@ namespace api.Controllers
                     Colors = garmet.Colors,
                     //Properties = garmet.Properties.Select(p => p).ToList(),
                 }).ToList();
-                respons.Status = "Success";
+                
                 return Ok(respons);
             }
-            respons.Status = "Failed";
+            respons.AddError("Not fuond");
             return Ok(respons);
         }
 
         [HttpPost]
         public IActionResult CreateGarment(GarmentApiDto garmentApiDto)
         {
-            var respons = new ResponsApiDto<GarmentApiDto>();
+            var respons = new ResponsApiDto<GarmentApiDto,string>();
             var data = _garmentServices.Create(new GarmentDto
             {
                 Name = garmentApiDto.Name,
@@ -105,7 +97,7 @@ namespace api.Controllers
                 Properties = garmentApiDto.Properties.Select(p => p).ToList(),
             });
 
-            if(data != null)
+            if (data != null)
             {
                 respons.Data = new GarmentApiDto
                 {
@@ -120,18 +112,17 @@ namespace api.Controllers
                     Colors = data.Colors,
                     //Properties = data.Properties.Select(p => p).ToList(),
                 };
-                respons.Status = "Success";
                 return Ok(respons);
             }
 
-            respons.Status = "Failed";
-            return Ok(respons);
+            respons.AddError("Failed");
+            return BadRequest(respons);
         }
 
         [HttpPut]
         public IActionResult EditGarment(GarmentApiDto garmentApiDto)
         {
-            var respons = new ResponsApiDto<GarmentApiDto>();
+            var respons = new ResponsApiDto<GarmentApiDto,string>();
             var data = _garmentServices.Edit(new GarmentDto
             {
                 Id = garmentApiDto.Id,
@@ -160,21 +151,22 @@ namespace api.Controllers
                     Colors = data.Colors,
                     Properties = data.Properties.Select(p => p).ToList(),
                 };
-                respons.Status = "Success";
                 return Ok(respons);
             }
-            respons.Status = "Failed";
-            return Ok(respons);
+            respons.AddError("Failed");
+            return BadRequest(respons);
         }
 
         [HttpDelete]
         public IActionResult DeleteGarmentById(long id)
         {
+            //TODO
+            var respons = new ResponsApiDto<string, string>();
             _garmentServices.DeleteById(id);
-
-            return Ok();
+            respons.Data = "Deleted Garment";
+            return Ok(respons);
         }
-        
-        
+
+
     }
 }
