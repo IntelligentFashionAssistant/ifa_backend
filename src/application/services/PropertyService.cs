@@ -17,8 +17,10 @@ namespace application.services
         {
             _propertyRepository = propertyRepository;
         }
+
         public PropertyDto Create(PropertyDto obj)
-        {
+        {    
+
             var property = _propertyRepository.Create(new Property
             {
                 Name = obj.Name,
