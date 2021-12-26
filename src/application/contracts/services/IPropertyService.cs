@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using application.DTOs;
+using domain.Entitys;
 
 namespace application.services
 {
@@ -7,5 +8,6 @@ namespace application.services
     {
         ICollection<PropertyDto> GetAllPropertyWithGroup();
         ICollection<PropertyDto> GetPropertysByGroupId(long groupId);
+        // ICollection<PropertyDto> GetPropertysByShape(Shape userShape);
     }
 }

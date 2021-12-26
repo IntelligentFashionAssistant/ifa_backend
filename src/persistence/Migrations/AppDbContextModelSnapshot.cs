@@ -45,19 +45,19 @@ namespace repository.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<float>("BustRange")
+                    b.Property<float>("BustSize")
                         .HasColumnType("real");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<float>("HipRange")
+                    b.Property<float>("HipSize")
                         .HasColumnType("real");
 
-                    b.Property<float>("ShoulderRange")
+                    b.Property<float>("ShoulderSize")
                         .HasColumnType("real");
 
-                    b.Property<float>("WaistRange")
+                    b.Property<float>("WaistSize")
                         .HasColumnType("real");
 
                     b.HasKey("Id");
@@ -276,13 +276,13 @@ namespace repository.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<float>("BustRange")
+                    b.Property<float>("BustSize")
                         .HasColumnType("real");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<float>("HipRange")
+                    b.Property<float>("HipSize")
                         .HasColumnType("real");
 
                     b.Property<string>("Name")
@@ -292,7 +292,7 @@ namespace repository.Migrations
                     b.Property<float>("Shoulder_range")
                         .HasColumnType("real");
 
-                    b.Property<float>("WaistRange")
+                    b.Property<float>("WaistSize")
                         .HasColumnType("real");
 
                     b.HasKey("Id");

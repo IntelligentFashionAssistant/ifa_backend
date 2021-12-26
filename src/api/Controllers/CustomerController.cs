@@ -1,48 +1,80 @@
 using api.ApiDTOs;
 using application.DTOs;
 using application.services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
     [ApiController]
     // TODO : add global prefix : /api/v-x
-    [Route("/User")]
-    public class UserController : Controller
+    [Route("/user")]
+    public class CustomerController : Controller
     {
-         private readonly IUserService _userService;
+         private readonly ICustomerService _customerService;
 
-        public UserController(IUserService userService)
+        public CustomerController(ICustomerService customerService)
         {
-            _userService = userService;
+            _customerService = customerService;
         }
 
-        //[HttpPost]
-        //public IActionResult SearchUsers()
-        //{
-        //    // return list of matched users
-        //    return null;
-        //}
+        [HttpPost("/calculatebodyshape")]
+        public async Task<IActionResult> CalculateBodyShape(BodySizesApiDto bodySizesApiDto)
+        {
+            var bodySizesDto = new BodySizesDto()
+            {
+                BustSize = bodySizesApiDto.BustSize,
+                HipSize = bodySizesApiDto.HipSize,
+                ShoulderSize = bodySizesApiDto.ShoulderSize,
+                WaistSize = bodySizesApiDto.WaistSize
+            };
+            
+            var respons = new ResponsApiDto<CustomerApiDto,string>();
 
-        // TODO : move to authentication controller 
-        //[HttpPost]
-        //public IActionResult Login()
-        //{
-        //    return null;
-        //}
+            try
+            {
+                var data = await _customerService.CalculateBodyShape(User, bodySizesDto);
+                respons.Data = new CustomerApiDto() 
+                    {
+                    Id = data.Id,
+                    FirstName = data.FirstName,
+                    LastName = data.LastName,
+                    Email = data.Email,
+                    City = data.City,
+                    Country = data.Country,
+                    BirthDate = data.BirthDate,
+                    Password = data.Password,
+                    Street = data.Street,
+                    HouseNumber = data.HouseNumber,
+                    Username = data.Username,
+                    PhoneNumber = data.PhoneNumber,
+                    BustSize = data.BustSize,
+                    HipSize = data.HipSize,
+                    ShoulderSize = data.ShoulderSize,
+                    WaistSize = data.WaistSize,
+                    Shape = data.Shape
+                    };
+                return Ok(respons); 
+            }
+            catch (Exception e)
+            {
+                respons.AddError(e.Message);
+                return BadRequest(respons);
+            }
+        }
 
-
+        
         //*************************************** CRUD ************************************// 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(long id)
         {
-            var respons = new ResponsApiDto<UserApiDto,string>();
+            var respons = new ResponsApiDto<CustomerApiDto,string>();
             try
             {
-                var data = await _userService.GetUserById(id);
+                var data = await _customerService.GetById(id);
                 if (data != null)
                 {
-                    respons.Data = new UserApiDto
+                    respons.Data = new CustomerApiDto() 
                     {
                         Id = data.Id,
                         FirstName = data.FirstName,
@@ -56,33 +88,48 @@ namespace api.Controllers
                         Username = data.Username,
                         PhoneNumber = data.PhoneNumber,
                     };
-                   // respons.Status = "Success";
-                    return Ok(respons);
                 }
+                else
+                {
+                    respons.Data = null;
+                }
+                return Ok(respons);
             }
             catch (Exception ex)
             {
-               // respons.Status =ex.Message;
                 respons.AddError(ex.Message);
+                return BadRequest(respons);
             }
-
-          
-           
-            return NotFound(respons);
         }
 
         [HttpGet]
-        public IActionResult GetAllUsers()
+        public async Task<IActionResult> GetAllUsers()
         {
+            var respons = new ResponsApiDto<List<CustomerApiDto>,string>();
             try
             {
-             var data =   _userService.GetAll();
+             var data =  await  _customerService.GetAll();
+             respons.Data = data.Select(data => new CustomerApiDto()
+             {
+                 Id = data.Id,
+                 FirstName = data.FirstName,
+                 LastName = data.LastName,
+                 Email = data.Email,
+                 City = data.City,
+                 Country = data.Country,
+                 BirthDate = data.BirthDate,
+                 Street = data.Street,
+                 HouseNumber = data.HouseNumber,
+                 Username = data.Username,
+                 PhoneNumber = data.PhoneNumber,
+             }).ToList();
+             return Ok(respons);
             }
             catch (Exception ex)
             {
-                return Ok(ex.Message);
+                respons.AddError(ex.Message);
+                return BadRequest(respons);
             }
-            return null;
         }
 
         /// <summary>
@@ -90,16 +137,16 @@ namespace api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CreateUser(UserApiDto userApiDto)
+        public async Task<IActionResult> CreateUser(CustomerApiDto userApiDto)
         {
             if (!ModelState.IsValid)
             {
                 BadRequest(userApiDto);
             }
-            var respons = new ResponsApiDto<UserApiDto,string>();
+            var respons = new ResponsApiDto<CustomerApiDto,string>();
             try
             {
-                var data = await _userService.CreateUser(new UserDto
+                var data = await _customerService.Create(new CustomerDto
                 {
                     FirstName = userApiDto.FirstName,
                     LastName = userApiDto.LastName,
@@ -107,14 +154,13 @@ namespace api.Controllers
                     City = userApiDto.City,
                     Country = userApiDto.Country,
                     BirthDate = userApiDto.BirthDate,
-                    Password = userApiDto.Password,
                     Street = userApiDto.Street,
                     HouseNumber = userApiDto.HouseNumber,
                     Username = userApiDto.Username,
                 });
                 if (data != null)
                 {
-                    respons.Data = new UserApiDto
+                    respons.Data = new CustomerApiDto() 
                     {
                         Id = data.Id,
                         FirstName = data.FirstName,
@@ -140,16 +186,16 @@ namespace api.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> EditUser(UserApiDto userApiDto)
+        public async Task<IActionResult> EditUser(CustomerApiDto userApiDto)
         {
             if (!ModelState.IsValid)
             {
                 BadRequest(userApiDto);
             }
-            var respons = new ResponsApiDto<UserApiDto,string>();
+            var respons = new ResponsApiDto<CustomerApiDto,string>();
             try
             {
-                var data = await _userService.EditUser(new UserDto
+                var data = await _customerService.Edit(new CustomerDto
                 { 
                     
                     Id = userApiDto.Id,
@@ -165,7 +211,7 @@ namespace api.Controllers
                 });
                 if (data != null)
                 {
-                    respons.Data = new UserApiDto
+                    respons.Data = new CustomerApiDto()
                     {
                         Id = data.Id,
                         FirstName = data.FirstName,
@@ -191,13 +237,13 @@ namespace api.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DeleteUser(long id)
+        public async Task<IActionResult> DeleteUser(long id)
         {
             var respons = new ResponsApiDto<long,string>();
 
             try
             {
-                _userService.DeleteUserById(id);
+                await _customerService.DeleteById(id);
                 respons.Data = id;
                 return Ok(respons);
             }

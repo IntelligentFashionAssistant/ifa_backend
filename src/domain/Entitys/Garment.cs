@@ -18,8 +18,10 @@ namespace domain.Entitys
         public ICollection<Color> Colors { get; set; }
         public ICollection<Property> Properties { get; set; }
         public ICollection<Image> Images { get; set; }
-        
         public ICollection<Shape> Shapes { get; set; }
+        public ICollection<Size> Sizes { get; set; }
+        public ICollection<User> Users { get; set; }
+
         //Constracter
         public Garment()
         {
@@ -27,6 +29,15 @@ namespace domain.Entitys
             Properties = new HashSet<Property>();
             Images = new HashSet<Image>();
             Shapes = new HashSet<Shape>();
+            Sizes = new HashSet<Size>();
+            Users = new HashSet<User>();
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null) return false;
+            if (obj is not Garment) return false;
+            return ((Garment) obj).Id == this.Id;
         }
     }
 }

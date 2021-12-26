@@ -18,14 +18,56 @@ namespace api.Controllers
             _garmentServices = garmentServices;
         }
 
-        [HttpPost("rate")]
-        public IActionResult RateGarment()
+
+        [HttpPost("toggle-like/{id:int}")]
+        public async Task<IActionResult> LikeOrDislikeGarment(long garmentId)
         {
-            return null;
+            var respons = new ResponsApiDto<ICollection<GarmentApiDto>,string>();
+            try
+            {
+                _garmentServices.LikeOrDislikeGarment(User, garmentId);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                respons.AddError(e.Message);
+                return BadRequest(respons);
+            }
+        }
+            
+
+        [HttpPost]
+        public async Task<IActionResult> GetUserGarments()
+        {
+            var respons = new ResponsApiDto<ICollection<GarmentApiDto>,string>();
+            try
+            {
+                var garments= await _garmentServices.GetUserGarments(User);
+                respons.Data = garments.Select(data => new GarmentApiDto()
+                {
+                    Name = data.Name,
+                    Description = data.Description,
+                    Brand = data.Brand,
+                    Price = data.Price,
+                    CategoryId = data.CategoryId,
+                    StoreId = data.StoreId,
+                    Images = data.Images,
+                    Colors = data.Colors,
+                    Sizes = data.Sizes
+                }).ToList();
+                return Ok(respons);
+            }
+            catch (Exception e)
+            {
+                // todo : better error message
+                respons.AddError("error");
+                return NotFound(respons);
+            }
+
         }
 
 
-        [HttpGet("/{id:int}")]
+        [HttpGet("{id:int}")]
         public IActionResult GetGarmentById(long id)
         {
             var respons = new ResponsApiDto<GarmentApiDto,string>();
@@ -43,6 +85,7 @@ namespace api.Controllers
                     StoreId = data.StoreId,
                     Images = data.Images,
                     Colors = data.Colors,
+                    Sizes = data.Sizes
                 };
                 return Ok(respons);
             }
@@ -71,6 +114,7 @@ namespace api.Controllers
                     //StoreId = garmet.StoreId,
                     Images = garmet.Images,
                     Colors = garmet.Colors,
+                    Sizes = garmet.Sizes
                     //Properties = garmet.Properties.Select(p => p).ToList(),
                 }).ToList();
                 
@@ -94,7 +138,8 @@ namespace api.Controllers
                 StoreId = garmentApiDto.StoreId,
                 Images = garmentApiDto.Images,
                 Colors = garmentApiDto.Colors,
-                Properties = garmentApiDto.Properties.Select(p => p).ToList(),
+                Properties = garmentApiDto.Properties,
+                Sizes = garmentApiDto.Sizes
             });
 
             if (data != null)
@@ -110,6 +155,7 @@ namespace api.Controllers
                     //StoreId = data.StoreId,
                     Images = data.Images,
                     Colors = data.Colors,
+                    Sizes = data.Sizes
                     //Properties = data.Properties.Select(p => p).ToList(),
                 };
                 return Ok(respons);
@@ -134,7 +180,8 @@ namespace api.Controllers
                 StoreId = garmentApiDto.StoreId,
                 Images = garmentApiDto.Images,
                 Colors = garmentApiDto.Colors,
-                Properties = garmentApiDto.Properties.Select(p => p).ToList(),
+                Sizes = garmentApiDto.Sizes,
+                Properties = garmentApiDto.Properties
             });
 
             if (data != null)
@@ -149,7 +196,8 @@ namespace api.Controllers
                     StoreId = data.StoreId,
                     Images = data.Images,
                     Colors = data.Colors,
-                    Properties = data.Properties.Select(p => p).ToList(),
+                    Properties = data.Properties,
+                    Sizes = data.Sizes
                 };
                 return Ok(respons);
             }

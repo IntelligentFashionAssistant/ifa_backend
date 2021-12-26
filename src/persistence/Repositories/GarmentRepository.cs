@@ -29,6 +29,7 @@ namespace persistence.Repositories
                             .Include(g => g.Images)
                             .Include(g => g.Category)
                             .Include(g => g.Colors)
+                            .Include(g => g.Properties)
                             .AsNoTracking().ToList();
             return garments;
         }
@@ -43,25 +44,35 @@ namespace persistence.Repositories
                 Name = obj.Name,
                 Price = obj.Price,
                 StoreId = obj.StoreId,
-                Colors = obj.Colors.Select(color => new Color { Name = color.Name }).ToList(),
             };
 
             var listProperts = new List<Property>();
             foreach (var prop in obj.Properties)
             {
-                var property = _appDbContext.Properties
-                              .Where(p => p.Id == prop.Id)
-                              .Include(p => p.Category)
-                              .SingleOrDefault();
-
-                listProperts.Add(property);
+                listProperts.Add(_appDbContext.Properties.Single(p => p.Id == prop.Id));
             }
+            garment.Properties = listProperts;
+
+            var sizes = new List<Size>();
+            foreach (var size in obj.Sizes)
+            {
+                sizes.Add(_appDbContext.Sizes.Single(s => s.Name == size.Name));
+            }
+            garment.Sizes = sizes;
+            
+            
+            var colors = new List<Color>();
+            foreach (var color in obj.Colors)
+            {
+                sizes.Add(_appDbContext.Sizes.Single(s => s.Name == color.Name));
+            }
+            garment.Colors= colors;
 
             foreach (var i in obj.Images)
             {
                 garment.Images.Add(new Image() { Path =  i.Path});
             }
-            garment.Properties = listProperts;
+            
 
             _appDbContext.Add(garment);
             _appDbContext.SaveChanges();
@@ -79,8 +90,6 @@ namespace persistence.Repositories
                 Description = obj.Description,
                 Name = obj.Name,
                 Price = obj.Price,
-                //StoreId = obj.StoreId,
-                Colors = obj.Colors.Select(color => new Color { Name = color.Name }).ToList(),
             };
 
             var listProperts = new List<Property>();
@@ -89,12 +98,29 @@ namespace persistence.Repositories
                 var property = _appDbContext.Properties.Where(p => p.Id == prop.Id).Include(p => p.Category).SingleOrDefault();
                 listProperts.Add(property);
             }
+            garment.Properties = listProperts;
 
+            var sizes = new List<Size>();
+            foreach (var size in obj.Sizes)
+            {
+                sizes.Add(_appDbContext.Sizes.Single(s => s.Name == size.Name));
+            }
+            garment.Sizes = sizes;
+            
+            
+            var colors = new List<Color>();
+            foreach (var color in obj.Colors)
+            {
+                sizes.Add(_appDbContext.Sizes.Single(s => s.Name == color.Name));
+            }
+            garment.Colors= colors;
+            
             foreach (var i in obj.Images)
             {
                 garment.Images.Add(new Image() { Path = i.Path, PropertyId = 1 });
             }
-            garment.Properties = listProperts;
+            
+            
             _appDbContext.Update(garment);
             _appDbContext.SaveChanges();
 

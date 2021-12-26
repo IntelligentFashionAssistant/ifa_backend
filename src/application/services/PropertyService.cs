@@ -129,5 +129,10 @@ namespace application.services
                        }).ToList();
             return data;
         }
+
+        // public ICollection<PropertyDto> GetPropertysByShape(Shape userShape)
+        // {
+        //     _propertyRepository.GetPropertysByShape(Shape userShape); 
+        // }
     }
 }

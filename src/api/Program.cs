@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(
-               options => options.UseSqlServer("Server=SCS\\SQLEXPRESS;Database=IFA;Trusted_Connection=True;MultipleActiveResultSets=true"));
+               options => options.UseSqlServer("Server=localhost,1433;Database=TheTop;User ID=SA;Password=Aamm-1970"));
 builder.Services.AddIdentityCore<User>(
                options =>
                {
@@ -60,7 +60,8 @@ if (app.Environment.IsDevelopment())
 }
 app.UseStaticFiles(new StaticFileOptions
 {
-    FileProvider = new PhysicalFileProvider("c:\\Images"),
+    // FileProvider = new PhysicalFileProvider("c:\\Images"),
+    FileProvider = new PhysicalFileProvider("/home/moamen/temp/"),
 
     RequestPath = "/StaticFiles"
 });

@@ -1,6 +1,6 @@
 ﻿namespace api.ApiDTOs
 {
-    public class UserApiDto
+    public class CustomerApiDto 
     {
         public long Id { get; set; }
         public string FirstName { get; set; }
@@ -14,5 +14,10 @@
         public string HouseNumber { get; set; }
         public string Username { get; set; }
         public string PhoneNumber { get; set; }
+        public float ShoulderSize { get; set; }
+        public float BustSize { get; set; }
+        public float HipSize { get; set; }
+        public float WaistSize { get; set; }
+        public string? Shape { get; set; }
     }
 }

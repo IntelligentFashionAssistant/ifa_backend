@@ -8,5 +8,6 @@ namespace application.services
 {
     public class StoreService
     {
+            
     }
 }

@@ -4,15 +4,19 @@ this is an api for the Intelligent Fashion Assistant
 
 ## rules : 
 
-### naming conventions : 
+### general naming conventions : 
 - parameter : camelCase 
 - Methods, Properties : PascalCase 
 - instance variables : _camelCase
 
-### crud order 
-- BL end points 
+### Persistence 
+responsible for database operations
+#### conventions
 - get (specialized)
 - get (generalized)
 - post 
 - put 
 - delete
+
+# Service  delete ( throw )
+- shapeservice delete

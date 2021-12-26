@@ -30,10 +30,10 @@ namespace repository.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ShoulderRange = table.Column<float>(type: "real", nullable: false),
-                    BustRange = table.Column<float>(type: "real", nullable: false),
-                    HipRange = table.Column<float>(type: "real", nullable: false),
-                    WaistRange = table.Column<float>(type: "real", nullable: false),
+                    ShoulderSize = table.Column<float>(type: "real", nullable: false),
+                    BustSize = table.Column<float>(type: "real", nullable: false),
+                    HipSize = table.Column<float>(type: "real", nullable: false),
+                    WaistSize = table.Column<float>(type: "real", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -77,9 +77,9 @@ namespace repository.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Shoulder_range = table.Column<float>(type: "real", nullable: false),
-                    BustRange = table.Column<float>(type: "real", nullable: false),
-                    HipRange = table.Column<float>(type: "real", nullable: false),
-                    WaistRange = table.Column<float>(type: "real", nullable: false),
+                    BustSize = table.Column<float>(type: "real", nullable: false),
+                    HipSize = table.Column<float>(type: "real", nullable: false),
+                    WaistSize = table.Column<float>(type: "real", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>

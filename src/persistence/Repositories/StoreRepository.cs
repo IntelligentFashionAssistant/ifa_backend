@@ -2,33 +2,46 @@ using System.Collections.Generic;
 using application.persistence;
 using domain.Entitys;
 
-namespace persistence.Repositories
+namespace persistence.Repositories;
+    
+public class StoreRepository : IStoreRepository
 {
-    public class StoreRepository : IStoreRepository
+    
+    private readonly AppDbContext _appDbContext;
+
+    public StoreRepository(AppDbContext appDbContext)
     {
-        public Store GetById(long id)
-        {
-            throw new System.NotImplementedException();
-        }
+        _appDbContext = appDbContext;
+    }
+    
+    public Store GetById(long id)
+    {
+        return _appDbContext.Stores.Single(store => store.Id == id);
+    }
 
-        public ICollection<Store> GetAll()
-        {
-            throw new System.NotImplementedException();
-        }
+    public ICollection<Store> GetAll()
+    {
+        return _appDbContext.Stores.ToList();
+    }
 
-        public Store Create(Store obj)
-        {
-            throw new System.NotImplementedException();
-        }
+    public Store Create(Store obj)
+    {
+        _appDbContext.Stores.Add(obj);
+        _appDbContext.SaveChanges();
+        return obj; 
+    }
 
-        public Store Update(Store obj)
-        {
-            throw new System.NotImplementedException();
-        }
+    public Store Update(Store obj)
+    {
+        _appDbContext.Update(obj);
+        _appDbContext.SaveChanges();
+        return obj;
+    }
 
-        public void DeleteById(long id)
-        {
-            throw new System.NotImplementedException();
-        }
+    public void DeleteById(long id)
+    {
+        var obj = _appDbContext.Stores.Single(store => store.Id == id);
+        _appDbContext.Stores.Remove(obj);
+        _appDbContext.SaveChanges();
     }
 }

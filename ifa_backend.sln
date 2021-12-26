@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "application", "src\applicat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ifa_front", "ifa_front\ifa_front.csproj", "{5F48E15D-4363-457A-AF10-CD1B16028E81}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpers", "src\Helpers\Helpers.csproj", "{84664AD2-2CB7-469E-93A7-71EFBDE8DFBA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{5F48E15D-4363-457A-AF10-CD1B16028E81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F48E15D-4363-457A-AF10-CD1B16028E81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F48E15D-4363-457A-AF10-CD1B16028E81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84664AD2-2CB7-469E-93A7-71EFBDE8DFBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84664AD2-2CB7-469E-93A7-71EFBDE8DFBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84664AD2-2CB7-469E-93A7-71EFBDE8DFBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84664AD2-2CB7-469E-93A7-71EFBDE8DFBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

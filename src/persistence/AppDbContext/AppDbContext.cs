@@ -45,6 +45,7 @@ namespace persistence
         }
 
         public DbSet<Category> Categorys { get; set; }
+        public DbSet<Size> Sizes { get; set; }
         public DbSet<Color> Colors { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Garment> Garments { get; set; }

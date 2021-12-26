@@ -8,10 +8,6 @@ namespace domain.Entitys
     {
         public long Id { get; set; }
         public string Name { get; set; }
-        public float Shoulder_range { get; set; }
-        public float BustRange { get; set; }
-        public float HipRange { get; set; }
-        public float WaistRange { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public ICollection<Property> Properties { get; set; }
         public ICollection<Garment> Garments { get; set; }

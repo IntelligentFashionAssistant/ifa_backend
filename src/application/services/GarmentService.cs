@@ -1,130 +1,209 @@
-﻿using application.DTOs;
+﻿using System.Linq;
+using System.Security.Claims;
+using application.DTOs;
 using application.persistence;
 using domain.Entitys;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
-namespace application.services
+namespace application.services;
+
+public class GarmentService : IGarmentService
+
 {
-    public class GarmentService : IGarmentService
+    private readonly IGarmentRepository _garmentRepository;
+    private readonly UserManager<User> _userManager;
+    private readonly IPropertyService _propertyService;
+    private readonly IShapeRepository _shapeRepository;
 
+    public GarmentService(IGarmentRepository garmentRepository, UserManager<User> userManager,
+        IPropertyService propertyService, IShapeRepository shapeRepository)
     {
-        private readonly IGarmentRepository _garmentRepository;
+        _garmentRepository = garmentRepository;
+        _userManager = userManager;
+        _propertyService = propertyService;
+        _shapeRepository = shapeRepository;
+    }
 
-        public GarmentService(IGarmentRepository garmentRepository)
+
+    public async Task<ICollection<GarmentDto>> GetUserGarments(ClaimsPrincipal userClaim)
+    {
+        return await GetUserGarments(userClaim, 0);
+    }
+
+    public async Task LikeOrDislikeGarment(ClaimsPrincipal userClaim, long garmentId)
+    {
+        var user = await _userManager.GetUserAsync(userClaim);
+        var garment = _garmentRepository.GetById(garmentId);
+        if (user.Garments.Contains(garment))
         {
-            _garmentRepository = garmentRepository;
+            user.Garments.Remove(garment);
         }
-
-        public GarmentDto Create(GarmentDto obj)
+        else
         {
-            //TODO Properties of list int or propertieDto and insert to shape_garment table
+            user.Garments.Add(garment);
+        }
+        
+        var res = await _userManager.UpdateAsync(user);
+        if (!res.Succeeded)
+        {
+            throw new Exception("internal server error");
+        }
+    }
 
-            var garment = _garmentRepository.Create(new Garment
+    public async Task<ICollection<GarmentDto>> GetUserGarments(ClaimsPrincipal userClaim, long categoryId)
+    {
+        var user = await _userManager.GetUserAsync(userClaim);
+        if (user.ShapeId != null)
+        {
+            throw new Exception("you should enter the body sizes to get the appropriate garments for you");
+        }
+        
+        var shape = _shapeRepository.GetById(user.ShapeId ?? 1);
+        return _garmentRepository.GetAll()
+            .Where(garment =>  categoryId == 0 || (garment.CategoryId == categoryId))
+            .Where(garment => ( (garment.Properties.Count(property => shape.Properties.Contains(property)) / garment.Properties.Count()) > 0.6) )
+            // true / false 
+            .Where(garment =>
             {
-                Brand = obj.Brand,
-                CategoryId = obj.CategoryId,
-                Description = obj.Description,
-                Name = obj.Name,
-                Price = obj.Price,
-                StoreId = obj.StoreId,
-                Colors = obj.Colors.Select(color => new Color { Name = color }).ToList(),
-                Images = obj.Images.Select(photo => new Image { Path = photo }).ToList(),
-                Properties = obj.Properties.Select(property => new Property
+                // TODO : fix runtime
+                foreach (var garmentSize in garment.Sizes)
                 {
-                    Id = property
-                }).ToList(),
-            }) ;
-
-            return new GarmentDto {
+                    foreach (var userSize in user.Sizes)
+                    {
+                        if (garmentSize.CategoryId == userSize.CategoryId && 
+                            garmentSize.Id == userSize.Id)
+                        {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            })
+            .Select(garment => new GarmentDto()
+            {
                 Id = garment.Id,
                 Brand = garment.Brand,
                 Description = garment.Description,
                 Name = garment.Name,
                 Price = garment.Price,
-                CategoryId = garment.CategoryId,
+                Category = garment.Category.Name,
                 CreatedAt = garment.CreatedAt,
+                StoreId = garment.StoreId,
                 Colors = garment.Colors.Select(color => color.Name).ToList(),
                 Images = garment.Images.Select(photo => photo.Path).ToList(),
-                StoreId = garment.StoreId,
-              };
-        }
+                Sizes = garment.Sizes.Select(size => size.Name).ToList()
+            })
+            .ToList();
+    } 
+    
+    public GarmentDto GetById(long id)
+    {
+        var garment = _garmentRepository.GetById(id);
 
-        public void DeleteById(long id)
+        return new GarmentDto
         {
-            _garmentRepository.DeleteById(id);
-        }
+            Id = garment.Id,
+            Brand = garment.Brand,
+            Description = garment.Description,
+            Name = garment.Name,
+            Price = garment.Price,
+            Category = garment.Category.Name,
+            CreatedAt = garment.CreatedAt,
+            Colors = garment.Colors.Select(color => color.Name).ToList(),
+            Images = garment.Images.Select(photo => photo.Path).ToList(),
+            Sizes = garment.Sizes.Select(size => size.Name).ToList()
+        };
+    }
 
+    public ICollection<GarmentDto> GetAll()
+    {
+        var garments = _garmentRepository.GetAll();
 
-        public GarmentDto Edit(GarmentDto obj)
+        return garments.Select(garment => new GarmentDto
         {
-            var garment = _garmentRepository.Update(new Garment
-            {
-                Id = obj.Id,
-                Brand = obj.Brand,
-                CategoryId = obj.CategoryId,
-                Description = obj.Description,
-                Name = obj.Name,
-                Price = obj.Price,
-                //StoreId = obj.StoreId,
-                Colors = obj.Colors.Select(color => new Color { Name = color }).ToList(),
-                Images = obj.Images.Select(photo => new Image { Path = photo }).ToList(),
-                Properties = obj.Properties.Select(property => new Property { Id = property}).ToList(),
-            });
+            Id = garment.Id,
+            Brand = garment.Brand,
+            Description = garment.Description,
+            Name = garment.Name,
+            Price = garment.Price,
+            Category = garment.Category.Name,
+            CreatedAt = garment.CreatedAt,
+            StoreId = garment.StoreId,
+            Colors = garment.Colors.Select(color => color.Name).ToList(),
+            Images = garment.Images.Select(photo => photo.Path).ToList(),
+            Sizes = garment.Sizes.Select(size => size.Name).ToList()
+        }).ToList();
+    }
 
-            return new GarmentDto
-            {
-                Id = garment.Id,
-                Brand = garment.Brand,
-                Description = garment.Description,
-                Name = garment.Name,
-                Price = garment.Price,
-                Category = garment.Category.Name,
-                CreatedAt = garment.CreatedAt,
-                Colors = garment.Colors.Select(color => color.Name).ToList(),
-                Images = garment.Images.Select(photo => photo.Path).ToList()
-            };
-        }
+    public GarmentDto Create(GarmentDto obj)
+    {
+        //TODO Properties of list int or propertieDto and insert to shape_garment table
 
-        public ICollection<GarmentDto> GetAll()
+        var garment = _garmentRepository.Create(new Garment
         {
-            var garments = _garmentRepository.GetAll();
+            Brand = obj.Brand,
+            CategoryId = obj.CategoryId,
+            Description = obj.Description,
+            Name = obj.Name,
+            Price = obj.Price,
+            StoreId = obj.StoreId,
+            Colors = obj.Colors.Select(color => new Color {Name = color}).ToList(),
+            Images = obj.Images.Select(photo => new Image {Path = photo}).ToList(),
+            Properties = obj.Properties.Select(property => new Property { Id = property }).ToList(),
+            Sizes = obj.Sizes.Select(size => new Size(){Name = size }).ToList()
+        });
 
-            return garments.Select(garment => new GarmentDto
-            {
-                Id = garment.Id,
-                Brand = garment.Brand,
-                Description = garment.Description,
-                Name = garment.Name,
-                Price = garment.Price,
-                Category = garment.Category.Name,
-                CreatedAt = garment.CreatedAt,
-                StoreId = garment.StoreId,
-                Colors = garment.Colors.Select(color => color.Name).ToList(),
-                Images = garment.Images.Select(photo => photo.Path).ToList()
-            }).ToList();
-        }
-
-        public GarmentDto GetById(long id)
+        return new GarmentDto
         {
-            var garment = _garmentRepository.GetById(id);
+            Id = garment.Id,
+            Brand = garment.Brand,
+            Description = garment.Description,
+            Name = garment.Name,
+            Price = garment.Price,
+            CategoryId = garment.CategoryId,
+            CreatedAt = garment.CreatedAt,
+            Colors = garment.Colors.Select(color => color.Name).ToList(),
+            Images = garment.Images.Select(photo => photo.Path).ToList(),
+            Sizes = garment.Sizes.Select(size => size.Name).ToList(),
+            StoreId = garment.StoreId,
+        };
+    }
 
-            return new GarmentDto
-            {
-                Id = garment.Id,
-                Brand = garment.Brand,
-                Description = garment.Description,
-                Name = garment.Name,
-                Price = garment.Price,
-                Category = garment.Category.Name,
-                CreatedAt = garment.CreatedAt,
-                Colors = garment.Colors.Select(color => color.Name).ToList(),
-                Images = garment.Images.Select(photo => photo.Path).ToList()
-            };
-        }
+    public void DeleteById(long id)
+    {
+        _garmentRepository.DeleteById(id);
+    }
 
+
+    public GarmentDto Edit(GarmentDto obj)
+    {
+        var garment = _garmentRepository.Update(new Garment
+        {
+            Id = obj.Id,
+            Brand = obj.Brand,
+            CategoryId = obj.CategoryId,
+            Description = obj.Description,
+            Name = obj.Name,
+            Price = obj.Price,
+            //StoreId = obj.StoreId,
+            Colors = obj.Colors.Select(color => new Color {Name = color}).ToList(),
+            Images = obj.Images.Select(photo => new Image {Path = photo}).ToList(),
+            Properties = obj.Properties.Select(property => new Property {Id = property}).ToList(),
+            Sizes = obj.Sizes.Select(size => new Size(){Name = size }).ToList()
+        });
+
+        return new GarmentDto
+        {
+            Id = garment.Id,
+            Brand = garment.Brand,
+            Description = garment.Description,
+            Name = garment.Name,
+            Price = garment.Price,
+            Category = garment.Category.Name,
+            CreatedAt = garment.CreatedAt,
+            Colors = garment.Colors.Select(color => color.Name).ToList(),
+            Images = garment.Images.Select(photo => photo.Path).ToList(),
+            Sizes = garment.Sizes.Select(size => size.Name).ToList(),
+        };
     }
 }

@@ -25,5 +25,12 @@ namespace domain.Entitys
             Images = new HashSet<Image>();
             Shapes = new HashSet<Shape>();
         }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null) return false;
+            if (obj is not Property) return false;
+            return ((Property) obj).Id == this.Id;
+        }
     }
 }

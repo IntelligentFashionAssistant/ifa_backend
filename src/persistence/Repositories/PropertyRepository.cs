@@ -65,5 +65,6 @@ namespace persistence.Repositories
                      AsNoTracking().ToList();
             return data;
         }
+
     }
 }
