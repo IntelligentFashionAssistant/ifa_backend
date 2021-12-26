@@ -44,4 +44,6 @@ public class StoreRepository : IStoreRepository
         _appDbContext.Stores.Remove(obj);
         _appDbContext.SaveChanges();
     }
+
+   
 }
