@@ -2,8 +2,8 @@ using application.DTOs;
 
 namespace application.services
 {
-    public interface IStoreService : IService<StoreDto, long>
+    public interface IStoreService : IAsnycService<StoreDto, long>
     {
-        void RateGarment(StoreRatingDto storeRatingDto);
+        //void RateGarment(StoreRatingDto storeRatingDto);
     }
 }

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace application.DTOs
+﻿namespace api.ApiDTOs
 {
-    public class LocationDto
+    public class LocationApiDto
     {
         public long Id { get; set; }
         public string Country { get; set; }

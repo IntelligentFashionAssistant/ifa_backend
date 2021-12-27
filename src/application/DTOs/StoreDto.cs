@@ -14,7 +14,10 @@ namespace application.DTOs
         public string Country { get; set; }
         public string City { get; set; }
         public string Street { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Username { get; set; }
         public CustomerDto Customer { get; set; }
         public ICollection<LocationDto> Locations { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

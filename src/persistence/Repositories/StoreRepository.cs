@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using application.persistence;
 using domain.Entitys;
+using Microsoft.EntityFrameworkCore;
 
 namespace persistence.Repositories;
     
@@ -14,31 +15,35 @@ public class StoreRepository : IStoreRepository
         _appDbContext = appDbContext;
     }
     
-    public Store GetById(long id)
+    public async Task<Store> GetById(long id)
     {
-        return _appDbContext.Stores.Single(store => store.Id == id);
+        return  _appDbContext.Stores.Where(store => store.Id == id).Include(store => store.User).Single();
+    }
+    public async Task<Store> GetByUserId(long userId)
+    {
+        return _appDbContext.Stores.Single(store => store.UserId == userId);
     }
 
-    public ICollection<Store> GetAll()
+    public async Task<ICollection<Store>> GetAll()
     {
-        return _appDbContext.Stores.ToList();
+        return _appDbContext.Stores.Include(store => store.User).ToList();
     }
 
-    public Store Create(Store obj)
+    public async Task<Store> Create(Store obj)
     {
         _appDbContext.Stores.Add(obj);
         _appDbContext.SaveChanges();
         return obj; 
     }
 
-    public Store Update(Store obj)
+    public async Task<Store> Update(Store obj)
     {
         _appDbContext.Update(obj);
         _appDbContext.SaveChanges();
         return obj;
     }
 
-    public void DeleteById(long id)
+    public async Task DeleteById(long id)
     {
         var obj = _appDbContext.Stores.Single(store => store.Id == id);
         _appDbContext.Stores.Remove(obj);
