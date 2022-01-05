@@ -14,13 +14,21 @@ namespace ifa_front
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IGarmentRepository, GarmentRepository>();
             services.AddScoped<IGroupRepository, GroupRepository>();
-            services.AddScoped<IPropertyRepository, PropertyRepository>();
+            services.AddScoped<IPropertyRepository, PropertyRepository>();//
+            services.AddScoped<IStoreRepository, StoreRepository>();
+            services.AddScoped<IShapeRepository, ShapeRepository>();
+            services.AddScoped<IBodySizesRepository, BodySizesRepository>();
+            services.AddScoped<ISizeRepository, SizeRepository>();
+            services.AddScoped<ILocationRepository, LocationRepository>();
 
-            //Service
+            //Repository
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IGarmentService, GarmentService>();
             services.AddScoped<IGroupService, GroupService>();
             services.AddScoped<IPropertyService, PropertyService>();
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IStoreService, StoreService>();
+            services.AddScoped<IImageService, ImageService>();
 
         }
     }

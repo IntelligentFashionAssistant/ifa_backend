@@ -30,25 +30,25 @@ public class GarmentService : IGarmentService
         return await GetUserGarments(userClaim, 0);
     }
 
-    public async Task LikeOrDislikeGarment(ClaimsPrincipal userClaim, long garmentId)
-    {
-        var user = await _userManager.GetUserAsync(userClaim);
-        var garment = _garmentRepository.GetById(garmentId);
-        if (user.Garments.Contains(garment))
-        {
-            user.Garments.Remove(garment);
-        }
-        else
-        {
-            user.Garments.Add(garment);
-        }
+    //public async Task LikeOrDislikeGarment(ClaimsPrincipal userClaim, long garmentId)
+    //{
+    //    var user = await _userManager.GetUserAsync(userClaim);
+    //    var garment = _garmentRepository.GetById(garmentId);
+    //    if (user.Garments.Contains(garment))
+    //    {
+    //        user.Garments.Remove(garment);
+    //    }
+    //    else
+    //    {
+    //        user.Garments.Add(garment);
+    //    }
         
-        var res = await _userManager.UpdateAsync(user);
-        if (!res.Succeeded)
-        {
-            throw new Exception("internal server error");
-        }
-    }
+    //    var res = await _userManager.UpdateAsync(user);
+    //    if (!res.Succeeded)
+    //    {
+    //        throw new Exception("internal server error");
+    //    }
+    //}
 
     public async Task<ICollection<GarmentDto>> GetUserGarments(ClaimsPrincipal userClaim, long categoryId)
     {
@@ -205,5 +205,10 @@ public class GarmentService : IGarmentService
             Images = garment.Images.Select(photo => photo.Path).ToList(),
             Sizes = garment.Sizes.Select(size => size.Name).ToList(),
         };
+    }
+
+    public Task LikeOrDislikeGarment(ClaimsPrincipal user, long garmentId)
+    {
+        throw new NotImplementedException();
     }
 }

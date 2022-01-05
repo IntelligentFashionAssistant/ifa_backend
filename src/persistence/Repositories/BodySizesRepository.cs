@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace repository.Repositories
+namespace persistence.Repositories
 {
     public class BodySizesRepository : IBodySizesRepository
     {

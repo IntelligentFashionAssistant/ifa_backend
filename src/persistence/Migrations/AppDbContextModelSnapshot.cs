@@ -276,28 +276,41 @@ namespace repository.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<float>("BustSize")
-                        .HasColumnType("real");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<float>("HipSize")
-                        .HasColumnType("real");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("Shoulder_range")
-                        .HasColumnType("real");
-
-                    b.Property<float>("WaistSize")
-                        .HasColumnType("real");
-
                     b.HasKey("Id");
 
                     b.ToTable("Shapes");
+                });
+
+            modelBuilder.Entity("domain.Entitys.Size", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<int>("CM")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("CategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Sizes");
                 });
 
             modelBuilder.Entity("domain.Entitys.Store", b =>
@@ -312,6 +325,10 @@ namespace repository.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhtotStore")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -431,8 +448,15 @@ namespace repository.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Phtot")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("ShapeId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Street")
                         .IsRequired()
@@ -457,7 +481,24 @@ namespace repository.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
+                    b.HasIndex("ShapeId");
+
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("domain.Entitys.UserGarment", b =>
+                {
+                    b.Property<long>("GarmentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("GarmentId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserGarment");
                 });
 
             modelBuilder.Entity("GarmentProperty", b =>
@@ -488,6 +529,21 @@ namespace repository.Migrations
                     b.HasIndex("ShapesId");
 
                     b.ToTable("GarmentShape");
+                });
+
+            modelBuilder.Entity("GarmentSize", b =>
+                {
+                    b.Property<long>("GarmentsId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("SizesId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("GarmentsId", "SizesId");
+
+                    b.HasIndex("SizesId");
+
+                    b.ToTable("GarmentSize");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<long>", b =>
@@ -638,6 +694,21 @@ namespace repository.Migrations
                     b.ToTable("PropertyShape");
                 });
 
+            modelBuilder.Entity("SizeUser", b =>
+                {
+                    b.Property<long>("SizesId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UsersId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("SizesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("SizeUser");
+                });
+
             modelBuilder.Entity("ColorGarment", b =>
                 {
                     b.HasOne("domain.Entitys.Color", null)
@@ -726,6 +797,15 @@ namespace repository.Migrations
                     b.Navigation("Group");
                 });
 
+            modelBuilder.Entity("domain.Entitys.Size", b =>
+                {
+                    b.HasOne("domain.Entitys.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("domain.Entitys.Store", b =>
                 {
                     b.HasOne("domain.Entitys.User", "User")
@@ -754,7 +834,32 @@ namespace repository.Migrations
                         .WithMany()
                         .HasForeignKey("BodySizesId");
 
+                    b.HasOne("domain.Entitys.Shape", "Shape")
+                        .WithMany()
+                        .HasForeignKey("ShapeId");
+
                     b.Navigation("BodySizes");
+
+                    b.Navigation("Shape");
+                });
+
+            modelBuilder.Entity("domain.Entitys.UserGarment", b =>
+                {
+                    b.HasOne("domain.Entitys.User", "User")
+                        .WithMany("UserGarments")
+                        .HasForeignKey("GarmentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("domain.Entitys.Garment", "Garment")
+                        .WithMany("UserGarments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Garment");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("GarmentProperty", b =>
@@ -783,6 +888,21 @@ namespace repository.Migrations
                     b.HasOne("domain.Entitys.Shape", null)
                         .WithMany()
                         .HasForeignKey("ShapesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GarmentSize", b =>
+                {
+                    b.HasOne("domain.Entitys.Garment", null)
+                        .WithMany()
+                        .HasForeignKey("GarmentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("domain.Entitys.Size", null)
+                        .WithMany()
+                        .HasForeignKey("SizesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -853,6 +973,21 @@ namespace repository.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SizeUser", b =>
+                {
+                    b.HasOne("domain.Entitys.Size", null)
+                        .WithMany()
+                        .HasForeignKey("SizesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("domain.Entitys.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("domain.Entitys.Category", b =>
                 {
                     b.Navigation("Garments");
@@ -865,6 +1000,8 @@ namespace repository.Migrations
             modelBuilder.Entity("domain.Entitys.Garment", b =>
                 {
                     b.Navigation("Images");
+
+                    b.Navigation("UserGarments");
                 });
 
             modelBuilder.Entity("domain.Entitys.Group", b =>
@@ -882,6 +1019,11 @@ namespace repository.Migrations
                     b.Navigation("Garments");
 
                     b.Navigation("Locations");
+                });
+
+            modelBuilder.Entity("domain.Entitys.User", b =>
+                {
+                    b.Navigation("UserGarments");
                 });
 #pragma warning restore 612, 618
         }

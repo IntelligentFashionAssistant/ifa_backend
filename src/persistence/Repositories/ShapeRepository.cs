@@ -4,7 +4,7 @@ using domain.Entitys;
 using Microsoft.EntityFrameworkCore;
 using persistence;
 
-namespace repository.Repositories;
+namespace persistence.Repositories;
 
 public class ShapeRepository : IShapeRepository
 {

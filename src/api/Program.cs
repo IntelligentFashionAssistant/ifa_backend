@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(
-               options => options.UseSqlServer("Server=localhost,1433;Database=TheTop;User ID=SA;Password=Aamm-1970"));
+               options => options.UseSqlServer("Server=SCS\\SQLEXPRESS;Database=IFA;Trusted_Connection=True;MultipleActiveResultSets=true"));
 builder.Services.AddIdentityCore<User>(
                options =>
                {

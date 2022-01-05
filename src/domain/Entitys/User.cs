@@ -14,19 +14,22 @@ namespace domain.Entitys
         public string City { get; set; }
         public string Street { get; set; }
         public string HouseNumber { get; set; }
+        public string Phtot { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public long? BodySizesId { get; set; }
         public BodySizes? BodySizes { get; set; }
         public long? ShapeId { get; set; }
         public Shape? Shape { get; set; }
-        
         public ICollection<Size> Sizes { get; set; }
         public ICollection<Garment> Garments { get; set; }
+        public ICollection<UserGarment> UserGarments { get; set; }
 
+        
         public User()
         {
             Sizes = new HashSet<Size>();
-            Garments = new HashSet<Garment>();
+           Garments = new HashSet<Garment>();
+           UserGarments = new HashSet<UserGarment>();
         }
     }
 }

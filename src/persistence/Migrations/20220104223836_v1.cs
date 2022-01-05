@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace repository.Migrations
 {
-    public partial class v2 : Migration
+    public partial class v1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -76,10 +76,6 @@ namespace repository.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Shoulder_range = table.Column<float>(type: "real", nullable: false),
-                    BustSize = table.Column<float>(type: "real", nullable: false),
-                    HipSize = table.Column<float>(type: "real", nullable: false),
-                    WaistSize = table.Column<float>(type: "real", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -109,6 +105,47 @@ namespace repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Groups",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CategoryId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Groups", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Groups_Categorys_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categorys",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Sizes",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CM = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sizes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Sizes_Categorys_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categorys",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
                 {
@@ -121,8 +158,10 @@ namespace repository.Migrations
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     HouseNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phtot = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BodySizesId = table.Column<long>(type: "bigint", nullable: false),
+                    BodySizesId = table.Column<long>(type: "bigint", nullable: true),
+                    ShapeId = table.Column<long>(type: "bigint", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -145,53 +184,39 @@ namespace repository.Migrations
                         name: "FK_AspNetUsers_BodySizes_BodySizesId",
                         column: x => x.BodySizesId,
                         principalTable: "BodySizes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Garments",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CategoryId = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Garments", x => x.Id);
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Garments_Categorys_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categorys",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_AspNetUsers_Shapes_ShapeId",
+                        column: x => x.ShapeId,
+                        principalTable: "Shapes",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Groups",
+                name: "Properties",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CategoryId = table.Column<long>(type: "bigint", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CategoryId = table.Column<long>(type: "bigint", nullable: true),
+                    GroupId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Groups", x => x.Id);
+                    table.PrimaryKey("PK_Properties", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Groups_Categorys_CategoryId",
+                        name: "FK_Properties_Categorys_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categorys",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Properties_Groups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Groups",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -280,6 +305,30 @@ namespace repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SizeUser",
+                columns: table => new
+                {
+                    SizesId = table.Column<long>(type: "bigint", nullable: false),
+                    UsersId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SizeUser", x => new { x.SizesId, x.UsersId });
+                    table.ForeignKey(
+                        name: "FK_SizeUser_AspNetUsers_UsersId",
+                        column: x => x.UsersId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SizeUser_Sizes_SizesId",
+                        column: x => x.SizesId,
+                        principalTable: "Sizes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "StoreFeedbacks",
                 columns: table => new
                 {
@@ -309,6 +358,7 @@ namespace repository.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhtotStore = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false)
                 },
@@ -319,6 +369,84 @@ namespace repository.Migrations
                         name: "FK_Stores_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PropertyShape",
+                columns: table => new
+                {
+                    PropertiesId = table.Column<long>(type: "bigint", nullable: false),
+                    ShapesId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PropertyShape", x => new { x.PropertiesId, x.ShapesId });
+                    table.ForeignKey(
+                        name: "FK_PropertyShape_Properties_PropertiesId",
+                        column: x => x.PropertiesId,
+                        principalTable: "Properties",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PropertyShape_Shapes_ShapesId",
+                        column: x => x.ShapesId,
+                        principalTable: "Shapes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Garments",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    StoreId = table.Column<long>(type: "bigint", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CategoryId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Garments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Garments_Categorys_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categorys",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Garments_Stores_StoreId",
+                        column: x => x.StoreId,
+                        principalTable: "Stores",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Locations",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StoreId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Locations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Locations_Stores_StoreId",
+                        column: x => x.StoreId,
+                        principalTable: "Stores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -348,80 +476,6 @@ namespace repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GarmentShape",
-                columns: table => new
-                {
-                    GarmentsId = table.Column<long>(type: "bigint", nullable: false),
-                    ShapesId = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GarmentShape", x => new { x.GarmentsId, x.ShapesId });
-                    table.ForeignKey(
-                        name: "FK_GarmentShape_Garments_GarmentsId",
-                        column: x => x.GarmentsId,
-                        principalTable: "Garments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_GarmentShape_Shapes_ShapesId",
-                        column: x => x.ShapesId,
-                        principalTable: "Shapes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Properties",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CategoryId = table.Column<long>(type: "bigint", nullable: true),
-                    GroupId = table.Column<long>(type: "bigint", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Properties", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Properties_Categorys_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categorys",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Properties_Groups_GroupId",
-                        column: x => x.GroupId,
-                        principalTable: "Groups",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Locations",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StoreId = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Locations", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Locations_Stores_StoreId",
-                        column: x => x.StoreId,
-                        principalTable: "Stores",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "GarmentProperty",
                 columns: table => new
                 {
@@ -446,6 +500,54 @@ namespace repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "GarmentShape",
+                columns: table => new
+                {
+                    GarmentsId = table.Column<long>(type: "bigint", nullable: false),
+                    ShapesId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GarmentShape", x => new { x.GarmentsId, x.ShapesId });
+                    table.ForeignKey(
+                        name: "FK_GarmentShape_Garments_GarmentsId",
+                        column: x => x.GarmentsId,
+                        principalTable: "Garments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GarmentShape_Shapes_ShapesId",
+                        column: x => x.ShapesId,
+                        principalTable: "Shapes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GarmentSize",
+                columns: table => new
+                {
+                    GarmentsId = table.Column<long>(type: "bigint", nullable: false),
+                    SizesId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GarmentSize", x => new { x.GarmentsId, x.SizesId });
+                    table.ForeignKey(
+                        name: "FK_GarmentSize_Garments_GarmentsId",
+                        column: x => x.GarmentsId,
+                        principalTable: "Garments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GarmentSize_Sizes_SizesId",
+                        column: x => x.SizesId,
+                        principalTable: "Sizes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Images",
                 columns: table => new
                 {
@@ -453,8 +555,8 @@ namespace repository.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Path = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    GarmentId = table.Column<long>(type: "bigint", nullable: false),
-                    PropertyId = table.Column<long>(type: "bigint", nullable: false)
+                    GarmentId = table.Column<long>(type: "bigint", nullable: true),
+                    PropertyId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -463,38 +565,34 @@ namespace repository.Migrations
                         name: "FK_Images_Garments_GarmentId",
                         column: x => x.GarmentId,
                         principalTable: "Garments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Images_Properties_PropertyId",
                         column: x => x.PropertyId,
                         principalTable: "Properties",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "PropertyShape",
+                name: "UserGarment",
                 columns: table => new
                 {
-                    PropertiesId = table.Column<long>(type: "bigint", nullable: false),
-                    ShapesId = table.Column<long>(type: "bigint", nullable: false)
+                    GarmentId = table.Column<long>(type: "bigint", nullable: false),
+                    UserId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PropertyShape", x => new { x.PropertiesId, x.ShapesId });
+                    table.PrimaryKey("PK_UserGarment", x => new { x.GarmentId, x.UserId });
                     table.ForeignKey(
-                        name: "FK_PropertyShape_Properties_PropertiesId",
-                        column: x => x.PropertiesId,
-                        principalTable: "Properties",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_UserGarment_AspNetUsers_GarmentId",
+                        column: x => x.GarmentId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_PropertyShape_Shapes_ShapesId",
-                        column: x => x.ShapesId,
-                        principalTable: "Shapes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_UserGarment_Garments_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Garments",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -535,6 +633,11 @@ namespace repository.Migrations
                 column: "BodySizesId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_ShapeId",
+                table: "AspNetUsers",
+                column: "ShapeId");
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -557,9 +660,19 @@ namespace repository.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Garments_StoreId",
+                table: "Garments",
+                column: "StoreId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_GarmentShape_ShapesId",
                 table: "GarmentShape",
                 column: "ShapesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GarmentSize_SizesId",
+                table: "GarmentSize",
+                column: "SizesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Groups_CategoryId",
@@ -597,6 +710,16 @@ namespace repository.Migrations
                 column: "ShapesId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Sizes_CategoryId",
+                table: "Sizes",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SizeUser_UsersId",
+                table: "SizeUser",
+                column: "UsersId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_StoreFeedbacks_UserId",
                 table: "StoreFeedbacks",
                 column: "UserId");
@@ -604,6 +727,11 @@ namespace repository.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Stores_UserId",
                 table: "Stores",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserGarment_UserId",
+                table: "UserGarment",
                 column: "UserId");
         }
 
@@ -634,6 +762,9 @@ namespace repository.Migrations
                 name: "GarmentShape");
 
             migrationBuilder.DropTable(
+                name: "GarmentSize");
+
+            migrationBuilder.DropTable(
                 name: "Images");
 
             migrationBuilder.DropTable(
@@ -643,7 +774,13 @@ namespace repository.Migrations
                 name: "PropertyShape");
 
             migrationBuilder.DropTable(
+                name: "SizeUser");
+
+            migrationBuilder.DropTable(
                 name: "StoreFeedbacks");
+
+            migrationBuilder.DropTable(
+                name: "UserGarment");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -652,28 +789,31 @@ namespace repository.Migrations
                 name: "Colors");
 
             migrationBuilder.DropTable(
-                name: "Garments");
-
-            migrationBuilder.DropTable(
-                name: "Stores");
-
-            migrationBuilder.DropTable(
                 name: "Properties");
 
             migrationBuilder.DropTable(
-                name: "Shapes");
+                name: "Sizes");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Garments");
 
             migrationBuilder.DropTable(
                 name: "Groups");
 
             migrationBuilder.DropTable(
-                name: "BodySizes");
+                name: "Stores");
 
             migrationBuilder.DropTable(
                 name: "Categorys");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "BodySizes");
+
+            migrationBuilder.DropTable(
+                name: "Shapes");
         }
     }
 }

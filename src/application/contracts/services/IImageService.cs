@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace application.contracts.services
+namespace application.services
 {
     public interface IImageService
     {

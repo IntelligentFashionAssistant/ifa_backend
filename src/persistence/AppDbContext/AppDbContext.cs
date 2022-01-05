@@ -29,7 +29,35 @@ namespace persistence
                     .HasForeignKey(property => property.CategoryId)
                    .OnDelete(DeleteBehavior.NoAction);
 
+
+
             });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+
+                entity.HasMany(x => x.Garments)
+               .WithMany(x => x.Users)
+               .UsingEntity<UserGarment>(
+                ug =>ug.HasOne(a => a.Garment).WithMany(g => g.UserGarments).HasForeignKey(u => u.UserId).OnDelete(DeleteBehavior.NoAction),
+                gg => gg.HasOne(a => a.User).WithMany(g => g.UserGarments).HasForeignKey(u => u.GarmentId).OnDelete(DeleteBehavior.NoAction)
+               );
+
+            });
+
+            //modelBuilder.Entity<User>()
+            //    .HasMany<User>(s => s.Garments)
+            //    .WithMany(c => c.us)
+            //    .UsingEntity(join => join.ToTable("UserGarment"))
+            //// .Map(cs =>
+            // {
+            //     cs.MapLeftKey("StudentRefId");
+            //     cs.MapRightKey("CourseRefId");
+            //     cs.ToTable("StudentCourse");
+            // });
+
+
+
 
             //modelBuilder.Entity<Category>()
             //    .HasMany(c => c.Properties)
@@ -45,6 +73,7 @@ namespace persistence
         }
 
         public DbSet<Category> Categorys { get; set; }
+        public DbSet<UserGarment> UserGarment { get; set; }
         public DbSet<Size> Sizes { get; set; }
         public DbSet<Color> Colors { get; set; }
         public DbSet<Group> Groups { get; set; }

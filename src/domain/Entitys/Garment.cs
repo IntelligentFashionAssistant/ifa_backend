@@ -21,6 +21,8 @@ namespace domain.Entitys
         public ICollection<Shape> Shapes { get; set; }
         public ICollection<Size> Sizes { get; set; }
         public ICollection<User> Users { get; set; }
+        public ICollection<UserGarment> UserGarments { get; set; }
+
 
         //Constracter
         public Garment()
@@ -31,6 +33,8 @@ namespace domain.Entitys
             Shapes = new HashSet<Shape>();
             Sizes = new HashSet<Size>();
             Users = new HashSet<User>();
+            UserGarments = new HashSet<UserGarment>();
+
         }
 
         public override bool Equals(object? obj)

@@ -1,6 +1,8 @@
 
 
+using domain.Entitys;
 using ifa_front;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using persistence;
@@ -10,9 +12,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(
                options => options.UseSqlServer("Server=SCS\\SQLEXPRESS;Database=IFA;Trusted_Connection=True;MultipleActiveResultSets=true"));
-builder.Services.AddControllersWithViews();
+builder.Services.AddIdentityCore<User>(
+              options => options.SignIn.RequireConfirmedAccount = false)
+              .AddRoles<IdentityRole<long>>()
+              .AddEntityFrameworkStores<AppDbContext>();
 builder.Services.AddServices();
-
+builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

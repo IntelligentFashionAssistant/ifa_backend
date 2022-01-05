@@ -8,6 +8,7 @@ namespace domain.Entitys
     {
         public long Id { get; set; }
         public string Name { get; set; }
+        public string PhtotStore { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public long UserId { get; set; }
         public User User { get; set; }
