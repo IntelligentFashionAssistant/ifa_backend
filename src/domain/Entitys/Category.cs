@@ -19,6 +19,7 @@ namespace domain.Entitys
         {
             Properties = new HashSet<Property>();
             Garments = new HashSet<Garment>(); 
+            Groups = new HashSet<Group>();
         }
     }
 }

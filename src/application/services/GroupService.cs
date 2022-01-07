@@ -26,7 +26,7 @@ namespace application.services
             {
                 Description = obj.Description,
                 Name = obj.Name,
-                CategoryId = obj.CategoryId,
+                Categories = obj.Categorys.Select(categoryId => new Category { Id = categoryId }).ToList(),  
             });
 
             return new GroupDto
@@ -34,7 +34,7 @@ namespace application.services
                 Id = group.Id,
                 Name = group.Name,
                 Description = group.Description,
-                CategoryId = group.CategoryId,
+                Categorys = group.Categories.Select(c => c.Id).ToList(),
             };
         }
 
@@ -50,7 +50,7 @@ namespace application.services
                 Id = obj.Id,
                 Description = obj.Description,
                 Name = obj.Name,
-                CategoryId = obj.CategoryId,
+                Categories = obj.Categorys.Select(categoryId => new Category { Id = categoryId }).ToList(),
             });
 
             return new GroupDto
@@ -58,7 +58,7 @@ namespace application.services
                 Id = group.Id,
                 Name = group.Name,
                 Description = group.Description,
-                CategoryId = obj.CategoryId,
+                Categorys = group.Categories.Select(c => c.Id).ToList(),
             };
         }
 
@@ -71,9 +71,7 @@ namespace application.services
                 Id = group.Id,
                 Name = group.Name,
                 Description = group.Description,
-                
-                Category = group.Category.Name,
-                CategoryId = group.CategoryId
+                CategorysNames = group.Categories.Select(c => c.Name).ToList(),
             }).ToList();
         }
 
@@ -88,7 +86,8 @@ namespace application.services
                 Name = group.Name,
                 Description = group.Description,
                 Propertys = _propertyService.GetPropertysByGroupId(group.Id),
-                CategoryId = group.CategoryId,
+                Categorys = group.Categories.Select(c => c.Id).ToList(),
+                CategorysNames = group.Categories.Select(c => c.Name).ToList(),
             };
         }
 
@@ -101,7 +100,6 @@ namespace application.services
                 Id = group.Id,
                 Name = group.Name,
                 Propertys = _propertyService.GetPropertysByGroupId(group.Id),
-                CategoryId = group.CategoryId,
             }).ToList();
         }
     }

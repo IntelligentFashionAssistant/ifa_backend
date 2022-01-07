@@ -112,7 +112,7 @@ namespace ifa_front.Controllers
                 groups = _groupService.GetAll().Select(e => new Group
             {
                 Id = e.Id,
-                Category = e.Category,
+                Category = e.CategorysNames.FirstOrDefault(),
                 Name = e.Name,
                 CategoryId=e.CategoryId,
             }).ToList();

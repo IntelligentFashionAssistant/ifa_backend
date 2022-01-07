@@ -20,12 +20,31 @@ namespace persistence.Repositories
 
         public Group Create(Group obj)
         {
+            var listCategorys = new List<Category>();
+            foreach (var category in obj.Categories)
+            {
+                listCategorys.Add(_appDbContext.Categorys.Single(c => c.Id == category.Id));
+            }
+             obj.Categories = listCategorys;
+
             _appDbContext.Add(obj);
             _appDbContext.SaveChanges();
 
             return obj;
         }
+        public Group Update(Group obj)
+        {
+            var listCategorys = new List<Category>();
+            foreach (var category in obj.Categories)
+            {
+                listCategorys.Add(_appDbContext.Categorys.Single(c => c.Id == category.Id));
+            }
+            obj.Categories = listCategorys;
+            _appDbContext.Update(obj);
+            _appDbContext.SaveChanges();
 
+            return obj;
+        }
         public void DeleteById(long id)
         {
             _appDbContext.Remove(new Group { Id = id });
@@ -36,7 +55,7 @@ namespace persistence.Repositories
         {
             var data = _appDbContext.Groups
                    .Include(group => group.Properties)
-                    .Include(group => group.Category)
+                    .Include(group => group.Categories)
                    .ToList();
 
             return data;
@@ -44,24 +63,21 @@ namespace persistence.Repositories
 
         public ICollection<Group> GetGroupByCategory(long id)
         {
-            var data = _appDbContext.Groups.Where(g => g.CategoryId == id)
-                   .Include(group => group.Properties)
-                   .AsNoTracking()
-                   .ToList();
+            //var data = _appDbContext.Groups.Where(g => g.Categories.Where(c => c.Id == id))
+            //       .Include(group => group.Properties)
+            //       .AsNoTracking()
+            //       .ToList();
 
-            return data;
+            return null;
         }
         public Group GetById(long id)
         {
-           return _appDbContext.Groups.SingleOrDefault(group => group.Id == id);
+           return _appDbContext.Groups
+                  .Include(g => g.Properties)
+                  .Include(g => g.Categories)
+                  .Single(group => group.Id == id);
         }
 
-        public Group Update(Group obj)
-        {
-            _appDbContext.Update(obj);
-            _appDbContext.SaveChanges();
-
-            return obj;
-        }
+       
     }
 }

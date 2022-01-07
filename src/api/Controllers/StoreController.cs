@@ -106,11 +106,11 @@ namespace api.Controllers
                     Email = storeApiDto.Email,
                     Password = storeApiDto.Password,
                     PhoneNumber = storeApiDto.PhoneNumber,
-                    Country = storeApiDto.Country,
-                    City = storeApiDto.City,
+                    //Country = storeApiDto.Country,
+                    //City = storeApiDto.City,
                     Username = storeApiDto.Username,
                     StoreName = storeApiDto.StoreName,
-                    Street = storeApiDto.Street,
+                    //Street = storeApiDto.Street,
                 });
                  if(data != null)
                 {
@@ -121,9 +121,9 @@ namespace api.Controllers
                         StoreName = data.StoreName,
                         Email = data.Email,
                         BirthDate = data.BirthDate,
-                        Country = data.Country,
-                        City = data.City,
-                        Street = data.Street,
+                        //Country = data.Country,
+                        //City = data.City,
+                        //Street = data.Street,
                         PhoneNumber = data.PhoneNumber,
                         Username = data.Username,
                     };

@@ -27,7 +27,7 @@ namespace ifa_front.Controllers
             groups =  data.Select(e => new Group
             {
                 Id = e.Id,
-                Category = e.Category,
+                Category = e.CategorysNames.First(),
                 Name = e.Name,
 
             }).ToList();

@@ -12,6 +12,7 @@ namespace domain.Entitys
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public long UserId { get; set; }
         public User User { get; set; }
+        public bool IsApprove { get; set; } = false;
         public ICollection<Location> Locations { get; set; }
         //public ICollection<StoreFeedback> StoreFeedbacks { get; set; }
         public ICollection<Garment> Garments { get; set; }

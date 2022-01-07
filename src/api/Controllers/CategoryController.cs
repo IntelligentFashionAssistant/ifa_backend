@@ -17,28 +17,34 @@ namespace api.Controllers
             _categoryService = categoryService;
         }
 
-        //[HttpGet("/{id:int}")]
-        //public IActionResult GetCategoryById(long id)
-        //{
-        //    var response = new ResponsApiDto<CateogryApiDTO>();
-        //    var data = _categoryService.GetById(id);
+        [HttpGet("{id:int}")]
+        public IActionResult GetCategoryById(long id)
+        {
+            var response = new ResponsApiDto<CateogryApiDTO,string>();
 
-        //    if (data != null)
-        //    {
-        //        response.Data = new CateogryApiDTO
-        //        {
-        //            Id = data.Id,
-        //            Name = data.Name,
-        //            Description = data.Description
-        //        };
-        //        response.Status = "Success";
-        //        return Ok(response);
-        //    }
+            try
+            {
+                var data = _categoryService.GetById(id);
 
-        //    response.Status = "Failed";
-        //    // TODO : change ok to appropriate result 
-        //    return Ok(response);
-        //}
+                if (data != null)
+                {
+                    response.Data = new CateogryApiDTO
+                    {
+                        Id = data.Id,
+                        Name = data.Name,
+                        Description = data.Description
+                    };
+                   
+                }
+            }
+            catch(Exception ex)
+            {
+                response.AddError(ex.Message);
+                return NotFound(response);
+            }
+
+            return Ok(response);
+        }
 
         [HttpGet]
         public IActionResult GetAllCategories()
