@@ -6,8 +6,9 @@ namespace application.services
 {
     public interface IGarmentService : IService<GarmentDto, long>
     {
-        Task<ICollection<GarmentDto>> GetUserGarments(ClaimsPrincipal userClaim, long categoryId);
-        Task<ICollection<GarmentDto>> GetUserGarments(ClaimsPrincipal userClaim);
+        Task<ICollection<GarmentDto>> GetUserGarmentsByKeyword(ClaimsPrincipal userClaim, string searchKeyword, int pageNumber, int pageSize);
+        Task<ICollection<GarmentDto>> GetUserGarmentsByCategory(ClaimsPrincipal userClaim, long categoryId, int pageNumber, int pageSize);
+        Task<ICollection<GarmentDto>> GetUserGarments(ClaimsPrincipal userClaim, int pageNumber, int pageSize);
         Task LikeOrDislikeGarment(ClaimsPrincipal user, long garmentId);
     }
 }

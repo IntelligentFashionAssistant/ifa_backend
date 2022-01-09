@@ -22,6 +22,21 @@ namespace repository.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("CategoryGroup", b =>
+                {
+                    b.Property<long>("CategoriesId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("GroupsId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("CategoriesId", "GroupsId");
+
+                    b.HasIndex("GroupsId");
+
+                    b.ToTable("CategoryGroup");
+                });
+
             modelBuilder.Entity("ColorGarment", b =>
                 {
                     b.Property<long>("ColorsId")
@@ -155,9 +170,6 @@ namespace repository.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<long>("CategoryId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -166,8 +178,6 @@ namespace repository.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
 
                     b.ToTable("Groups");
                 });
@@ -243,9 +253,6 @@ namespace repository.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<long?>("CategoryId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -260,8 +267,6 @@ namespace repository.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
 
                     b.HasIndex("GroupId");
 
@@ -324,11 +329,14 @@ namespace repository.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsApprove")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhtotStore")
+                    b.Property<string>("PhotoStore")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -361,13 +369,18 @@ namespace repository.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("Rate")
-                        .HasColumnType("real");
+                    b.Property<int>("Rate")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("StoreId")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("StoreId");
 
                     b.HasIndex("UserId");
 
@@ -385,14 +398,13 @@ namespace repository.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("BirthDate")
+                    b.Property<DateTime?>("BirthDate")
                         .HasColumnType("datetime2");
 
                     b.Property<long?>("BodySizesId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -400,7 +412,6 @@ namespace repository.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -414,15 +425,12 @@ namespace repository.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HouseNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -449,7 +457,6 @@ namespace repository.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Phtot")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
@@ -459,7 +466,6 @@ namespace repository.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Street")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -484,6 +490,23 @@ namespace repository.Migrations
                     b.HasIndex("ShapeId");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "fa71309e-d0d0-4e32-a860-c5df10a416f2",
+                            CreatedAt = new DateTime(2022, 1, 8, 22, 50, 20, 714, DateTimeKind.Local).AddTicks(5739),
+                            Email = "admin@admin.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGaj2pQiKlqRWOo9PEQjVG+jRAHG/bQIwU8n48mp1HqP6ycvLpFdKdBL7gtSplWtHA==",
+                            PhoneNumberConfirmed = false,
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("domain.Entitys.UserGarment", b =>
@@ -574,6 +597,29 @@ namespace repository.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            ConcurrencyStamp = "c6d1590b-9792-4d72-8ead-9ff3d57af7ec",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            ConcurrencyStamp = "af98df76-0ad2-4c40-b8e6-b1d0c90c51d0",
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            ConcurrencyStamp = "f8c4f31e-a8ad-40a2-85f9-0dd1f41aa8dc",
+                            Name = "ShopOwner",
+                            NormalizedName = "SHOPOWNER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
@@ -658,6 +704,13 @@ namespace repository.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1L,
+                            RoleId = 1L
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<long>", b =>
@@ -709,6 +762,21 @@ namespace repository.Migrations
                     b.ToTable("SizeUser");
                 });
 
+            modelBuilder.Entity("CategoryGroup", b =>
+                {
+                    b.HasOne("domain.Entitys.Category", null)
+                        .WithMany()
+                        .HasForeignKey("CategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("domain.Entitys.Group", null)
+                        .WithMany()
+                        .HasForeignKey("GroupsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ColorGarment", b =>
                 {
                     b.HasOne("domain.Entitys.Color", null)
@@ -743,17 +811,6 @@ namespace repository.Migrations
                     b.Navigation("Store");
                 });
 
-            modelBuilder.Entity("domain.Entitys.Group", b =>
-                {
-                    b.HasOne("domain.Entitys.Category", "Category")
-                        .WithMany("Groups")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
             modelBuilder.Entity("domain.Entitys.Image", b =>
                 {
                     b.HasOne("domain.Entitys.Garment", "Garment")
@@ -782,17 +839,10 @@ namespace repository.Migrations
 
             modelBuilder.Entity("domain.Entitys.Property", b =>
                 {
-                    b.HasOne("domain.Entitys.Category", "Category")
-                        .WithMany("Properties")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.HasOne("domain.Entitys.Group", "Group")
                         .WithMany("Properties")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Category");
 
                     b.Navigation("Group");
                 });
@@ -819,6 +869,10 @@ namespace repository.Migrations
 
             modelBuilder.Entity("domain.Entitys.StoreFeedback", b =>
                 {
+                    b.HasOne("domain.Entitys.Store", null)
+                        .WithMany("StoreFeedbacks")
+                        .HasForeignKey("StoreId");
+
                     b.HasOne("domain.Entitys.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -991,10 +1045,6 @@ namespace repository.Migrations
             modelBuilder.Entity("domain.Entitys.Category", b =>
                 {
                     b.Navigation("Garments");
-
-                    b.Navigation("Groups");
-
-                    b.Navigation("Properties");
                 });
 
             modelBuilder.Entity("domain.Entitys.Garment", b =>
@@ -1019,6 +1069,8 @@ namespace repository.Migrations
                     b.Navigation("Garments");
 
                     b.Navigation("Locations");
+
+                    b.Navigation("StoreFeedbacks");
                 });
 
             modelBuilder.Entity("domain.Entitys.User", b =>

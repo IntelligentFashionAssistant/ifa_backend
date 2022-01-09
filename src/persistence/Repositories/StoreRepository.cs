@@ -14,7 +14,7 @@ public class StoreRepository : IStoreRepository
     {
         _appDbContext = appDbContext;
     }
-    
+
     public async Task<Store> GetById(long id)
     {
         return  _appDbContext.Stores.Where(store => store.Id == id).Include(store => store.User).Single();

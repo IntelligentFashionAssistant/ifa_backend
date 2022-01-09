@@ -18,19 +18,10 @@ namespace persistence
         {
             modelBuilder.Entity<Property>(entity =>
             {
-
                 entity.HasOne(property => property.Group)
                     .WithMany(property => property.Properties)
                     .HasForeignKey(property => property.GroupId)
                     .OnDelete(DeleteBehavior.NoAction);
-                    
-                entity.HasOne(property => property.Category)
-                   .WithMany(property => property.Properties)
-                    .HasForeignKey(property => property.CategoryId)
-                   .OnDelete(DeleteBehavior.NoAction);
-
-
-
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -44,32 +35,8 @@ namespace persistence
                );
 
             });
-
-            //modelBuilder.Entity<User>()
-            //    .HasMany<User>(s => s.Garments)
-            //    .WithMany(c => c.us)
-            //    .UsingEntity(join => join.ToTable("UserGarment"))
-            //// .Map(cs =>
-            // {
-            //     cs.MapLeftKey("StudentRefId");
-            //     cs.MapRightKey("CourseRefId");
-            //     cs.ToTable("StudentCourse");
-            // });
-
-
-
-
-            //modelBuilder.Entity<Category>()
-            //    .HasMany(c => c.Properties)
-            //    .WithOne().HasForeignKey(c => c.Id)
-            //     .OnDelete(DeleteBehavior.NoAction);
-            //modelBuilder.Entity<Group>()
-            //    .HasMany(c => c.Properties)
-            //    .WithOne().HasForeignKey(c => c.Id)
-            // .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Seed();
             base.OnModelCreating(modelBuilder);
-
-
         }
 
         public DbSet<Category> Categorys { get; set; }

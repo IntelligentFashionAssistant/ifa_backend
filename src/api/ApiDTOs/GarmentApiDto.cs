@@ -18,5 +18,6 @@ namespace api.ApiDTOs
         public ICollection<string> Images { get; set; }
         public ICollection<int> Properties { get; set; }
         public ICollection<string> Sizes { get; set; }
+        public StoreApiDto StoreApiDto { get; set; }
     }
 }

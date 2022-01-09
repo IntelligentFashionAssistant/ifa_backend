@@ -23,7 +23,6 @@ namespace application.services
             {
                 Name = obj.Name,
                 Description = obj.Description,
-                CategoryId = obj.CategoryId,
                 GroupId = obj.GroupId,
                 //Images = obj.Images.Select(photo => new Image
                 //{

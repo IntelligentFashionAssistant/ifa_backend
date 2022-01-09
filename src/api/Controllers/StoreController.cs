@@ -14,11 +14,29 @@ namespace api.Controllers
         {
             _storeService = storeService;
         }
-        //[HttpPost]
-        //public IActionResult RateStore()
-        //{
-        //    return null;
-        //}
+        
+        
+        [HttpPost("rate")]
+        public IActionResult RateStore(StoreFeedbackApiDto storeFeedbackApiDto)
+        {
+            var response = new ResponsApiDto<string, string>();
+            try {
+                _storeService.RateStore(User, new StoreFeedbackDto()
+                {
+                    Header = storeFeedbackApiDto.Header, 
+                    Body = storeFeedbackApiDto.Body ,
+                    Rate = storeFeedbackApiDto.Rate, 
+                    StoreId = storeFeedbackApiDto.StoreId, 
+                });
+                response.Data = "Succeed";
+            }
+            catch(Exception ex)
+            {
+                response.AddError(ex.Message);
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetStoreById(long storeId)
@@ -197,5 +215,16 @@ namespace api.Controllers
 
             return Ok(response);
         }
+    }
+
+    public class StoreFeedbackApiDto
+    {
+        public long Id { get; set; }
+        public string Header { get; set; }
+        public string Body { get; set; }
+        public int Rate { get; set; }
+        public long? StoreId { get; set; }
+        public string UserName { get; set; }
+        public string UserImage { get; set; }
     }
 }

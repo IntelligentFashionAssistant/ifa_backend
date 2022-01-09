@@ -63,13 +63,14 @@ namespace persistence.Repositories
 
         public ICollection<Group> GetGroupByCategory(long id)
         {
-            //var data = _appDbContext.Groups.Where(g => g.Categories.Where(c => c.Id == id))
-            //       .Include(group => group.Properties)
-            //       .AsNoTracking()
-            //       .ToList();
-
-            return null;
+            return _appDbContext.Categorys
+                .Include(category => category.Groups)
+                .ThenInclude(group => group.Properties)
+                .Single(category => category.Id == id)
+                .Groups;
         }
+        
+        
         public Group GetById(long id)
         {
            return _appDbContext.Groups

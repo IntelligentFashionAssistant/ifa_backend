@@ -11,13 +11,11 @@ namespace domain.Entitys
         public long Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public ICollection<Property> Properties { get; set; }
         public ICollection<Group> Groups { get; set; }
         public ICollection<Garment> Garments { get; set; }
 
         public Category()
         {
-            Properties = new HashSet<Property>();
             Garments = new HashSet<Garment>(); 
             Groups = new HashSet<Group>();
         }

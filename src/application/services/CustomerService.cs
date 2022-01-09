@@ -248,19 +248,9 @@ namespace application.services
 
             if (result.Succeeded)
             {
-                return new CustomerDto
-                {
-                    Id = user.Id,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    BirthDate = user.BirthDate,
-                    City = user.City,
-                    Country = user.Country,
-                    Email = user.Email,
-                    Street = user.Street,
-                    Username = user.UserName,
-                    HouseNumber = user.HouseNumber
-                };
+                await _userManager.AddToRoleAsync(user, "Customer");
+                obj.Id = user.Id;
+                return obj;
             }
             else
             {

@@ -24,33 +24,45 @@ public class GarmentService : IGarmentService
         _shapeRepository = shapeRepository;
     }
 
-
-    public async Task<ICollection<GarmentDto>> GetUserGarments(ClaimsPrincipal userClaim)
+    
+    public async Task LikeOrDislikeGarment(ClaimsPrincipal userClaim, long garmentId)
     {
-        return await GetUserGarments(userClaim, 0);
+        var user = await _userManager.GetUserAsync(userClaim);
+        var garment = _garmentRepository.GetById(garmentId);
+        if (user.Garments.Contains(garment))
+        {
+            user.Garments.Remove(garment);
+        }
+        else
+        {
+            user.Garments.Add(garment);
+        }
+        
+        var res = await _userManager.UpdateAsync(user);
+        if (!res.Succeeded)
+        {
+            throw new Exception("internal server error");
+        }
     }
 
-    //public async Task LikeOrDislikeGarment(ClaimsPrincipal userClaim, long garmentId)
-    //{
-    //    var user = await _userManager.GetUserAsync(userClaim);
-    //    var garment = _garmentRepository.GetById(garmentId);
-    //    if (user.Garments.Contains(garment))
-    //    {
-    //        user.Garments.Remove(garment);
-    //    }
-    //    else
-    //    {
-    //        user.Garments.Add(garment);
-    //    }
-        
-    //    var res = await _userManager.UpdateAsync(user);
-    //    if (!res.Succeeded)
-    //    {
-    //        throw new Exception("internal server error");
-    //    }
-    //}
 
-    public async Task<ICollection<GarmentDto>> GetUserGarments(ClaimsPrincipal userClaim, long categoryId)
+    // TODO : match garment properties
+    public async Task<ICollection<GarmentDto>> GetUserGarmentsByKeyword(ClaimsPrincipal userClaim, string searchKeyword, int pageNumber, int pageSize)
+    {
+        return (await GetUserGarments(userClaim, pageNumber, pageSize))
+            .Where(garment =>
+                garment.Category == searchKeyword
+                || garment.Name == searchKeyword).ToList();
+    }
+
+    public async Task<ICollection<GarmentDto>> GetUserGarmentsByCategory(ClaimsPrincipal userClaim, long categoryId, int pageNumber, int pageSize)
+    {
+        return (await GetUserGarments(userClaim,pageNumber, pageSize))
+            .Where(garment => garment.CategoryId == categoryId).ToList();
+    }
+
+    // TODO: move to repository 
+    public async Task<ICollection<GarmentDto>> GetUserGarments(ClaimsPrincipal userClaim, int pageNumber, int pageSize)
     {
         var user = await _userManager.GetUserAsync(userClaim);
         if (user.ShapeId != null)
@@ -60,8 +72,9 @@ public class GarmentService : IGarmentService
         
         var shape = _shapeRepository.GetById(user.ShapeId ?? 1);
         return _garmentRepository.GetAll()
-            .Where(garment =>  categoryId == 0 || (garment.CategoryId == categoryId))
-            .Where(garment => ( (garment.Properties.Count(property => shape.Properties.Contains(property)) / garment.Properties.Count()) > 0.6) )
+            // .Where(garment => categoryId == 0 || (garment.CategoryId == categoryId))
+            .Where(garment =>
+                ((garment.Properties.Count(property => shape.Properties.Contains(property)) / garment.Properties.Count()) > 0.6))
             // true / false 
             .Where(garment =>
             {
@@ -70,15 +83,17 @@ public class GarmentService : IGarmentService
                 {
                     foreach (var userSize in user.Sizes)
                     {
-                        if (garmentSize.CategoryId == userSize.CategoryId && 
+                        if (garmentSize.CategoryId == userSize.CategoryId &&
                             garmentSize.Id == userSize.Id)
                         {
                             return true;
                         }
                     }
                 }
+
                 return false;
-            })
+            }).Skip((pageNumber - 1) * pageSize)  
+            .Take(pageSize)// TODO paging meta data
             .Select(garment => new GarmentDto()
             {
                 Id = garment.Id,
@@ -91,11 +106,25 @@ public class GarmentService : IGarmentService
                 StoreId = garment.StoreId,
                 Colors = garment.Colors.Select(color => color.Name).ToList(),
                 Images = garment.Images.Select(photo => photo.Path).ToList(),
-                Sizes = garment.Sizes.Select(size => size.Name).ToList()
+                Sizes = garment.Sizes.Select(size => size.Name).ToList(),
+                StoreDto = new StoreDto()
+                {
+                    Id = garment.Store.Id,
+                    StoreName = garment.Store.Name,
+                    PhoneNumber = garment.Store.User.PhoneNumber,
+                    Locations = garment.Store.Locations.Select(l => new LocationDto()
+                    {
+                        City = l.City,
+                        Country = l.Country,
+                        Street = l.Street,
+                    }).ToList(),
+                    Rank = garment.Store.StoreFeedbacks.Sum(feedback => feedback.Rate) / garment.Store.StoreFeedbacks.Count
+                }
             })
             .ToList();
-    } 
-    
+    }
+
+
     public GarmentDto GetById(long id)
     {
         var garment = _garmentRepository.GetById(id);
@@ -207,8 +236,4 @@ public class GarmentService : IGarmentService
         };
     }
 
-    public Task LikeOrDislikeGarment(ClaimsPrincipal user, long garmentId)
-    {
-        throw new NotImplementedException();
-    }
 }

@@ -1,9 +1,11 @@
+using System.Security.Claims;
 using application.DTOs;
 
 namespace application.services
 {
     public interface IStoreService : IAsnycService<StoreDto, long>
     {
-        //void RateGarment(StoreRatingDto storeRatingDto);
+        Task RateStore(ClaimsPrincipal claimsPrincipal, StoreFeedbackDto storeFeedbackDto);
+        ICollection<GarmentDto> GetAllGarments(ClaimsPrincipal claimsPrincipal);
     }
 }

@@ -1,12 +1,9 @@
-﻿using application.DTOs;
+﻿using System.Security.Claims;
+using application.DTOs;
+using application.exceptions;
 using application.persistence;
 using domain.Entitys;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace application.services
 {
@@ -14,15 +11,39 @@ namespace application.services
     {
         private readonly UserManager<User> _userManager;
         private readonly ILocationRepository _locationRepository;
+        private readonly IStoreFeedbackRepository _storeFeedbackRepository;
         private readonly IStoreRepository _storeRepository;
         public StoreService(UserManager<User> userManager,
                             ILocationRepository locationRepository,
+                            IStoreFeedbackRepository storeFeedbackRepository,
                             IStoreRepository storeRepository)
         {
             _userManager = userManager;
             _locationRepository = locationRepository;
+            _storeFeedbackRepository = storeFeedbackRepository;
             _storeRepository = storeRepository;
         }
+
+
+        public async Task RateStore(ClaimsPrincipal claimsPrincipal, StoreFeedbackDto storeFeedbackDto)
+        {
+            var user = await _userManager.GetUserAsync(claimsPrincipal);
+            _storeFeedbackRepository.Create(new StoreFeedback()
+            {
+                Header = storeFeedbackDto.Header, 
+                Body = storeFeedbackDto.Body ,
+                Rate = storeFeedbackDto.Rate, 
+                StoreId = storeFeedbackDto.StoreId, 
+                UserId = user.Id,
+            });
+        }
+
+        public ICollection<GarmentDto> GetAllGarments(ClaimsPrincipal claimsPrincipal)
+        {
+            throw new NotImplementedException();
+        }
+
+
         public async Task<StoreDto> Create(StoreDto obj)
         {
             var user = new User()
@@ -42,20 +63,13 @@ namespace application.services
                 {
                     Name = obj.StoreName,
                     UserId = user.Id,
-                    // Locations = new List<Location> {
-                    //     new Location { 
-                    //         Country = obj.Country,
-                    //         City = obj.City,
-                    //         Street = obj.Street,
-
-                    //     } 
-                    //} 
                 });
-                var locatin = _locationRepository.Create(new Location
+                var location = _locationRepository.Create(new Location
                 {
-                    Country = obj.Country,
-                    City = obj.City,
-                    Street = obj.Street
+                    StoreId = store.Id,
+                    Country = obj.Locations.First().Country,
+                    City = obj.Locations.First().City,
+                    Street = obj.Locations.First().Street
                 });
                 return new StoreDto
                 {
@@ -63,25 +77,26 @@ namespace application.services
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     BirthDate = user.BirthDate,
-                    City = locatin.City,
-                    Country = locatin.Country,
                     Email = user.Email,
-                    Street = locatin.Street,
                     Username = user.UserName,
                     StoreName = store.Name,
                     PhoneNumber = user.PhoneNumber,
+                    Locations = new List<LocationDto>(){new LocationDto()
+                    {
+                        City = location.City,
+                        Country = location.Country,
+                        Street = location.Street
+                    }}
                 };
             }
             else
             {
-                string error = " ";
-                foreach (var e in result.Errors)
-                {
-                    error += e.Description + ",";
-                }
-                // var mm = result.Errors.Select(e => e.Description);
-
-                throw new NullReferenceException(error);
+                throw new CustomException(
+                    "error",
+                    result.
+                        Errors.
+                        Select(el => el.Description).
+                        ToList());
             }
         }
 
@@ -159,7 +174,7 @@ namespace application.services
                 Email = l.User.Email,
                 PhoneNumber = l.User.PhoneNumber,
                 Username = l.User.UserName,
-                CreatedAt = l.CreatedAt
+                CreatedAt = l.CreatedAt,
             }).ToList();
         }
 
@@ -184,7 +199,16 @@ namespace application.services
                     City = l.City,
                     Street = l.Street,
                 }).ToList(),
-                CreatedAt = data.CreatedAt
+                StoreFeedbackDto = data.StoreFeedbacks.Select(feedback => new StoreFeedbackDto()
+                {
+                    Body = feedback.Body, 
+                    Header = feedback.Header, 
+                    Rate = feedback.Rate, 
+                    UserName = feedback.User.FirstName + ' ' + feedback.User.LastName,
+                    UserImage =feedback.User.Phtot
+                }).ToList(),
+                Rank = data.StoreFeedbacks.Sum(feedback => feedback.Rate) / data.StoreFeedbacks.Count
+                
             };
         }
       

@@ -157,7 +157,9 @@ namespace api.Controllers
                     Street = userApiDto.Street,
                     HouseNumber = userApiDto.HouseNumber,
                     Username = userApiDto.Username,
+                    Password = userApiDto.Password
                 });
+                
                 if (data != null)
                 {
                     respons.Data = new CustomerApiDto() 

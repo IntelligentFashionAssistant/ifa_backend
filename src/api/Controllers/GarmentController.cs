@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using api.ApiDTOs;
+using api.Utils;
 using application.DTOs;
 using application.services;
 using Microsoft.AspNetCore.Mvc;
@@ -34,27 +35,54 @@ namespace api.Controllers
                 return BadRequest(respons);
             }
         }
-
-
-        [HttpPost]
-        public async Task<IActionResult> GetUserGarments()
+        
+        
+        [HttpGet("search/{keyword}")]
+        public async Task<IActionResult> GetUserGarmentsByKeyword(string keyword, [FromQuery] PageApiDto pageApiDto)
         {
             var respons = new ResponsApiDto<ICollection<GarmentApiDto>, string>();
+            
             try
             {
-                var garments = await _garmentServices.GetUserGarments(User);
-                respons.Data = garments.Select(data => new GarmentApiDto()
-                {
-                    Name = data.Name,
-                    Description = data.Description,
-                    Brand = data.Brand,
-                    Price = data.Price,
-                    CategoryId = data.CategoryId,
-                    StoreId = data.StoreId,
-                    Images = data.Images,
-                    Colors = data.Colors,
-                    Sizes = data.Sizes
-                }).ToList();
+                var garments = await _garmentServices.GetUserGarmentsByKeyword(User, keyword, pageApiDto.PageNumber, pageApiDto.PageSize);
+                respons.Data = Mapper.FromGarmentDtoToGarmentApiDto(garments);
+                return Ok(respons);
+            }
+            catch (Exception e)
+            {
+                // todo : better error message
+                respons.AddError("error");
+                return NotFound(respons);
+            }
+        }
+        [HttpGet("category/{categoryId:long}")]
+        public async Task<IActionResult> GetUserGarmentsByCategory(long categoryId, [FromQuery] PageApiDto pageApiDto)
+        {
+            var respons = new ResponsApiDto<ICollection<GarmentApiDto>, string>();
+            
+            try
+            {
+                var garments = await _garmentServices.GetUserGarmentsByCategory(User, categoryId, pageApiDto.PageNumber, pageApiDto.PageSize);
+                respons.Data = Mapper.FromGarmentDtoToGarmentApiDto(garments);
+                return Ok(respons);
+            }
+            catch (Exception e)
+            {
+                // todo : better error message
+                respons.AddError("error");
+                return NotFound(respons);
+            }
+        }
+        
+        [HttpGet("user-garments")]
+        public async Task<IActionResult> GetUserGarments([FromQuery] PageApiDto pageApiDto)
+        {
+            var respons = new ResponsApiDto<ICollection<GarmentApiDto>, string>();
+            
+            try
+            {
+                var garments = await _garmentServices.GetUserGarments(User, pageApiDto.PageNumber, pageApiDto.PageSize);
+                respons.Data = Mapper.FromGarmentDtoToGarmentApiDto(garments);
                 return Ok(respons);
             }
             catch (Exception e)
@@ -95,7 +123,7 @@ namespace api.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet()]
         public IActionResult GetAllGaremnts()
         {
             var respons = new ResponsApiDto<ICollection<GarmentApiDto>, string>();

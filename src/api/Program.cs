@@ -1,72 +1,64 @@
 using api;
-using domain.Entitys;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+using application.utils;
 using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Hosting;
-using persistence;
-using System.Configuration;
+using Microsoft.OpenApi.Models;
+using persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-builder.Services.AddDbContext<AppDbContext>(
-               options => options.UseSqlServer("Server=SCS\\SQLEXPRESS;Database=IFA;Trusted_Connection=True;MultipleActiveResultSets=true"));
-builder.Services.AddIdentityCore<User>(
-               options =>
-               {
-                   options.SignIn.RequireConfirmedAccount = false;
-                   options.SignIn.RequireConfirmedEmail = false;
-                   options.SignIn.RequireConfirmedAccount = false;
-                   options.SignIn.RequireConfirmedPhoneNumber = false;
-                   // Password settings.
-                   options.Password.RequireDigit = false;
-                   options.Password.RequireLowercase = false;
-                   options.Password.RequireNonAlphanumeric = false;
-                   options.Password.RequireUppercase = false;
-                   options.Password.RequiredLength = 6;
-                   options.Password.RequiredUniqueChars = 1;
-                   
-                   // Lockout settings.
-                   options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                   options.Lockout.MaxFailedAccessAttempts = 5;
-                   options.Lockout.AllowedForNewUsers = true;
-
-                   // User settings.
-                   options.User.AllowedUserNameCharacters =
-                   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                   options.User.RequireUniqueEmail = false;
-               
-               }
-                )
-               .AddRoles<IdentityRole<long>>()
-               .AddEntityFrameworkStores<AppDbContext>();
+builder.Services.AddApplicationDbContext();
+builder.Services.ConfigureIdentity();
+builder.Services.AddRepositories();
 builder.Services.AddServices();
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo {Title = "MyProject", Version = "v1.0.0"});
+
+    var securitySchema = new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        Reference = new OpenApiReference
+        {
+            Type = ReferenceType.SecurityScheme,
+            Id = "Bearer"
+        }
+    };
+
+    c.AddSecurityDefinition("Bearer", securitySchema);
+
+    var securityRequirement = new OpenApiSecurityRequirement
+    {
+        {securitySchema, new[] {"Bearer"}}
+    };
+
+    c.AddSecurityRequirement(securityRequirement);
+});
+// builder.Services.AddAuthentication();
+builder.Services.ConfigureJWT();
 
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseStaticFiles(new StaticFileOptions
 {
-    FileProvider = new PhysicalFileProvider("c:\\Images"),
-    //FileProvider = new PhysicalFileProvider("/home/moamen/temp/"),
+    // FileProvider = new PhysicalFileProvider("c:\\Images"),
+    FileProvider = new PhysicalFileProvider("/home/moamen/temp/"),
 
     RequestPath = "/StaticFiles"
 });
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using api.ApiDTOs;
 using application.services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -46,6 +47,7 @@ namespace api.Controllers
             return Ok(response);
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult GetAllCategories()
         {
@@ -66,6 +68,7 @@ namespace api.Controllers
             return BadRequest(response.Data);
         }
 
+        [Authorize(Roles ="Admin")]
         [HttpPost]
         public IActionResult CreateCategory(CateogryApiDTO cateogryApiDto)
         {

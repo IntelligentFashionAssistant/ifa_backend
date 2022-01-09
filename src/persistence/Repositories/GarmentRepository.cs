@@ -19,7 +19,6 @@ namespace persistence.Repositories
         public Garment GetById(long id)
         {
             var garment = _appDbContext.Garments.SingleOrDefault(garment => garment.Id == id);
-
             return garment;
         }
 
@@ -30,6 +29,12 @@ namespace persistence.Repositories
                             .Include(g => g.Category)
                             .Include(g => g.Colors)
                             .Include(g => g.Properties)
+                            .Include(g => g.Store)
+                            .ThenInclude(s => s.User)
+                            .Include(g => g.Store)
+                            .ThenInclude(s => s.Locations)
+                            .Include(g => g.Store)
+                            .ThenInclude(s => s.StoreFeedbacks)
                             .AsNoTracking().ToList();
             return garments;
         }
@@ -95,7 +100,7 @@ namespace persistence.Repositories
             var listProperts = new List<Property>();
             foreach (var prop in obj.Properties)
             {
-                var property = _appDbContext.Properties.Where(p => p.Id == prop.Id).Include(p => p.Category).SingleOrDefault();
+                var property = _appDbContext.Properties.Where(p => p.Id == prop.Id).SingleOrDefault();
                 listProperts.Add(property);
             }
             garment.Properties = listProperts;

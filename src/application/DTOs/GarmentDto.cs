@@ -19,5 +19,6 @@ namespace application.DTOs
         public ICollection<string> Images { get; set; }
         public ICollection<int> Properties { get; set; }
         public ICollection<string> Sizes { get; set; }
+        public StoreDto StoreDto { get; set; }
     }
 }
