@@ -47,7 +47,7 @@ namespace api.Controllers
             return Ok(response);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public IActionResult GetAllCategories()
         {
@@ -68,7 +68,7 @@ namespace api.Controllers
             return BadRequest(response.Data);
         }
 
-        [Authorize(Roles ="Admin")]
+       // [Authorize(Roles ="Admin")]
         [HttpPost]
         public IActionResult CreateCategory(CateogryApiDTO cateogryApiDto)
         {
@@ -124,9 +124,17 @@ namespace api.Controllers
         public IActionResult DeleteCategory(long id)
         {
             //TODO throu exption
-            var respons = new ResponsApiDto<string, string>();
-            _categoryService.DeleteById(id);
-            respons.Data = "deleted category";
+            var respons = new ResponsApiDto<long, string>();
+            try
+            {
+                _categoryService.DeleteById(id);
+                respons.Data = id;
+            }
+            catch(Exception ex)
+            {
+                respons.AddError("Not Found");
+                return NotFound(respons);
+            }
             return Ok(respons);
         }
     }

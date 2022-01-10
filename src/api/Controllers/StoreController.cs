@@ -1,5 +1,6 @@
 using api.ApiDTOs;
 using application.DTOs;
+using application.exceptions;
 using application.services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace api.Controllers
     public class StoreController : Controller
     {
         private readonly IStoreService _storeService;
+        
         public StoreController(IStoreService storeService)
         {
             _storeService = storeService;
@@ -17,11 +19,11 @@ namespace api.Controllers
         
         
         [HttpPost("rate")]
-        public IActionResult RateStore(StoreFeedbackApiDto storeFeedbackApiDto)
+        public async Task<IActionResult> RateStore(StoreFeedbackApiDto storeFeedbackApiDto)
         {
             var response = new ResponsApiDto<string, string>();
             try {
-                _storeService.RateStore(User, new StoreFeedbackDto()
+               await _storeService.RateStore(User, new StoreFeedbackDto()
                 {
                     Header = storeFeedbackApiDto.Header, 
                     Body = storeFeedbackApiDto.Body ,
@@ -39,13 +41,13 @@ namespace api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetStoreById(long storeId)
+        public async Task<IActionResult> GetStoreById(long id)
         {
             var response = new ResponsApiDto<StoreApiDto, string>();
 
             try
             {
-                var data = await _storeService.GetById(storeId);  
+                var data = await _storeService.GetById(id);  
 
                 if(data != null)
                 {
@@ -58,7 +60,6 @@ namespace api.Controllers
                         Email = data.Email,
                         PhoneNumber = data.PhoneNumber,
                         Username = data.Username,
-                        BirthDate = data.BirthDate,
                         LastName = data.LastName,
                         Locations = data.Locations.Select(location => new LocationApiDto
                         {
@@ -124,11 +125,16 @@ namespace api.Controllers
                     Email = storeApiDto.Email,
                     Password = storeApiDto.Password,
                     PhoneNumber = storeApiDto.PhoneNumber,
-                    //Country = storeApiDto.Country,
-                    //City = storeApiDto.City,
                     Username = storeApiDto.Username,
                     StoreName = storeApiDto.StoreName,
-                    //Street = storeApiDto.Street,
+                   Locations = new List<LocationDto>()
+                   {
+                       new LocationDto(){
+                           Country = storeApiDto.Locations.First().Country,
+                           City = storeApiDto.Locations.First().City,
+                           Street = storeApiDto.Locations.First().Street,
+                       }
+                   }
                 });
                  if(data != null)
                 {
@@ -148,9 +154,13 @@ namespace api.Controllers
                     
                 }
             }
-            catch (Exception ex)
+            catch (CustomException ex)
             {
-                response.AddError(ex.Message);
+                ex.ErrorMessages.ForEach(m =>
+                {
+                    response.AddError(m);
+                });
+               
                 return BadRequest(response);
             }
             return Ok(response);
@@ -164,12 +174,11 @@ namespace api.Controllers
 
             try
             {
-                var data = await _storeService.Create(new StoreDto
+                var data = await _storeService.Edit(new StoreDto
                 {
                     Id = storeApiDto.Id,
                     FirstName = storeApiDto.FirstName,
                     LastName = storeApiDto.LastName,
-                    BirthDate = storeApiDto.BirthDate,
                     PhoneNumber = storeApiDto.PhoneNumber,
                     Username = storeApiDto.Username,
                     StoreName = storeApiDto.StoreName,

@@ -40,6 +40,7 @@ namespace persistence.Repositories
                 listCategorys.Add(_appDbContext.Categorys.Single(c => c.Id == category.Id));
             }
             obj.Categories = listCategorys;
+
             _appDbContext.Update(obj);
             _appDbContext.SaveChanges();
 

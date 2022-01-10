@@ -28,7 +28,11 @@ namespace application.services
         public async Task RateStore(ClaimsPrincipal claimsPrincipal, StoreFeedbackDto storeFeedbackDto)
         {
             var user = await _userManager.GetUserAsync(claimsPrincipal);
-            _storeFeedbackRepository.Create(new StoreFeedback()
+
+            if(user != null)
+            {
+
+                 _storeFeedbackRepository.Create(new StoreFeedback()
             {
                 Header = storeFeedbackDto.Header, 
                 Body = storeFeedbackDto.Body ,
@@ -36,6 +40,11 @@ namespace application.services
                 StoreId = storeFeedbackDto.StoreId, 
                 UserId = user.Id,
             });
+            }
+            else
+            {
+                throw new Exception();
+            }
         }
 
         public ICollection<GarmentDto> GetAllGarments(ClaimsPrincipal claimsPrincipal)
@@ -59,6 +68,8 @@ namespace application.services
 
             if (result.Succeeded)
             {
+                await _userManager.AddToRoleAsync(user, "SHOPOWNER");
+
                 var store = await _storeRepository.Create(new Store
                 {
                     Name = obj.StoreName,
@@ -102,33 +113,32 @@ namespace application.services
 
         public async Task DeleteById(long id)
         {
-            var user = await _userManager.FindByIdAsync((id).ToString());
+            var store = await _storeRepository.GetById(id);
+            var user = await _userManager.FindByIdAsync((store.UserId).ToString());
             if (user != null)
             {
                 var result = await _userManager.DeleteAsync(user);
             }
             else
             {
-                throw new NullReferenceException("User not found");
+                throw new NullReferenceException();
             }
         }
 
         public async Task<StoreDto> Edit(StoreDto obj)
         {
+            var store = await _storeRepository.GetById(obj.Id);
+            var user = await _userManager.FindByIdAsync((store.UserId).ToString());
 
-            var user = new User()
-            {
-                FirstName = obj.FirstName,
-                LastName = obj.LastName,
-                BirthDate = obj.BirthDate,
-                UserName = obj.Username,
-                PhoneNumber = obj.PhoneNumber,
-            };
+            user.FirstName = obj.FirstName;
+            user.LastName = obj.LastName;
+            user.BirthDate = obj.BirthDate;
+            user.PhoneNumber = obj.PhoneNumber;
+            user.UserName = obj.Username;
             var result = await _userManager.UpdateAsync(user);
 
             if (result.Succeeded)
             {
-                var store = _storeRepository.GetByUserId(user.Id);
                 var newStore = await _storeRepository.Update(new Store
                 {
                     Id = store.Id,
@@ -182,7 +192,7 @@ namespace application.services
         {
            var data = await _storeRepository.GetById(id);
 
-            return new StoreDto
+            var res = new StoreDto
             {
                 Id = data.Id,
                 StoreName = data.Name,
@@ -207,9 +217,11 @@ namespace application.services
                     UserName = feedback.User.FirstName + ' ' + feedback.User.LastName,
                     UserImage =feedback.User.Phtot
                 }).ToList(),
-                Rank = data.StoreFeedbacks.Sum(feedback => feedback.Rate) / data.StoreFeedbacks.Count
+                Rank = data.StoreFeedbacks.Sum(feedback => feedback.Rate) / data.StoreFeedbacks.Count()
                 
             };
+
+            return res;
         }
       
     }

@@ -10,7 +10,7 @@ namespace persistence
         {
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
             // optionsBuilder.UseSqlServer("Server=SCS\\SQLEXPRESS;Database=IFA;Trusted_Connection=True;MultipleActiveResultSets=true");
-            optionsBuilder.UseSqlServer("Server=localhost,1433;Database=IFA2;User ID=SA;Password=Aamm-1970");
+            optionsBuilder.UseSqlServer("Server=SCS\\SQLEXPRESS;Database=IFA;Trusted_Connection=True;MultipleActiveResultSets=true");
 
             return new AppDbContext(optionsBuilder.Options);
         }

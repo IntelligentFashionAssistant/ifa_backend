@@ -36,7 +36,7 @@ namespace api.Controllers
                     Id = property.Id,
                     Name = property.Name,
                     Description = property.Description,
-                    //Category = property.Category,
+                    GroupId = property.GroupId,
                     Group = property.Group,
 
                 }).ToList();
@@ -92,7 +92,7 @@ namespace api.Controllers
 
             try
             {
-                var data = _propertyService.Create(new PropertyDto
+                var data = _propertyService.Edit(new PropertyDto
                 {
                     Id = propertyApiDto.Id,
                     Name = propertyApiDto.Name,

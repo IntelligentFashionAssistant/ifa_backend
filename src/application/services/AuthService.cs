@@ -48,7 +48,8 @@ public class AuthService : IAuthService
     private async Task<List<Claim>> GetClaims()
     {
         var claims = new List<Claim> {new Claim("email", _user.Email)};
-        claims.Add(new Claim("id", _user.Id.ToString()));
+        //claims.Add(new Claim("id", _user.Id.ToString()));
+        claims.Add(new Claim(ClaimTypes.NameIdentifier, _user.Id.ToString()));
         var roles = await _userManager.GetRolesAsync(_user);
         claims.Add(new Claim("role", roles.First()));
         // foreach (var role in roles)

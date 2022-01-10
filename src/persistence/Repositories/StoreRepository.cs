@@ -17,7 +17,11 @@ public class StoreRepository : IStoreRepository
 
     public async Task<Store> GetById(long id)
     {
-        return  _appDbContext.Stores.Where(store => store.Id == id).Include(store => store.User).Single();
+        return  _appDbContext.Stores.Where(store => store.Id == id)
+                .Include(store => store.User)
+                .Include(store => store.StoreFeedbacks).ThenInclude(f => f.User)
+                .Include(store =>store.Locations)
+                .AsNoTracking().Single();
     }
     public async Task<Store> GetByUserId(long userId)
     {

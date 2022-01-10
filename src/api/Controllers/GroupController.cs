@@ -84,7 +84,7 @@ namespace api.Controllers
 
             try
             {
-                var data = _groupService.Create(
+                var data = _groupService.Edit(
                     new GroupDto
                     {
                         Id = groupApiDto.Id,
@@ -123,7 +123,7 @@ namespace api.Controllers
             }
             catch (Exception ex)
             {
-                response.AddError(ex.Message);
+                response.AddError("Not found");
                 return NotFound(response);
             }
            

@@ -45,6 +45,7 @@ namespace application.services
 
         public GroupDto Edit(GroupDto obj)
         {
+
             var group = _groupRepository.Update(new Group
             {
                 Id = obj.Id,
@@ -52,6 +53,9 @@ namespace application.services
                 Name = obj.Name,
                 Categories = obj.Categorys.Select(categoryId => new Category { Id = categoryId }).ToList(),
             });
+
+
+
 
             return new GroupDto
             {
