@@ -174,7 +174,7 @@ namespace application.services
         {
             var data = await _storeRepository.GetAll();
 
-            return  data.Select(l => new StoreDto
+            var  dd =  data.Select(l => new StoreDto
             {
                 Id=l.Id,
                 StoreName = l.Name,
@@ -185,14 +185,17 @@ namespace application.services
                 PhoneNumber = l.User.PhoneNumber,
                 Username = l.User.UserName,
                 CreatedAt = l.CreatedAt,
+                Rank = (l.StoreFeedbacks.Count() > 0) ? l.StoreFeedbacks.Sum(feedback => feedback.Rate) / l.StoreFeedbacks.Count() : 1
             }).ToList();
+
+            return dd;
         }
 
         public async Task<StoreDto> GetById(long id)
         {
            var data = await _storeRepository.GetById(id);
 
-            var res = new StoreDto
+           return new StoreDto
             {
                 Id = data.Id,
                 StoreName = data.Name,
@@ -217,11 +220,11 @@ namespace application.services
                     UserName = feedback.User.FirstName + ' ' + feedback.User.LastName,
                     UserImage =feedback.User.Phtot
                 }).ToList(),
-                Rank = data.StoreFeedbacks.Sum(feedback => feedback.Rate) / data.StoreFeedbacks.Count()
-                
-            };
+                Rank = (data.StoreFeedbacks.Count() > 0) ? data.StoreFeedbacks.Sum(feedback => feedback.Rate) / data.StoreFeedbacks.Count() : 1
 
-            return res;
+           };
+
+           
         }
       
     }

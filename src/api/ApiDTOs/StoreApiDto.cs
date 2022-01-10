@@ -10,6 +10,7 @@
         public DateTime? BirthDate { get; set;}
         public string StoreName { get; set; }
         public string PhoneNumber { get; set;}
+        public float Rank { get; set; }
         public string Username { get; set; }
         public ICollection<LocationApiDto> Locations { get; set; }
         public DateTime CreatedAt { get; set; }

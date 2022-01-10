@@ -30,7 +30,10 @@ public class StoreRepository : IStoreRepository
 
     public async Task<ICollection<Store>> GetAll()
     {
-        return _appDbContext.Stores.Include(store => store.User).ToList();
+        return _appDbContext.Stores
+                .Include(store => store.User)
+                .Include(store => store.StoreFeedbacks).ThenInclude(f => f.User)
+                .AsNoTracking().ToList();
     }
 
     public async Task<Store> Create(Store obj)

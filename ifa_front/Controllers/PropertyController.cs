@@ -34,7 +34,7 @@ namespace ifa_front.Controllers
             {
                 Id = e.Id,
                 Name = e.Name,
-                CategoryId = (long)e.CategoryId,
+                //CategoryId = (long)e.CategoryId,
                 Group = e.Group,
                 
             }).ToList();
@@ -68,7 +68,7 @@ namespace ifa_front.Controllers
                 {
                     Name = model.Name,
                     Description = model.Description,
-                    CategoryId = model.CategoryId,
+                    //CategoryId = model.CategoryId,
                     GroupId = model.GroupId
                 });
                 return RedirectToAction("Index");

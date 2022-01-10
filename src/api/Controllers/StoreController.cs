@@ -61,6 +61,7 @@ namespace api.Controllers
                         PhoneNumber = data.PhoneNumber,
                         Username = data.Username,
                         LastName = data.LastName,
+                        Rank = data.Rank,
                         Locations = data.Locations.Select(location => new LocationApiDto
                         {
                             Id = location.Id,
@@ -98,6 +99,7 @@ namespace api.Controllers
                     Email = store.Email,
                     PhoneNumber = store.PhoneNumber,
                     Username = store.Username,
+                    Rank = store.Rank,
                 }).ToList();
             }
             catch(Exception ex)
@@ -127,14 +129,8 @@ namespace api.Controllers
                     PhoneNumber = storeApiDto.PhoneNumber,
                     Username = storeApiDto.Username,
                     StoreName = storeApiDto.StoreName,
-                   Locations = new List<LocationDto>()
-                   {
-                       new LocationDto(){
-                           Country = storeApiDto.Locations.First().Country,
-                           City = storeApiDto.Locations.First().City,
-                           Street = storeApiDto.Locations.First().Street,
-                       }
-                   }
+                    Rank = storeApiDto.Rank,
+                    CreatedAt = storeApiDto.CreatedAt
                 });
                  if(data != null)
                 {
