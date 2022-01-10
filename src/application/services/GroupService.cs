@@ -103,8 +103,13 @@ namespace application.services
             {
                 Id = group.Id,
                 Name = group.Name,
-                Propertys = _propertyService.GetPropertysByGroupId(group.Id),
+                Propertys = group.Properties.Select(p => new PropertyDto
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                }).ToList(),
             }).ToList();
         }
+        //_propertyService.GetPropertysByGroupId(group.Id)
     }
 }

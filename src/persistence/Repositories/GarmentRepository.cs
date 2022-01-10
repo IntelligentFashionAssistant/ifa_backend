@@ -69,7 +69,7 @@ namespace persistence.Repositories
             var colors = new List<Color>();
             foreach (var color in obj.Colors)
             {
-                sizes.Add(_appDbContext.Sizes.Single(s => s.Name == color.Name));
+                colors.Add(_appDbContext.Colors.Single(s => s.Name == color.Name));
             }
             garment.Colors= colors;
 
@@ -95,6 +95,7 @@ namespace persistence.Repositories
                 Description = obj.Description,
                 Name = obj.Name,
                 Price = obj.Price,
+                StoreId = obj.StoreId
             };
 
             var listProperts = new List<Property>();
@@ -136,6 +137,20 @@ namespace persistence.Repositories
         {
             _appDbContext.Remove(new Garment { Id = id });
             _appDbContext.SaveChanges();
+        }
+
+        public ICollection<Color> GetColors()
+        {
+            return _appDbContext.Colors.AsNoTracking().ToList();
+        }
+
+        public ICollection<Size> GetSizeByCategory(long categoryId)
+        {
+
+            return _appDbContext.Sizes
+                   .Where(Size => Size.CategoryId == categoryId)
+                   .AsNoTracking()
+                   .ToList();
         }
 
     }

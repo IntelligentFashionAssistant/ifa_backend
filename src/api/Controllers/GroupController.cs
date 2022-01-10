@@ -17,7 +17,7 @@ namespace api.Controllers
             _groupService = groupService;
         }
 
-        [HttpGet]
+        [HttpGet] 
         public IActionResult GetAllGroups()
         {
             var response = new ResponsApiDto<ICollection<GroupApiDto>,string>();
@@ -42,6 +42,38 @@ namespace api.Controllers
             
               return Ok(response);
         }
+
+        [HttpGet("GetGroupByCategory")]
+        public IActionResult GetGroupByCategory(long id)
+        {
+            var response = new ResponsApiDto<ICollection<GroupApiDto>, string>();
+
+            try
+            {
+                var data = _groupService.GetGroupByCategory(id);
+
+                response.Data = data.Select(gruop => new GroupApiDto
+                {
+                    Id = gruop.Id,
+                    Name = gruop.Name,
+                    CategorysNames = gruop.CategorysNames,
+                    PropertysInsidGroup = gruop.Propertys.Select(p => new PropertyApiDto
+                    {
+                        Name = p.Name,
+                        Id = p.Id
+                    }).ToList()
+                    
+                }).ToList();
+            }
+            catch (Exception ex)
+            {
+                response.AddError(ex.Message);
+                return NotFound(response);
+            }
+
+            return Ok(response);
+        }
+
 
         [HttpPost]
         public IActionResult CreateGroup(GroupApiDto groupApiDto)

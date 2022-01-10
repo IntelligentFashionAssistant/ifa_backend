@@ -10,5 +10,7 @@ namespace application.services
         Task<ICollection<GarmentDto>> GetUserGarmentsByCategory(ClaimsPrincipal userClaim, long categoryId, int pageNumber, int pageSize);
         Task<ICollection<GarmentDto>> GetUserGarments(ClaimsPrincipal userClaim, int pageNumber, int pageSize);
         Task LikeOrDislikeGarment(ClaimsPrincipal user, long garmentId);
+        ICollection<ColorDto> GetColors();
+        ICollection<SizeDto> GetSizeByCategory(long categoryId);
     }
 }

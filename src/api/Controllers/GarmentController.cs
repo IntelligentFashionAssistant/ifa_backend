@@ -180,7 +180,7 @@ namespace api.Controllers
                     Brand = data.Brand,
                     Price = data.Price,
                     CategoryId = data.CategoryId,
-                    //StoreId = data.StoreId,
+                    StoreId = data.StoreId,
                     Images = data.Images,
                     Colors = data.Colors,
                     Sizes = data.Sizes
@@ -242,7 +242,57 @@ namespace api.Controllers
             respons.Data = "Deleted Garment";
             return Ok(respons);
         }
+        
+        [HttpGet("GetColors")]
+        public IActionResult GetColors()
+        {
+            var respons = new ResponsApiDto<ICollection<ColorApiDto>, string>();
 
+            try
+            {
+                var data = _garmentServices.GetColors();
+
+                respons.Data = data.Select(color => new ColorApiDto
+                {
+                    Id = color.Id,
+                    Name = color.Name,
+                }).ToList();
+
+            }catch(Exception ex)
+            {
+                respons.AddError(ex.Message);
+                return NotFound(respons);
+            }
+
+            return Ok(respons);
+        }
+
+        [HttpGet("GetSizeByCategory/{categoryId:long}")]
+        public IActionResult GetSizeByCategory(long categoryId)
+        {
+            var respons = new ResponsApiDto<ICollection<SizeApiDto>, string>();
+
+            try
+            {
+                var data = _garmentServices.GetSizeByCategory(categoryId);
+
+                respons.Data = data.Select(size => new SizeApiDto
+                {
+                    Id = size.Id,
+                    Name = size.Name,
+                    CM = size.CM,
+                    CategoryId = size.CategoryId,
+                }).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                respons.AddError(ex.Message);
+                return NotFound(respons);
+            }
+
+            return Ok(respons);
+        }
 
     }
 }

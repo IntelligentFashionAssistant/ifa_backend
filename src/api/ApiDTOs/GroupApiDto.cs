@@ -8,6 +8,8 @@
        // public long CategoryId { get; set; }
         public ICollection<long>? Categorys { get; set; }
         public ICollection<string>? CategorysNames { get; set; }
+
+        public ICollection<PropertyApiDto>? PropertysInsidGroup { get; set; }
         //public string Category { get; set; }
     }
 }

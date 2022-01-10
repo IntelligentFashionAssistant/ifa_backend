@@ -236,4 +236,23 @@ public class GarmentService : IGarmentService
         };
     }
 
+    public ICollection<ColorDto> GetColors()
+    {
+        return _garmentRepository.GetColors().Select(color => new ColorDto
+        {
+            Id = color.Id,
+            Name = color.Name,
+        }).ToList();
+    }
+
+    public ICollection<SizeDto> GetSizeByCategory(long categoryId)
+    {
+        return _garmentRepository.GetSizeByCategory(categoryId).Select(size => new SizeDto
+        {
+            Id = size.Id,
+            Name = size.Name,
+            CM = size.CM,
+            CategoryId = size.CategoryId,
+        }).ToList();
+    }
 }
