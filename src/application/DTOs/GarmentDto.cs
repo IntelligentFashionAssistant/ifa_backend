@@ -16,9 +16,11 @@ namespace application.DTOs
         public long CategoryId { get; set; }
         public string Category { get; set; }
         public ICollection<string> Colors { get; set; }
+        public ICollection<long> ColorsOfId { get; set; }
         public ICollection<string> Images { get; set; }
-        public ICollection<int> Properties { get; set; }
+        public ICollection<long> Properties { get; set; }
         public ICollection<string> Sizes { get; set; }
+        public ICollection<long> SizesOfId { get; set; }
         public StoreDto StoreDto { get; set; }
     }
 }

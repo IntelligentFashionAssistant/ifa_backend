@@ -4,6 +4,6 @@ namespace application.persistence
 {
     public interface IStoreRepository : IAsnycRepository<Store, long>
     {
-        Task<Store> GetByUserId(long userId);
+        Task<long> GetByUserId(long userId);
     }
 }

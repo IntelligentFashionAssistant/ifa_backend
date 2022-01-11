@@ -4,6 +4,8 @@ using api.ApiDTOs;
 using api.Utils;
 using application.DTOs;
 using application.services;
+using domain.Entitys;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -13,10 +15,19 @@ namespace api.Controllers
     public class GarmentController : Controller
     {
         private readonly IGarmentService _garmentServices;
-
-        public GarmentController(IGarmentService garmentServices)
+        private readonly IImageService _imageService;
+        private readonly IStoreService _storeService;
+        private readonly UserManager<User> _userManager;
+        public GarmentController(IGarmentService garmentServices,
+                                 IImageService imageService,
+                                 IStoreService storeService,
+                                 UserManager<User> userManager
+                                 )
         {
             _garmentServices = garmentServices;
+            _imageService = imageService;
+            _storeService = storeService;
+            _userManager = userManager;
         }
 
 
@@ -111,7 +122,7 @@ namespace api.Controllers
                     Price = data.Price,
                     CategoryId = data.CategoryId,
                     StoreId = data.StoreId,
-                    Images = data.Images,
+                    //Images = data.Images,
                     Colors = data.Colors,
                     Sizes = data.Sizes
                 };
@@ -140,7 +151,7 @@ namespace api.Controllers
                     CategoryId = garmet.CategoryId,
                     Category = garmet.Category,
                     //StoreId = garmet.StoreId,
-                    Images = garmet.Images,
+                    //Images = garmet.Images,
                     Colors = garmet.Colors,
                     Sizes = garmet.Sizes
                     //Properties = garmet.Properties.Select(p => p).ToList(),
@@ -153,84 +164,118 @@ namespace api.Controllers
         }
 
         [HttpPost("CreateGarment")]
-        public IActionResult CreateGarment(GarmentApiDto garmentApiDto)
+        public async  Task<IActionResult> CreateGarment([FromForm] GarmentApiDto.Requst garmentApiDto)
         {
+            //TODO 
+            //var user = await _userManager.GetUserAsync(User);
+            //long storeId = await _storeService.GetStoreByUserId(user.Id);
+
+
             var respons = new ResponsApiDto<GarmentApiDto, string>();
-            var data = _garmentServices.Create(new GarmentDto
-            {
-                Name = garmentApiDto.Name,
-                Description = garmentApiDto.Description,
-                Brand = garmentApiDto.Brand,
-                Price = garmentApiDto.Price,
-                CategoryId = garmentApiDto.CategoryId,
-                StoreId = garmentApiDto.StoreId,
-                Images = garmentApiDto.Images,
-                Colors = garmentApiDto.Colors,
-                Properties = garmentApiDto.Properties,
-                Sizes = garmentApiDto.Sizes
-            });
+            var images = new List<string>();
 
-            if (data != null)
+            try
             {
-                respons.Data = new GarmentApiDto
+                if (garmentApiDto.ImagesFiles.Count > 0)
                 {
-                    Id = data.Id,
-                    Name = data.Name,
-                    Description = data.Description,
-                    Brand = data.Brand,
-                    Price = data.Price,
-                    CategoryId = data.CategoryId,
-                    StoreId = data.StoreId,
-                    Images = data.Images,
-                    Colors = data.Colors,
-                    Sizes = data.Sizes
-                    //Properties = data.Properties.Select(p => p).ToList(),
-                };
-                return Ok(respons);
-            }
+                    images = await _imageService.SaveListOfImages(garmentApiDto.ImagesFiles);
 
-            respons.AddError("Failed");
-            return BadRequest(respons);
+                }
+                var data = _garmentServices.Create(new GarmentDto
+                {
+                    Name = garmentApiDto.Name,
+                    Description = garmentApiDto.Description,
+                    Brand = garmentApiDto.Brand,
+                    Price = garmentApiDto.Price,
+                    CategoryId = garmentApiDto.CategoryId,
+                    StoreId = garmentApiDto.StoreId,
+                    Images = images,
+                    ColorsOfId = garmentApiDto.Colors,
+                    Properties = garmentApiDto.Properties,
+                    SizesOfId = garmentApiDto.Sizes
+                });
+
+                if (data != null)
+                {   
+                    respons.Data = new GarmentApiDto
+                    {
+                        Id = data.Id,
+                        Name = data.Name,
+                        Description = data.Description,
+                        Brand = data.Brand,
+                        Price = data.Price,
+                        CategoryId = data.CategoryId,
+                        StoreId = data.StoreId,
+                        Images = data.Images,
+                        Colors = data.Colors,
+                        Sizes = data.Sizes
+                        //Properties = data.Properties.Select(p => p).ToList(),
+                    };
+                   
+                }
+            }
+            catch (Exception ex)
+            {
+                respons.AddError(ex.Message);
+                return BadRequest(respons);
+            }
+            return Ok(respons);
         }
 
         [HttpPut]
-        public IActionResult EditGarment(GarmentApiDto garmentApiDto)
+        public async Task<IActionResult> EditGarment([FromForm] GarmentApiDto.Requst garmentApiDto)
         {
-            var respons = new ResponsApiDto<GarmentApiDto, string>();
-            var data = _garmentServices.Edit(new GarmentDto
-            {
-                Id = garmentApiDto.Id,
-                Name = garmentApiDto.Name,
-                Description = garmentApiDto.Description,
-                Brand = garmentApiDto.Brand,
-                Price = garmentApiDto.Price,
-                CategoryId = garmentApiDto.CategoryId,
-                StoreId = garmentApiDto.StoreId,
-                Images = garmentApiDto.Images,
-                Colors = garmentApiDto.Colors,
-                Sizes = garmentApiDto.Sizes,
-                Properties = garmentApiDto.Properties
-            });
 
-            if (data != null)
+            var respons = new ResponsApiDto<GarmentApiDto, string>();
+            var images = new List<string>();
+
+            try
             {
-                respons.Data = new GarmentApiDto
+                if (garmentApiDto.ImagesFiles.Count > 0)
                 {
-                    Name = data.Name,
-                    Description = data.Description,
-                    Brand = data.Brand,
-                    Price = data.Price,
-                    CategoryId = data.CategoryId,
-                    StoreId = data.StoreId,
-                    Images = data.Images,
-                    Colors = data.Colors,
-                    Properties = data.Properties,
-                    Sizes = data.Sizes
-                };
-                return Ok(respons);
+                    images = await _imageService.SaveListOfImages(garmentApiDto.ImagesFiles);
+
+                }
+                var data = _garmentServices.Edit(new GarmentDto
+                { 
+                    Id = garmentApiDto.Id,
+                    Name = garmentApiDto.Name,
+                    Description = garmentApiDto.Description,
+                    Brand = garmentApiDto.Brand,
+                    Price = garmentApiDto.Price,
+                    CategoryId = garmentApiDto.CategoryId,
+                    StoreId = garmentApiDto.StoreId,
+                    Images = images,
+                    ColorsOfId = garmentApiDto.Colors,
+                    Properties = garmentApiDto.Properties,
+                    SizesOfId = garmentApiDto.Sizes
+                });
+
+                if (data != null)
+                {
+                    respons.Data = new GarmentApiDto
+                    {
+                        Id = data.Id,
+                        Name = data.Name,
+                        Description = data.Description,
+                        Brand = data.Brand,
+                        Price = data.Price,
+                        CategoryId = data.CategoryId,
+                        StoreId = data.StoreId,
+                        Images = data.Images,
+                        Colors = data.Colors,
+                        Sizes = data.Sizes
+                        //Properties = data.Properties.Select(p => p).ToList(),
+                    };
+
+                }
             }
-            respons.AddError("Failed");
-            return BadRequest(respons);
+            catch (Exception ex)
+            {
+                respons.AddError(ex.Message);
+                return BadRequest(respons);
+            }
+            return Ok(respons);
         }
 
         [HttpDelete]

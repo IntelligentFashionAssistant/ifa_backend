@@ -6,7 +6,7 @@ namespace application.services
     {
         private static Random random = new Random();
 
-        public async Task<string> SaveOneIamge(FormFile image)
+        public async Task<string> SaveOneIamge(IFormFile image)
         {
             string imgName = "";
             var fileName = Path.GetFileName(image.FileName);
@@ -38,7 +38,7 @@ namespace application.services
             return imgName;
         }
 
-        public async Task<List<string>> SaveListOfImages(ICollection<FormFile> images)
+        public async Task<List<string>> SaveListOfImages(ICollection<IFormFile> images)
         {
             var imagesName = new List<string>();
 
@@ -64,6 +64,10 @@ namespace application.services
                         {
                             return null;
                         }
+                    }
+                    else
+                    {
+                        throw new Exception("It must file type photo");
                     }
 
                 }

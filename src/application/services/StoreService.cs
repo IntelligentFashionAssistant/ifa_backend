@@ -226,6 +226,13 @@ namespace application.services
 
            
         }
-      
+
+        public async Task<long> GetStoreByUserId(long userId)
+        { 
+
+            return await _storeRepository.GetByUserId(userId);
+        }
+
+        
     }
 }

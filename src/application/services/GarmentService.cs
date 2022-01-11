@@ -176,26 +176,14 @@ public class GarmentService : IGarmentService
             Name = obj.Name,
             Price = obj.Price,
             StoreId = obj.StoreId,
-            Colors = obj.Colors.Select(color => new Color {Name = color}).ToList(),
+            Colors = obj.ColorsOfId.Select(colorId => new Color {Id = colorId}).ToList(),
             Images = obj.Images.Select(photo => new Image {Path = photo}).ToList(),
             Properties = obj.Properties.Select(property => new Property { Id = property }).ToList(),
-            Sizes = obj.Sizes.Select(size => new Size(){Name = size }).ToList()
+            Sizes = obj.SizesOfId.Select(sizeId => new Size(){Id = sizeId}).ToList()
         });
-
-        return new GarmentDto
-        {
-            Id = garment.Id,
-            Brand = garment.Brand,
-            Description = garment.Description,
-            Name = garment.Name,
-            Price = garment.Price,
-            CategoryId = garment.CategoryId,
-            CreatedAt = garment.CreatedAt,
-            Colors = garment.Colors.Select(color => color.Name).ToList(),
-            Images = garment.Images.Select(photo => photo.Path).ToList(),
-            Sizes = garment.Sizes.Select(size => size.Name).ToList(),
-            StoreId = garment.StoreId,
-        };
+         obj.Id = garment.Id;
+         obj.CreatedAt = garment.CreatedAt;
+        return obj ;
     }
 
     public void DeleteById(long id)
@@ -206,6 +194,7 @@ public class GarmentService : IGarmentService
 
     public GarmentDto Edit(GarmentDto obj)
     {
+
         var garment = _garmentRepository.Update(new Garment
         {
             Id = obj.Id,
@@ -214,26 +203,15 @@ public class GarmentService : IGarmentService
             Description = obj.Description,
             Name = obj.Name,
             Price = obj.Price,
-            //StoreId = obj.StoreId,
-            Colors = obj.Colors.Select(color => new Color {Name = color}).ToList(),
-            Images = obj.Images.Select(photo => new Image {Path = photo}).ToList(),
-            Properties = obj.Properties.Select(property => new Property {Id = property}).ToList(),
-            Sizes = obj.Sizes.Select(size => new Size(){Name = size }).ToList()
+            StoreId = obj.StoreId,
+            Colors = obj.ColorsOfId.Select(colorId => new Color { Id = colorId }).ToList(),
+            Images = obj.Images.Select(photo => new Image { Path = photo }).ToList(),
+            Properties = obj.Properties.Select(property => new Property { Id = property }).ToList(),
+            Sizes = obj.SizesOfId.Select(sizeId => new Size() { Id = sizeId }).ToList()
         });
-
-        return new GarmentDto
-        {
-            Id = garment.Id,
-            Brand = garment.Brand,
-            Description = garment.Description,
-            Name = garment.Name,
-            Price = garment.Price,
-            Category = garment.Category.Name,
-            CreatedAt = garment.CreatedAt,
-            Colors = garment.Colors.Select(color => color.Name).ToList(),
-            Images = garment.Images.Select(photo => photo.Path).ToList(),
-            Sizes = garment.Sizes.Select(size => size.Name).ToList(),
-        };
+        obj.Id = garment.Id;
+        obj.CreatedAt = garment.CreatedAt;
+        return obj;
     }
 
     public ICollection<ColorDto> GetColors()

@@ -23,9 +23,9 @@ public class StoreRepository : IStoreRepository
                 .Include(store =>store.Locations)
                 .AsNoTracking().Single();
     }
-    public async Task<Store> GetByUserId(long userId)
+    public async Task<long> GetByUserId(long userId)
     {
-        return _appDbContext.Stores.Single(store => store.UserId == userId);
+        return _appDbContext.Stores.Single(store => store.UserId == userId).Id;
     }
 
     public async Task<ICollection<Store>> GetAll()

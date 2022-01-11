@@ -7,5 +7,6 @@ namespace application.services
     {
         Task RateStore(ClaimsPrincipal claimsPrincipal, StoreFeedbackDto storeFeedbackDto);
         ICollection<GarmentDto> GetAllGarments(ClaimsPrincipal claimsPrincipal);
+        Task<long> GetStoreByUserId(long userId);
     }
 }

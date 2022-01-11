@@ -4,7 +4,7 @@ namespace application.services
 {
     public interface IImageService
     {
-        Task<string> SaveOneIamge(FormFile image);
-        Task<List<string>> SaveListOfImages(ICollection<FormFile> images);
+        Task<string> SaveOneIamge(IFormFile image);
+        Task<List<string>> SaveListOfImages(ICollection<IFormFile> images);
     }
 }
