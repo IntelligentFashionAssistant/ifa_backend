@@ -68,7 +68,7 @@ app.UseStaticFiles(new StaticFileOptions
 
     RequestPath = "/StaticFiles"
 });
-app.UseHttpsRedirection();
+
 
 app.UseAuthentication();
 app.UseAuthorization();
