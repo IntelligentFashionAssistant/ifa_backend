@@ -57,5 +57,13 @@ public class StoreRepository : IStoreRepository
         _appDbContext.SaveChanges();
     }
 
-   
+    public ICollection<Garment> GetGarmentsByCategory(long categoryId, long storeId)
+    {
+        var garments = _appDbContext.Garments
+                      .Where(g => g.CategoryId == categoryId && g.StoreId == storeId)
+                      .Include(g => g.Images)
+                      .AsNoTracking()
+                      .ToList();
+        return garments;
+        }
 }

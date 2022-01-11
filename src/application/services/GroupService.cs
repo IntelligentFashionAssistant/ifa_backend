@@ -75,7 +75,8 @@ namespace application.services
                 Id = group.Id,
                 Name = group.Name,
                 Description = group.Description,
-                CategorysNames = group.Categories.Select(c => c.Name).ToList(),
+                Categorys = group.Categories.Select(c => c.Id).ToList(),
+                NumberOfPropriety = group.Properties.Count(),
             }).ToList();
         }
 

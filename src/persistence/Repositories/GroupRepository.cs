@@ -60,9 +60,9 @@ namespace Propertys.Repositories
         public ICollection<Group> GetAll()
         {
             var data = _appDbContext.Groups
-                   .Include(group => group.Properties)
+                    .Include(group => group.Properties)
                     .Include(group => group.Categories)
-                   .ToList();
+                    .ToList();
 
             return data;
         }

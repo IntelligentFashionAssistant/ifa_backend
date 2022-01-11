@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("/group")]
     [ApiController]
     public class GroupController : Controller
     {
@@ -31,7 +31,8 @@ namespace api.Controllers
                     Id = gruop.Id,
                     Name = gruop.Name,
                     Description = gruop.Description,
-                    CategorysNames = gruop.CategorysNames,
+                    NumberOfPropriety = gruop.NumberOfPropriety,
+                    Categorys = gruop.Categorys
                 }).ToList();
             }
             catch (Exception ex)

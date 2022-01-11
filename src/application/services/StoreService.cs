@@ -47,9 +47,22 @@ namespace application.services
             }
         }
 
-        public ICollection<GarmentDto> GetAllGarments(ClaimsPrincipal claimsPrincipal)
+        public async Task<ICollection<GarmentDto>> GetGarmentsByCategory(ClaimsPrincipal claimsPrincipal, long categoryId)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.GetUserAsync(claimsPrincipal);
+            var storeId = await _storeRepository.GetByUserId(user.Id);
+
+            return _storeRepository.GetGarmentsByCategory(categoryId, storeId)
+                  .Select(garment => new GarmentDto
+                  {
+                      Id = garment.Id,
+                      Name = garment.Name,
+                      Brand = garment.Brand,
+                      Price = garment.Price,
+                      CreatedAt =garment.CreatedAt,
+                      CategoryId = garment.CategoryId,
+                      Images = garment.Images.Select(img => img.Path).ToList()
+                  }).ToList();
         }
 
 
@@ -233,6 +246,6 @@ namespace application.services
             return await _storeRepository.GetByUserId(userId);
         }
 
-        
+       
     }
 }

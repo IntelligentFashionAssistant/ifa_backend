@@ -60,7 +60,8 @@ namespace api.Controllers
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    Description = c.Description
+                    Description = c.Description,
+                    NumberOfGroups = c.NumberOfGroups,
                 }).ToList();
                 return Ok(response.Data);
             }

@@ -130,8 +130,14 @@ namespace api.Controllers
                     Username = storeApiDto.Username,
                     StoreName = storeApiDto.StoreName,
                     Rank = storeApiDto.Rank,
-                    CreatedAt = storeApiDto.CreatedAt
-                });
+                    CreatedAt = storeApiDto.CreatedAt,
+                    Locations = storeApiDto.Locations.Select(l => new LocationDto
+                    {
+                        Country = l.Country,
+                        City = l.City,
+                        Street = l.Street,
+                    }).ToList()
+                }) ;
                  if(data != null)
                 {
                     response.Data = new StoreApiDto
@@ -220,8 +226,36 @@ namespace api.Controllers
 
             return Ok(response);
         }
-    }
 
+        [HttpGet("GetGarmentsByCategory")]
+        public async Task<IActionResult> GetGarmentsByCategory(long categoryId)
+        {
+            var response = new ResponsApiDto<ICollection<GarmentApiDto>, string>();
+
+            try
+            {
+                var data = await _storeService.GetGarmentsByCategory(User, categoryId);
+
+                 response.Data = data.Select(garment => new GarmentApiDto
+                 {
+                     Id = garment.Id,
+                     Name = garment.Name,
+                     Price = garment.Price,
+                     Brand = garment.Brand,
+                     CategoryId = garment.CategoryId,
+                     CreatedAt = garment.CreatedAt,
+                     Images = garment.Images,
+                 }).ToList();
+
+            }catch (Exception ex)
+            {
+                response.AddError(ex.Message);
+                return NotFound(response);
+            }
+            return Ok(response);
+        }
+    }
+      
     public class StoreFeedbackApiDto
     {
         public long Id { get; set; }

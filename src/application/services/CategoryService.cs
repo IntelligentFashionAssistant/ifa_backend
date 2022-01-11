@@ -55,7 +55,8 @@ namespace application.services
             {
                 Id = categorie.Id,
                 Description = categorie.Description,
-                Name = categorie.Name
+                Name = categorie.Name,
+                NumberOfGroups = categorie.Groups.Count(),
             }).ToList();
         }
 

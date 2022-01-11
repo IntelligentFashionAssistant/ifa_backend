@@ -16,7 +16,7 @@ namespace api.ApiDTOs
         public string? Category { get; set; }
         public ICollection<string> Colors { get; set; }
 
-        public ICollection<IFormFile> ImagesFiles { get; set; }
+        //public ICollection<IFormFile> ImagesFiles { get; set; }
         public ICollection<string> Images { get; set; }
         public ICollection<long> Properties { get; set; }
         public ICollection<string> Sizes { get; set; }

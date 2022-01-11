@@ -6,7 +6,7 @@ namespace application.services
     public interface IStoreService : IAsnycService<StoreDto, long>
     {
         Task RateStore(ClaimsPrincipal claimsPrincipal, StoreFeedbackDto storeFeedbackDto);
-        ICollection<GarmentDto> GetAllGarments(ClaimsPrincipal claimsPrincipal);
         Task<long> GetStoreByUserId(long userId);
+        Task<ICollection<GarmentDto>> GetGarmentsByCategory(ClaimsPrincipal claimsPrincipal, long categoryId);
     }
 }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using application.persistence;
 using domain.Entitys;
+using Microsoft.EntityFrameworkCore;
 
 namespace Propertys.Repositories
 {
@@ -21,7 +22,9 @@ namespace Propertys.Repositories
 
         public ICollection<Category> GetAll()
         {
-            return _appDbContext.Categorys.ToList();
+            return _appDbContext.Categorys
+                   .Include(c => c.Groups)
+                   .ToList();
         }
 
         public Category Create(Category obj)
