@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace persistence.Repositories
+namespace Propertys.Repositories
 {
     public class GroupRepository : IGroupRepository
     {
@@ -34,17 +34,22 @@ namespace persistence.Repositories
         }
         public Group Update(Group obj)
         {
-            var listCategorys = new List<Category>();
+            var g = _appDbContext.Groups.Where(g => g.Id == obj.Id).Include(g => g.Categories).Single();
+            if (obj.Categories.ToList().Count > 0)
+            {
+                g.Categories.Clear();
+            }
             foreach (var category in obj.Categories)
             {
-                listCategorys.Add(_appDbContext.Categorys.Single(c => c.Id == category.Id));
+                g.Categories.Add(_appDbContext.Categorys.Single(c => c.Id == category.Id));
             }
-            obj.Categories = listCategorys;
+            g.Name = obj.Name;
+            g.Description = obj.Description;
+                
 
-            _appDbContext.Update(obj);
             _appDbContext.SaveChanges();
 
-            return obj;
+            return g;
         }
         public void DeleteById(long id)
         {

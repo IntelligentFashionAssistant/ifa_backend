@@ -5,7 +5,7 @@ using application.persistence;
 using domain.Entitys;
 using Microsoft.EntityFrameworkCore;
 
-namespace persistence.Repositories
+namespace Propertys.Repositories
 {
     public class GarmentRepository : IGarmentRepository
     {
@@ -87,66 +87,62 @@ namespace persistence.Repositories
 
         public Garment Update(Garment obj)
         {   
-             
-            if(obj.Images.Count > 0)
-            {
+                var garment = _appDbContext.Garments.
+                           Where(g => g.Id == obj.Id)
+                           .Include(g => g.Images)
+                           .Include(g => g.Properties)
+                           .Include(g => g.Colors)
+                           .Include(g => g.Sizes)
+                           .Single();
 
-            var oldGarment = _appDbContext.Garments.Single(g => g.Id == obj.Id);                     
-                oldGarment.Images.Clear();
-               
+
+
+            garment.Brand = obj.Brand;
+            garment.Description =  obj.Description;
+            garment.Name =obj.Name ;
+            garment.Price = obj.Price;
+            garment.CategoryId = obj.CategoryId;
+            garment.Properties =obj.Properties ;
+
+
+            if (obj.Properties.ToList().Count > 0)
+            {
+                garment.Properties.Clear();
             }
-                     
-            // oldGarment.Brand = (obj.Brand != null)? obj.Brand: oldGarment.Brand;
-            // oldGarment.Description = (obj.Description != null) ? obj.Description : oldGarment.Description;
-            // oldGarment.Name = (obj.Name != null) ? obj.Name : oldGarment.Name;
-            // oldGarment.Price = (obj.Price != null) ? obj.Price : oldGarment.Price;
-            // oldGarment.CategoryId = (obj.CategoryId != oldGarment.CategoryId) ? obj.CategoryId : oldGarment.CategoryId;
-            //oldGarment.Properties = (obj.Properties != oldGarment.CategoryId) ? obj.CategoryId : oldGarment.CategoryId;
 
-            var garment = new Garment()
-            {
-                Id = obj.Id,
-                Brand = obj.Brand,
-                CategoryId = obj.CategoryId,
-                Description = obj.Description,
-                Name = obj.Name,
-                Price = obj.Price,
-                StoreId = obj.StoreId,
-            };
-
-            if (obj.Properties.Count > 0)
-            {
-
-            }
-            var listProperts = new List<Property>();
             foreach (var prop in obj.Properties)
             {
-                listProperts.Add(_appDbContext.Properties.Single(p => p.Id == prop.Id));
+                garment.Properties.Add(_appDbContext.Properties.Single(p => p.Id == prop.Id));
             }
-            garment.Properties = listProperts;
-
-            var sizes = new List<Size>();
+            if (obj.Sizes.ToList().Count > 0)
+            {
+                garment.Sizes.Clear();
+            }
             foreach (var size in obj.Sizes)
             {
-                sizes.Add(_appDbContext.Sizes.Single(s => s.Id == size.Id));
+                garment.Sizes.Add(_appDbContext.Sizes.Single(s => s.Id == size.Id));
             }
-            garment.Sizes = sizes;
 
 
-            var colors = new List<Color>();
+            if (obj.Colors.ToList().Count > 0)
+            {
+                garment.Colors.Clear();
+            }
             foreach (var color in obj.Colors)
             {
-                colors.Add(_appDbContext.Colors.Single(s => s.Id == color.Id));
+                garment.Colors.Add(_appDbContext.Colors.Single(s => s.Id == color.Id));
             }
-            garment.Colors = colors;
 
+            if (obj.Images.ToList().Count > 0)
+            {
+                garment.Images.Clear();
+            }
             foreach (var i in obj.Images)
             {
                 garment.Images.Add(new Image() { Path = i.Path });
             }
 
 
-            _appDbContext.Update(garment);
             _appDbContext.SaveChanges();
 
             return garment;

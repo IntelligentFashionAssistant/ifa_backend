@@ -5,7 +5,7 @@ using ifa_front;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
-using persistence;
+using Propertys;
 
 var builder = WebApplication.CreateBuilder(args);
 

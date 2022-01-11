@@ -2,7 +2,7 @@ using api;
 using application.utils;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
-using persistence.Repositories;
+using Propertys.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplicationDbContext();

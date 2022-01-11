@@ -1,7 +1,7 @@
 ﻿using application.persistence;
 using application.services;
 using Microsoft.Extensions.DependencyInjection;
-using persistence.Repositories;
+using Propertys.Repositories;
 
 namespace ifa_front
 {

@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using repository.Repositories;
 
-namespace persistence.Repositories;
+namespace Propertys.Repositories;
 
 public static class PersistenceExtensions
 {

@@ -2,7 +2,7 @@ using domain.Entitys;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace persistence;
+namespace Propertys;
 
 public static class ContextSeed
     {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using persistence;
+using Propertys;
 
-namespace persistence
+namespace Propertys
 {
     public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
     {

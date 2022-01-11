@@ -4,7 +4,7 @@ using application.persistence;
 using domain.Entitys;
 using Microsoft.EntityFrameworkCore;
 
-namespace persistence.Repositories
+namespace Propertys.Repositories
 {
     public class PropertyRepository : IPropertyRepository
     {

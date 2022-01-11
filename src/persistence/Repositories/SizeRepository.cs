@@ -1,6 +1,6 @@
 using application.persistence;
 using domain.Entitys;
-using persistence;
+using Propertys;
 
 namespace application.services;
 

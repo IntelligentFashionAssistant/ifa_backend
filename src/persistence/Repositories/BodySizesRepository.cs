@@ -1,13 +1,13 @@
 ﻿using application.persistence;
 using domain.Entitys;
-using persistence;
+using Propertys;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace persistence.Repositories
+namespace Propertys.Repositories
 {
     public class BodySizesRepository : IBodySizesRepository
     {

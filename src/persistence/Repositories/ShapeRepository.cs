@@ -2,9 +2,9 @@ using System.Linq;
 using application.persistence;
 using domain.Entitys;
 using Microsoft.EntityFrameworkCore;
-using persistence;
+using Propertys;
 
-namespace persistence.Repositories;
+namespace Propertys.Repositories;
 
 public class ShapeRepository : IShapeRepository
 {
