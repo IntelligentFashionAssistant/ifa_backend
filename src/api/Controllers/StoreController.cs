@@ -82,7 +82,7 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllStores()
+        public async Task<IActionResult> GetAllStoresApproved()
         {
             var response = new ResponsApiDto<ICollection<StoreApiDto>, string>();
 
@@ -111,7 +111,39 @@ namespace api.Controllers
 
             return Ok(response);
         }
-              
+
+        [HttpGet("StoresNotApproved")]
+        public async Task<IActionResult> GetAllStoresNotApproved()
+        {
+            var response = new ResponsApiDto<ICollection<StoreApiDto>, string>();
+
+            try
+            {
+                var data = await _storeService.GetAllNotApproved();
+
+                response.Data = data.Select(store => new StoreApiDto
+                {
+                    Id = store.Id,
+                    StoreName = store.StoreName,
+                    FirstName = store.FirstName,
+                    LastName = store.LastName,
+                    CreatedAt = store.CreatedAt,
+                    Email = store.Email,
+                    PhoneNumber = store.PhoneNumber,
+                    Username = store.Username,
+                    Rank = store.Rank,
+                }).ToList();
+            }
+            catch (Exception ex)
+            {
+                response.AddError(ex.Message);
+                response.Data = new List<StoreApiDto>();
+                return NotFound(response);
+            }
+
+            return Ok(response);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateStore(StoreApiDto storeApiDto)
         {
@@ -141,15 +173,20 @@ namespace api.Controllers
                  if(data != null)
                 {
                     response.Data = new StoreApiDto
-                    {
+                    {  
+                        Id = data.Id,
                         FirstName = data.FirstName,
                         LastName = data.LastName,
                         StoreName = data.StoreName,
                         Email = data.Email,
                         BirthDate = data.BirthDate,
-                        //Country = data.Country,
-                        //City = data.City,
-                        //Street = data.Street,
+                        Locations = data.Locations.Select(l => new LocationApiDto
+                        {
+                            Id = l.Id,
+                            Country = l.Country,
+                            City = l.City,
+                            Street = l.Street,
+                        }).ToList(),
                         PhoneNumber = data.PhoneNumber,
                         Username = data.Username,
                     };
@@ -253,6 +290,24 @@ namespace api.Controllers
                 return NotFound(response);
             }
             return Ok(response);
+        }
+
+        [HttpPut("Approved/{stroeId:long}")]
+        public IActionResult Approved(long stroeId)
+        {
+            var response = new ResponsApiDto<string, string>();
+
+            try
+            {
+            var data = _storeService.Approved(stroeId);
+                response.Data = "Approved";
+            }
+            catch(Exception ex)
+            {
+                response.AddError(ex.Message);
+                return BadRequest(response);
+            }
+            return Ok(response); 
         }
     }
       

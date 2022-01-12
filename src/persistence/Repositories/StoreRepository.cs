@@ -21,7 +21,7 @@ public class StoreRepository : IStoreRepository
                 .Include(store => store.User)
                 .Include(store => store.StoreFeedbacks).ThenInclude(f => f.User)
                 .Include(store =>store.Locations)
-                .AsNoTracking().Single();
+                .Single();
     }
     public async Task<long> GetByUserId(long userId)
     {
@@ -30,7 +30,14 @@ public class StoreRepository : IStoreRepository
 
     public async Task<ICollection<Store>> GetAll()
     {
-        return _appDbContext.Stores
+        return _appDbContext.Stores.Where(store => store.IsApprove == true)
+                .Include(store => store.User)
+                .Include(store => store.StoreFeedbacks).ThenInclude(f => f.User)
+                .AsNoTracking().ToList();
+    }
+    public async Task<ICollection<Store>> GetAllNotApproved()
+    {
+        return _appDbContext.Stores.Where(store => store.IsApprove == false)
                 .Include(store => store.User)
                 .Include(store => store.StoreFeedbacks).ThenInclude(f => f.User)
                 .AsNoTracking().ToList();
@@ -66,4 +73,16 @@ public class StoreRepository : IStoreRepository
                       .ToList();
         return garments;
         }
+
+    public bool Approved(long storeId)
+    {
+        var store = _appDbContext.Stores.Single(store => store.Id == storeId);
+        if (store == null)
+            return false;
+
+        store.IsApprove = true;
+        _appDbContext.SaveChanges();
+
+        return true;
+    }
 }

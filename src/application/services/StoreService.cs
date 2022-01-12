@@ -107,6 +107,7 @@ namespace application.services
                     PhoneNumber = user.PhoneNumber,
                     Locations = new List<LocationDto>(){new LocationDto()
                     {
+                        Id = location.Id,
                         City = location.City,
                         Country = location.Country,
                         Street = location.Street
@@ -187,7 +188,7 @@ namespace application.services
         {
             var data = await _storeRepository.GetAll();
 
-            var  dd =  data.Select(l => new StoreDto
+            return  data.Select(l => new StoreDto
             {
                 Id=l.Id,
                 StoreName = l.Name,
@@ -201,7 +202,6 @@ namespace application.services
                 Rank = (l.StoreFeedbacks.Count() > 0) ? l.StoreFeedbacks.Sum(feedback => feedback.Rate) / l.StoreFeedbacks.Count() : 1
             }).ToList();
 
-            return dd;
         }
 
         public async Task<StoreDto> GetById(long id)
@@ -246,6 +246,27 @@ namespace application.services
             return await _storeRepository.GetByUserId(userId);
         }
 
-       
+        public bool Approved(long storeId)
+        {
+            return _storeRepository.Approved(storeId);
+        }
+
+        public async Task<ICollection<StoreDto>> GetAllNotApproved()
+        {
+            var data = await _storeRepository.GetAllNotApproved();
+
+            return data.Select(l => new StoreDto
+            {
+                Id = l.Id,
+                StoreName = l.Name,
+                FirstName = l.User.FirstName,
+                LastName = l.User.LastName,
+                BirthDate = l.User.BirthDate,
+                Email = l.User.Email,
+                PhoneNumber = l.User.PhoneNumber,
+                Username = l.User.UserName,
+                CreatedAt = l.CreatedAt,
+            }).ToList();
+        }
     }
 }

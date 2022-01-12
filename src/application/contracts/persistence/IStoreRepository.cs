@@ -6,5 +6,7 @@ namespace application.persistence
     {
         Task<long> GetByUserId(long userId);
         ICollection<Garment> GetGarmentsByCategory(long categoryId, long storeId);
+        bool Approved(long storeId);
+        Task<ICollection<Store>> GetAllNotApproved();
     }
 }
