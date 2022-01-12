@@ -36,7 +36,15 @@ public class AuthService : IAuthService
         return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
     }
 
+    public async Task<bool> EmailIsExist(string userEmail)
+    {
+        var user = await _userManager.FindByEmailAsync(userEmail);
 
+        if (user == null)
+            return true;
+        else
+            throw new Exception("The email is already in use");
+    }
     private SigningCredentials GetSigningCredentials()
     {
         // var key = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SECRET"));
