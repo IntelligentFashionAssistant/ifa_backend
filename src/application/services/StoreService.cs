@@ -13,15 +13,18 @@ namespace application.services
         private readonly ILocationRepository _locationRepository;
         private readonly IStoreFeedbackRepository _storeFeedbackRepository;
         private readonly IStoreRepository _storeRepository;
+        private readonly IMailingService _mailingService;
         public StoreService(UserManager<User> userManager,
                             ILocationRepository locationRepository,
                             IStoreFeedbackRepository storeFeedbackRepository,
-                            IStoreRepository storeRepository)
+                            IStoreRepository storeRepository,
+                            IMailingService mailingService)
         {
             _userManager = userManager;
             _locationRepository = locationRepository;
             _storeFeedbackRepository = storeFeedbackRepository;
             _storeRepository = storeRepository;
+            _mailingService = mailingService;
         }
 
 
@@ -95,6 +98,8 @@ namespace application.services
                     City = obj.Locations.First().City,
                     Street = obj.Locations.First().Street
                 });
+
+                await _mailingService.SendEmailAsync(user.Email, "IFA", "Coinfarm");
                 return new StoreDto
                 {
                     Id = user.Id,
