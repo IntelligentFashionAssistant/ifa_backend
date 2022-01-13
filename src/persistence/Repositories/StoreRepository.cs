@@ -69,6 +69,9 @@ public class StoreRepository : IStoreRepository
         var garments = _appDbContext.Garments
                       .Where(g => g.CategoryId == categoryId && g.StoreId == storeId)
                       .Include(g => g.Images)
+                      .Include(g => g.Properties)
+                      .Include(g => g.Sizes)
+                      .Include(g => g.Colors)
                       .AsNoTracking()
                       .ToList();
         return garments;

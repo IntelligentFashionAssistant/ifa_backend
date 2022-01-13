@@ -140,7 +140,8 @@ public class GarmentService : IGarmentService
             CreatedAt = garment.CreatedAt,
             Colors = garment.Colors.Select(color => color.Name).ToList(),
             Images = garment.Images.Select(photo => photo.Path).ToList(),
-            Sizes = garment.Sizes.Select(size => size.Name).ToList()
+            Sizes = garment.Sizes.Select(size => size.Name).ToList(),
+            
         };
     }
 

@@ -64,7 +64,10 @@ namespace application.services
                       Price = garment.Price,
                       CreatedAt =garment.CreatedAt,
                       CategoryId = garment.CategoryId,
-                      Images = garment.Images.Select(img => img.Path).ToList()
+                      Images = garment.Images.Select(img => img.Path).ToList(),
+                      SizesOfId = garment.Sizes.Select(s => s.Id).ToList(),
+                      ColorsOfId = garment.Colors.Select(c => c.Id).ToList(),
+                      Properties = garment.Properties.Select(p => p.Id).ToList(),
                   }).ToList();
         }
 

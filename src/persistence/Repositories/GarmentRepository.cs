@@ -18,7 +18,12 @@ namespace Propertys.Repositories
 
         public Garment GetById(long id)
         {
-            var garment = _appDbContext.Garments.SingleOrDefault(garment => garment.Id == id);
+            var garment = _appDbContext.Garments
+                          .Where(garment => garment.Id == id)
+                          .Include(g => g.Properties)
+                          .Include(g => g.Colors)
+                          .Include(g => g.Images)
+                          .Include(g => g.Category).Single();
             return garment;
         }
 

@@ -282,6 +282,9 @@ namespace api.Controllers
                      CategoryId = garment.CategoryId,
                      CreatedAt = garment.CreatedAt,
                      Images = garment.Images,
+                     Properties = garment.Properties,
+                     ColorsOfId = garment.ColorsOfId,
+                     SizesOfId = garment.SizesOfId,
                  }).ToList();
 
             }catch (Exception ex)

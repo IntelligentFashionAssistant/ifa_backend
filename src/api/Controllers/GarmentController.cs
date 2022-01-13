@@ -116,15 +116,17 @@ namespace api.Controllers
             {
                 respons.Data = new GarmentApiDto
                 {
+                    Id = data.Id,
                     Name = data.Name,
                     Description = data.Description,
                     Brand = data.Brand,
                     Price = data.Price,
                     CategoryId = data.CategoryId,
                     StoreId = data.StoreId,
-                    //Images = data.Images,
+                    Images = data.Images,
                     Colors = data.Colors,
-                    Sizes = data.Sizes
+                    Sizes = data.Sizes,
+                    CreatedAt = data.CreatedAt,
                 };
                 return Ok(respons);
             }

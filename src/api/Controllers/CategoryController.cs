@@ -52,21 +52,30 @@ namespace api.Controllers
         public IActionResult GetAllCategories()
         {
             var response = new ResponsApiDto<ICollection<CateogryApiDTO>,string>();
-            var data = _categoryService.GetAll();
 
-            if (data != null)
+            try
             {
-                response.Data = data.Select(c => new CateogryApiDTO
+                var data = _categoryService.GetAll();
+
+                if (data != null)
                 {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Description = c.Description,
-                    NumberOfGroups = c.NumberOfGroups,
-                }).ToList();
-                return Ok(response.Data);
+                    response.Data = data.Select(c => new CateogryApiDTO
+                    {
+                        Id = c.Id,
+                        Name = c.Name,
+                        Description = c.Description,
+                        NumberOfGroups = c.NumberOfGroups,
+                    }).ToList();
+                   
+                }
             }
-            response.AddError("Not found");
-            return BadRequest(response.Data);
+            catch(Exception ex)
+            {
+                response.AddError(ex.Message);
+                return BadRequest(response);
+            }
+            return Ok(response);
+
         }
 
        // [Authorize(Roles ="Admin")]
@@ -118,10 +127,10 @@ namespace api.Controllers
             }
 
             respons.AddError("Failed");
-            return Ok(respons);
+            return BadRequest(respons);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id:long}")]
         public IActionResult DeleteCategory(long id)
         {
             //TODO throu exption

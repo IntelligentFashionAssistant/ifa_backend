@@ -21,8 +21,10 @@ namespace api.ApiDTOs
         public ICollection<long> Properties { get; set; }
         public ICollection<string> Sizes { get; set; }
         public StoreApiDto StoreApiDto { get; set; }
+        public ICollection<long> ColorsOfId { get; set; }
+        public ICollection<long> SizesOfId { get; set; }
 
-      public  class Requst
+        public  class Requst
         {
             public long Id { get; set; }
             public string Name { get; set; }
