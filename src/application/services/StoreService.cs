@@ -276,5 +276,13 @@ namespace application.services
                 CreatedAt = l.CreatedAt,
             }).ToList();
         }
+
+        public async Task<string> AddPhoto(string photo, ClaimsPrincipal claimsPrincipal)
+        {
+            var user = await _userManager.GetUserAsync(claimsPrincipal);
+            var storeId = await _storeRepository.GetByUserId(user.Id);
+
+            return await _storeRepository.AddPhoto(photo, storeId);
+        }
     }
 }

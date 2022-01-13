@@ -8,5 +8,6 @@ namespace application.persistence
         ICollection<Garment> GetGarmentsByCategory(long categoryId, long storeId);
         bool Approved(long storeId);
         Task<ICollection<Store>> GetAllNotApproved();
+        Task<string> AddPhoto(string photo, long storeId);
     }
 }

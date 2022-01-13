@@ -88,4 +88,14 @@ public class StoreRepository : IStoreRepository
 
         return true;
     }
+
+    public async Task<string>  AddPhoto(string photo , long storeId)
+    {
+        var store =  _appDbContext.Stores.Single(store => store.Id == storeId);
+
+         store.PhotoStore = photo;
+        _appDbContext.SaveChanges();
+
+        return photo;
+    }
 }

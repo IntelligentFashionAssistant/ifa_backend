@@ -11,10 +11,12 @@ namespace api.Controllers
     public class StoreController : Controller
     {
         private readonly IStoreService _storeService;
-        
-        public StoreController(IStoreService storeService)
+        private readonly IImageService _imageService;
+
+        public StoreController(IStoreService storeService , IImageService imageService)
         {
             _storeService = storeService;
+            _imageService = imageService;
         }
         
         
@@ -312,6 +314,32 @@ namespace api.Controllers
             }
             return Ok(response); 
         }
+
+        [HttpPost("AddPhoto")]
+        public async Task<IActionResult> AddPhoto(IFormFile photo)
+        {
+            var response = new ResponsApiDto<string, string>();
+
+            try
+            {
+                 if(photo == null)
+                {
+                    response.AddError("the photo is required");
+                    return BadRequest(response);
+                }
+
+                var photoName = await _imageService.SaveOneIamge(photo);
+                response.Data = await _storeService.AddPhoto(photoName, User);
+
+            }catch(Exception ex)
+            {
+                response.AddError(ex.Message);
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
+
     }
       
     public class StoreFeedbackApiDto
