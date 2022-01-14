@@ -12,8 +12,9 @@ namespace application.DTOs
         public string Password { get; set; }
         public DateTime? BirthDate { get; set; }
         public string StoreName { get; set; }
-        public string PhoneNumber { get; set; }
+        //public string PhoneNumber { get; set; }
         public string Username { get; set; }
+        public string StorePhoto { get; set; }
         public CustomerDto Customer { get; set; }
         public ICollection<LocationDto> Locations { get; set; }
         public DateTime CreatedAt { get; set; }

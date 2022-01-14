@@ -11,6 +11,7 @@ namespace application.services
         bool Approved(long storeId);
         Task<ICollection<StoreDto>> GetAllNotApproved();
         Task<string> AddPhoto(string photo, ClaimsPrincipal claimsPrincipal);
+        Task<StoreDto> Profile(ClaimsPrincipal claimsPrincipal);
 
     }
 }

@@ -66,7 +66,7 @@ app.UseStaticFiles(new StaticFileOptions
      FileProvider = new PhysicalFileProvider("c:\\Images"),
       //FileProvider = new PhysicalFileProvider("/home/moamen/temp/"),
 
-    RequestPath = "/StaticFiles"
+    RequestPath = "/Images"
 });
 
 

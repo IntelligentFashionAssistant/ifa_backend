@@ -22,12 +22,13 @@ public class Mapper
             {
                 Id = data.StoreDto.Id,
                 StoreName = data.StoreDto.StoreName,
-                PhoneNumber = data.StoreDto.PhoneNumber,
+               
                 Locations = data.StoreDto.Locations.Select(l => new LocationApiDto()
                 {
                     City = l.City,
                     Country = l.Country,
                     Street = l.Street,
+                    PhoneNumber = l.PhoneNumaber,
                 }).ToList()
             }
         }).ToList();

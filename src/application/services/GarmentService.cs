@@ -111,12 +111,13 @@ public class GarmentService : IGarmentService
                 {
                     Id = garment.Store.Id,
                     StoreName = garment.Store.Name,
-                    PhoneNumber = garment.Store.User.PhoneNumber,
+                    
                     Locations = garment.Store.Locations.Select(l => new LocationDto()
                     {
                         City = l.City,
                         Country = l.Country,
                         Street = l.Street,
+                        PhoneNumaber = l.PhoneNumaber
                     }).ToList(),
                     Rank = garment.Store.StoreFeedbacks.Sum(feedback => feedback.Rate) / garment.Store.StoreFeedbacks.Count
                 }

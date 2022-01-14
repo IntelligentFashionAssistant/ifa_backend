@@ -155,7 +155,6 @@ namespace application.services
             user.FirstName = obj.FirstName;
             user.LastName = obj.LastName;
             user.BirthDate = obj.BirthDate;
-            user.PhoneNumber = obj.PhoneNumber;
             user.UserName = obj.Username;
             var result = await _userManager.UpdateAsync(user);
 
@@ -175,7 +174,6 @@ namespace application.services
                     BirthDate = user.BirthDate,
                     Username = user.UserName,
                     StoreName = newStore.Name,
-                    PhoneNumber = user.PhoneNumber,
                     Email = user.Email,
                 };
             }
@@ -204,7 +202,6 @@ namespace application.services
                 LastName = l.User.LastName,
                 BirthDate= l.User.BirthDate,
                 Email = l.User.Email,
-                PhoneNumber = l.User.PhoneNumber,
                 Username = l.User.UserName,
                 CreatedAt = l.CreatedAt,
                 Rank = (l.StoreFeedbacks.Count() > 0) ? l.StoreFeedbacks.Sum(feedback => feedback.Rate) / l.StoreFeedbacks.Count() : 1
@@ -223,7 +220,6 @@ namespace application.services
                 FirstName = data.User.FirstName,
                 LastName = data.User.LastName,
                 Email = data.User.Email,
-                PhoneNumber = data.User.PhoneNumber,
                 Username = data.User.UserName,
                 BirthDate = data.User.BirthDate,
                 Locations = data.Locations.Select(l => new LocationDto
@@ -232,6 +228,7 @@ namespace application.services
                     Country = l.Country,
                     City = l.City,
                     Street = l.Street,
+                    PhoneNumaber = l.PhoneNumaber,
                 }).ToList(),
                 StoreFeedbackDto = data.StoreFeedbacks.Select(feedback => new StoreFeedbackDto()
                 {
@@ -271,7 +268,6 @@ namespace application.services
                 LastName = l.User.LastName,
                 BirthDate = l.User.BirthDate,
                 Email = l.User.Email,
-                PhoneNumber = l.User.PhoneNumber,
                 Username = l.User.UserName,
                 CreatedAt = l.CreatedAt,
             }).ToList();
@@ -283,6 +279,32 @@ namespace application.services
             var storeId = await _storeRepository.GetByUserId(user.Id);
 
             return await _storeRepository.AddPhoto(photo, storeId);
+        }
+
+        public async Task<StoreDto> Profile(ClaimsPrincipal claimsPrincipal)
+        {
+            var user = await _userManager.GetUserAsync(claimsPrincipal);
+            var storeId = await _storeRepository.GetByUserId(user.Id);
+            var store = await _storeRepository.Profile(storeId);
+
+            return new StoreDto
+            {
+                Id = store.Id,
+                StoreName = store.Name,
+                CreatedAt = store.CreatedAt,
+                FirstName = store.User.FirstName,
+                LastName = store.User.LastName,
+                Email = store.User.Email,
+                Username = store.User.UserName,
+                StorePhoto = (store.PhotoStore) == null ? "http://localhost:5001/Images/img.png" : "http://localhost:5001/Images/" + store.PhotoStore,
+                Locations = store.Locations.Select(l => new LocationDto { 
+                  Id = l.Id,
+                  City = l.City,
+                  Country = l.Country,
+                  Street = l.Street,
+                  PhoneNumaber =l.PhoneNumaber,
+                }).ToList(),
+            };
         }
     }
 }

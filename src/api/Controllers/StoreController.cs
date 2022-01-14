@@ -60,7 +60,6 @@ namespace api.Controllers
                         FirstName = data.FirstName,
                         CreatedAt = data.CreatedAt,
                         Email = data.Email,
-                        PhoneNumber = data.PhoneNumber,
                         Username = data.Username,
                         LastName = data.LastName,
                         Rank = data.Rank,
@@ -70,6 +69,7 @@ namespace api.Controllers
                             Country = location.Country,
                             City = location.City,
                             Street = location.Street,
+                            PhoneNumber = location.PhoneNumaber,
                         }).ToList(),
                     };
                 }
@@ -99,7 +99,6 @@ namespace api.Controllers
                     LastName = store.LastName,
                     CreatedAt = store.CreatedAt,
                     Email = store.Email,
-                    PhoneNumber = store.PhoneNumber,
                     Username = store.Username,
                     Rank = store.Rank,
                 }).ToList();
@@ -131,7 +130,6 @@ namespace api.Controllers
                     LastName = store.LastName,
                     CreatedAt = store.CreatedAt,
                     Email = store.Email,
-                    PhoneNumber = store.PhoneNumber,
                     Username = store.Username,
                     Rank = store.Rank,
                 }).ToList();
@@ -188,7 +186,7 @@ namespace api.Controllers
                             Country = l.Country,
                             City = l.City,
                             Street = l.Street,
-                            PhoneNumber = data.PhoneNumber,
+                            PhoneNumber = l.PhoneNumaber,
                         }).ToList(),
                         Username = data.Username,
                     };
@@ -220,7 +218,6 @@ namespace api.Controllers
                     Id = storeApiDto.Id,
                     FirstName = storeApiDto.FirstName,
                     LastName = storeApiDto.LastName,
-                    PhoneNumber = storeApiDto.PhoneNumber,
                     Username = storeApiDto.Username,
                     StoreName = storeApiDto.StoreName,
                 });
@@ -233,7 +230,6 @@ namespace api.Controllers
                         LastName = data.LastName,
                         StoreName = data.StoreName,
                         BirthDate = data.BirthDate,
-                        PhoneNumber = data.PhoneNumber,
                         Username = data.Username,
                         Email = data.Email,
                     };
@@ -337,6 +333,42 @@ namespace api.Controllers
                 return BadRequest(response);
             }
 
+            return Ok(response);
+        }
+
+        [HttpGet("Profile")]
+        public async Task<IActionResult> Profile()
+        {
+            var response = new ResponsApiDto<StoreApiDto, string>();
+
+            try
+            {
+                var data = await _storeService.Profile(User);
+                response.Data = new StoreApiDto
+                {
+                    Id = data.Id,
+                    StoreName = data.StoreName,
+                    CreatedAt = data.CreatedAt,
+                    Email = data.Email,
+                    FirstName = data.FirstName,
+                    LastName = data.LastName,
+                    Username = data.Username,
+                    StroePhoto = data.StorePhoto,
+                    Locations = data.Locations.Select(l => new LocationApiDto
+                    {
+                        Id = l.Id,
+                        City = l.City,
+                        Country = l.Country,
+                        Street = l.Street,
+                        PhoneNumber = l.PhoneNumaber
+                    }).ToList(),
+                };
+            }
+            catch(Exception ex)
+            {
+                response.AddError(ex.Message);
+                return NotFound(response);
+            }
             return Ok(response);
         }
 

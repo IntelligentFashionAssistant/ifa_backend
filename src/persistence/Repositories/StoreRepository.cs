@@ -98,4 +98,11 @@ public class StoreRepository : IStoreRepository
 
         return photo;
     }
+
+    public async Task<Store> Profile(long storeId) 
+    {
+        return _appDbContext.Stores.Where(store => store.Id == storeId)
+                                   .Include(store => store.User)
+                                   .Include(store => store.Locations).Single(); 
+    }
 }
