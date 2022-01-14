@@ -40,6 +40,7 @@ namespace Propertys.Repositories
                             .ThenInclude(s => s.Locations)
                             .Include(g => g.Store)
                             .ThenInclude(s => s.StoreFeedbacks)
+                            .Include(g => g.Sizes)
                             .AsNoTracking().ToList();
             return garments;
         }

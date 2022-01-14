@@ -19,5 +19,6 @@ public static class ServicesExtensions
         services.AddScoped<IImageService, ImageService>();
         services.AddScoped<IAuthService, AuthService>(); 
         services.AddScoped<IMailingService, MailingService>();
+        services.AddScoped<ILocationService, LocationService>();
     }
 }

@@ -160,7 +160,6 @@ namespace api.Controllers
                     BirthDate = storeApiDto.BirthDate,
                     Email = storeApiDto.Email,
                     Password = storeApiDto.Password,
-                    PhoneNumber = storeApiDto.PhoneNumber,
                     Username = storeApiDto.Username,
                     StoreName = storeApiDto.StoreName,
                     Rank = storeApiDto.Rank,
@@ -170,6 +169,7 @@ namespace api.Controllers
                         Country = l.Country,
                         City = l.City,
                         Street = l.Street,
+                        PhoneNumaber = l.PhoneNumber,
                     }).ToList()
                 }) ;
                  if(data != null)
@@ -188,8 +188,8 @@ namespace api.Controllers
                             Country = l.Country,
                             City = l.City,
                             Street = l.Street,
+                            PhoneNumber = data.PhoneNumber,
                         }).ToList(),
-                        PhoneNumber = data.PhoneNumber,
                         Username = data.Username,
                     };
                     

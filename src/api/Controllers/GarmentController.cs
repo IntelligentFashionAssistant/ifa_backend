@@ -140,28 +140,48 @@ namespace api.Controllers
         public IActionResult GetAllGaremnts()
         {
             var respons = new ResponsApiDto<ICollection<GarmentApiDto>, string>();
-            var data = _garmentServices.GetAll();
-
-            if (data != null)
+            try
             {
-                respons.Data = data.Select(garmet => new GarmentApiDto
-                {
-                    Name = garmet.Name,
-                    Description = garmet.Description,
-                    Brand = garmet.Brand,
-                    Price = garmet.Price,
-                    CategoryId = garmet.CategoryId,
-                    Category = garmet.Category,
-                    //StoreId = garmet.StoreId,
-                    //Images = garmet.Images,
-                    Colors = garmet.Colors,
-                    Sizes = garmet.Sizes
-                    //Properties = garmet.Properties.Select(p => p).ToList(),
-                }).ToList();
+                var data = _garmentServices.GetAll();
 
-                return Ok(respons);
+                if (data != null)
+                {
+                    respons.Data = data.Select(garmet => new GarmentApiDto
+                    {
+                        Id = garmet.Id,
+                        Name = garmet.Name,
+                        Description = garmet.Description,
+                        Brand = garmet.Brand,
+                        Price = garmet.Price,
+                        CategoryId = garmet.CategoryId,
+                        Category = garmet.Category,
+                        StoreId = garmet.StoreId,
+                        Images = garmet.Images,
+                        Colors = garmet.Colors,
+                        Sizes = garmet.Sizes,
+                        StoreApiDto = new StoreApiDto
+                        {
+                            StoreName = garmet.StoreDto.StoreName,
+                            Locations = garmet.StoreDto.Locations.Select(l => new LocationApiDto
+                            {
+                                Country = l.Country,
+                                City = l.City,
+                                Street = l.Street,
+                                PhoneNumber = l.PhoneNumaber,
+                                Id = l.Id,
+                            }).ToList(),
+                        },
+                        //Properties = garmet.Properties.Select(p => p).ToList(),
+                    }).ToList();
+
+                }
             }
-            respons.AddError("Not fuond");
+            catch(Exception ex)
+            {
+                respons.AddError(ex.Message);
+                return NotFound(respons);
+            }
+            
             return Ok(respons);
         }
 

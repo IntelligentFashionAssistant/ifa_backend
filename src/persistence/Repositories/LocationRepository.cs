@@ -55,5 +55,7 @@ namespace Propertys.Repositories
         
           return _appDbContext.Locations.Where(locaton => locaton.StoreId == storeId).ToList();        
         }
+
+
     }
 }

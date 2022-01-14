@@ -159,6 +159,19 @@ public class GarmentService : IGarmentService
             Category = garment.Category.Name,
             CreatedAt = garment.CreatedAt,
             StoreId = garment.StoreId,
+            StoreDto = new StoreDto
+            {
+                StoreName = garment.Store.Name,
+                Locations = garment.Store.Locations.Select(l => new LocationDto
+                {
+                    Id = l.Id,
+                    City = l.City,
+                    Country = l.Country,
+                    PhoneNumaber = l.PhoneNumaber,
+                    Street = l.Street,
+
+                }).ToList(),
+            },
             Colors = garment.Colors.Select(color => color.Name).ToList(),
             Images = garment.Images.Select(photo => photo.Path).ToList(),
             Sizes = garment.Sizes.Select(size => size.Name).ToList()

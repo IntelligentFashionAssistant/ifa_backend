@@ -81,7 +81,6 @@ namespace application.services
                 Email = obj.Email,
                 BirthDate = obj.BirthDate,
                 UserName = obj.Username,
-                PhoneNumber = obj.PhoneNumber,
             };
             var result = await _userManager.CreateAsync(user, obj.Password);
 
@@ -99,7 +98,8 @@ namespace application.services
                     StoreId = store.Id,
                     Country = obj.Locations.First().Country,
                     City = obj.Locations.First().City,
-                    Street = obj.Locations.First().Street
+                    Street = obj.Locations.First().Street,
+                    PhoneNumaber = obj.Locations.First().PhoneNumaber,
                 });
 
                 await _mailingService.SendEmailAsync(user.Email, "IFA", "Coinfarm");
@@ -112,13 +112,13 @@ namespace application.services
                     Email = user.Email,
                     Username = user.UserName,
                     StoreName = store.Name,
-                    PhoneNumber = user.PhoneNumber,
                     Locations = new List<LocationDto>(){new LocationDto()
                     {
                         Id = location.Id,
                         City = location.City,
                         Country = location.Country,
-                        Street = location.Street
+                        Street = location.Street,
+                        PhoneNumaber = location.PhoneNumaber,
                     }}
                 };
             }
