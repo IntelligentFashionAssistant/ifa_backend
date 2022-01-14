@@ -16,6 +16,6 @@ public class ApplicationDbContext : DbContext
         
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     { 
-        optionsBuilder.UseSqlServer("Server=localhost,1433;Database=TheTop;User ID=SA;Password=Aamm-1970");
+        optionsBuilder.UseSqlServer("Server=localhost,1433;Database=IFA2;User ID=SA;Password=Aamm-1970");
     }
 }
