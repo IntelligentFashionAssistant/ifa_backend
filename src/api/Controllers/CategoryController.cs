@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
+
     [ApiController]
     [Route("/category")]
     public class CategoryController : Controller
@@ -44,6 +45,7 @@ namespace api.Controllers
                 return NotFound(response);
             }
 
+    
             return Ok(response);
         }
 

@@ -1,4 +1,5 @@
 using api;
+using api.Utils;
 using application.utils;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
@@ -64,15 +65,10 @@ app.UseCors("AllowAllOrigins");
 app.UseStaticFiles(new StaticFileOptions
 {
      FileProvider = new PhysicalFileProvider("c:\\Images"),
-      //FileProvider = new PhysicalFileProvider("/home/moamen/temp/"),
-
+      // FileProvider = new PhysicalFileProvider("/home/moamen/temp/"),
     RequestPath = "/Images"
 });
-
-
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

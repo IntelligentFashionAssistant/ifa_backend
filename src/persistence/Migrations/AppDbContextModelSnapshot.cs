@@ -112,6 +112,10 @@ namespace repository.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("HEX")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -499,14 +503,14 @@ namespace repository.Migrations
                         {
                             Id = 1L,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6db85941-46a8-4b03-a8c6-cfd152a96bc2",
-                            CreatedAt = new DateTime(2022, 1, 13, 18, 43, 45, 396, DateTimeKind.Local).AddTicks(3532),
+                            ConcurrencyStamp = "f5384d4d-779c-49d1-ba7d-ce8503a4f37c",
+                            CreatedAt = new DateTime(2022, 1, 15, 3, 39, 58, 226, DateTimeKind.Local).AddTicks(6182),
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOA+FzMpPUW0zYnm2AW6Zl6n2pw5EAexSi8Ybxd6gUM4paOyAmmsEfB0ZAeay5z6jQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIzV7epA3/O6x4kZC5pFsirVteAjfMtqMKRDOEDiSTFoccHu3QcBudCJyu/gNkEkmg==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "admin"
@@ -606,21 +610,21 @@ namespace repository.Migrations
                         new
                         {
                             Id = 1L,
-                            ConcurrencyStamp = "f28f83f3-8ec7-4adb-8039-d18bbbf84f88",
+                            ConcurrencyStamp = "cffd802c-7c2d-4737-8414-5c128674975f",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2L,
-                            ConcurrencyStamp = "23321d65-12fa-45d2-b151-b0b9738b0f36",
+                            ConcurrencyStamp = "8ed24e9f-9d83-4b4f-ae05-3bad367b8158",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = 3L,
-                            ConcurrencyStamp = "d5757276-3c2b-4d92-aa28-c20e3c52446b",
+                            ConcurrencyStamp = "179c8cf5-3c01-4117-b2cf-6d642ae96190",
                             Name = "ShopOwner",
                             NormalizedName = "SHOPOWNER"
                         });
