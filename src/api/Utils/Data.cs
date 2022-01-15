@@ -16,12 +16,12 @@ public class Data
 
     public static List<Group> groups_category1 = new List<Group>()
     {
-        new Group() {Id = 1, Name = "Details", Description = "Any specific detail"},
+        new Group() {Id = 1, Name = "Details", Description = "Any specific detail", Categories = new List<Category>{ new Category {Id = 1}} },
         new Group()
         {
-            Id = 2, Name = "Hemline", Description = "the level of the lower edge of a garment such as a skirt"
+            Id = 2, Name = "Hemline", Description = "the level of the lower edge of a garment such as a skirt",Categories = new List<Category>{ new Category {Id = 1}}
         },
-        new Group() {Id = 3, Name = "Style", Description = "the style or specific design"},
+        new Group() {Id = 3, Name = "Style", Description = "the style or specific design",Categories = new List<Category>{ new Category {Id = 1}}},
     };
 
     public static List<Group> groups_category2 = new List<Group>()
@@ -1417,8 +1417,8 @@ public class Data
 
    public static List<Store> stores = new List<Store>()
    {
-       new Store() {Id = 1, Name = "first Store", IsApprove = true, UserId = 1},
-       new Store() {Id = 2, Name = "second Store", IsApprove = true, UserId = 2}
+       new Store() {Id = 1, Name = "first Store", IsApprove = true, UserId = 2},
+       new Store() {Id = 2, Name = "second Store", IsApprove = true, UserId = 3}
    };
         
         

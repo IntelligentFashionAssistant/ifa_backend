@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\application\application.csproj" />
-    <ProjectReference Include="..\Helpers\Helpers.csproj" />
+    <!--<ProjectReference Include="..\Helpers\Helpers.csproj" />-->
     <ProjectReference Include="..\persistence\persistence.csproj" />
   </ItemGroup>
 

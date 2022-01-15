@@ -64,8 +64,8 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowAllOrigins");
 app.UseStaticFiles(new StaticFileOptions
 {
-     FileProvider = new PhysicalFileProvider("c:\\Images"),
-      // FileProvider = new PhysicalFileProvider("/home/moamen/temp/"),
+    //FileProvider = new PhysicalFileProvider("c:\\Images"),
+    FileProvider = new PhysicalFileProvider("/home/moamen/temp/"),
     RequestPath = "/Images"
 });
 app.UseAuthentication();
