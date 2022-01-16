@@ -49,24 +49,17 @@ public class SeedController : Controller
             using (var transaction = _dbContext.Database.BeginTransaction())
             {
                 _dbContext.Database.ExecuteSqlInterpolated($"SET IDENTITY_INSERT dbo.groups ON");
-                foreach (var el in Data.groups_category1)
+                foreach (var (group, categoryIds) in Data.groups_categories)
                 {
-                var listC = new List<Category>();
-                    foreach( var i in el.Categories)
-                {
-
-                    listC.Add( _dbContext.Categorys.Where(c => c.Id == i.Id).Single());
-                }
-                    el.Categories = listC;
-                    var res = _dbContext.Groups.Add(el);
+                    group.Categories =  categoryIds
+                        .Select(id => _dbContext.Categorys.Single(category => category.Id == id)).ToList();
+                    _dbContext.Groups.Add(group);
                 }
            
-            _dbContext.SaveChanges();
+                _dbContext.SaveChanges();
                 _dbContext.Database.ExecuteSqlInterpolated($"SET IDENTITY_INSERT dbo.groups OFF");
-
                 transaction.Commit();
             }
-
             return Ok();
         }
 
@@ -169,6 +162,66 @@ public class SeedController : Controller
             transaction.Commit();
         }
 
+        return Ok();
+    }
+
+
+    [HttpPost("property")]
+    public IActionResult InsertDataIntoDataBaseProperties()
+    {
+        using (var transaction = _dbContext.Database.BeginTransaction())
+        {
+            _dbContext.Database.ExecuteSqlInterpolated($"SET IDENTITY_INSERT dbo.Properties ON");
+            foreach (var el in Data.properties)
+            {
+                var res = _dbContext.Properties.Add(el);
+            }
+
+            _dbContext.SaveChanges();
+            _dbContext.Database.ExecuteSqlInterpolated($"SET IDENTITY_INSERT dbo.Properties OFF");
+
+            transaction.Commit();
+        }
+        return Ok();
+    }
+    
+    
+    
+    [HttpPost("shape")]
+    public IActionResult InsertDataIntoDataBaseShape()
+    {
+        
+        // using (var transaction = _dbContext.Database.BeginTransaction())
+        // {
+            // _dbContext.Database.ExecuteSqlInterpolated($"SET IDENTITY_INSERT dbo. ON");
+            int x = 0, y = 0;
+            foreach (var (shapeName, propertyNames) in Data.shapes)
+            {
+                foreach (var propertyName in propertyNames)
+                {
+                    if (_dbContext.Properties.SingleOrDefault(el => el.Name.ToLower().Equals(propertyName.ToLower())) == null)
+                    {
+                        y++;
+                    }
+                    else
+                    {
+                        x++;
+                    }
+                }
+            }
+       
+            // _dbContext.SaveChanges();
+            // _dbContext.Database.ExecuteSqlInterpolated($"SET IDENTITY_INSERT dbo.groups OFF");
+            // transaction.Commit();
+        // }
+        return Ok(new {X=x, Y=y});
+    }
+    
+    
+    [HttpPost("garment")]
+    public IActionResult InsertDataIntoDataBaseGarment()
+    {
+        
         return Ok();
     }
 }

@@ -4,6 +4,21 @@ namespace Helpers;
 
 public class Data
 {
+
+
+    public static List<Color> colors = new List<Color>
+    {
+        new Color() {Id = 1, Name = "Yellow", HEX = "#F1C40F"},
+        new Color() {Id = 2, Name = "Orange", HEX = "#F39C12"},
+        new Color() {Id = 5, Name = "Blue", HEX = "#2E86C1"},
+        new Color() {Id = 9, Name = "Green", HEX = "#229954"},
+        new Color() {Id = 10, Name = "Black", HEX = "#000000"},
+        new Color() {Id = 14, Name = "Red", HEX = "#B03A2E"},
+        new Color() {Id = 24, Name = "Beige", HEX = "#FCF3CF"},
+        new Color() {Id = 59, Name = "Pink", HEX = "#F5B7B1"},
+        new Color() {Id = 92, Name = "White", HEX = "#FFFFFF"},
+    };
+
     public static List<Category> categories = new List<Category>()
     {
         new Category() {Id = 1, Name = "Skirt", Description = "the lower part of human"},
@@ -14,981 +29,507 @@ public class Data
     };
 
 
-    public static List<Group> groups_category1 = new List<Group>()
+    public static List<Size> sizes = new List<Size>
     {
-        new Group() {Id = 1, Name = "Details", Description = "Any specific detail", Categories = new List<Category>{ new Category {Id = 1}} },
-        new Group()
-        {
-            Id = 2, Name = "Hemline", Description = "the level of the lower edge of a garment such as a skirt",Categories = new List<Category>{ new Category {Id = 1}}
-        },
-        new Group() {Id = 3, Name = "Style", Description = "the style or specific design",Categories = new List<Category>{ new Category {Id = 1}}},
-    };
+        new Size() {Id = 1, Name = "S", CM = 90, CategoryId = 2},
+        new Size() {Id = 2, Name = "M", CM = 98, CategoryId = 2},
+        new Size() {Id = 3, Name = "L", CM = 110, CategoryId = 2},
+        new Size() {Id = 4, Name = "XL", CM = 120, CategoryId = 2},
 
-    public static List<Group> groups_category2 = new List<Group>()
-    {
-        new Group() {Id = 6, Name = "Style", Description = "Design"},
-        new Group() {Id = 7, Name = "Details", Description = "Special adds on the garment such as mesh or buttons"},
-        new Group() {Id = 8, Name = "Waistline", Description = "line encircling the narrowest part of the wais"},
-        new Group() {Id = 9, Name = "Height", Description = "length of a dress"},
-        new Group() {Id = 10, Name = "Neckline", Description = "the shape of a garment near the woman's neck"},
-        new Group() {Id = 11, Name = "Sleeve", Description = "Sleeve of a dress"},
-    };
+        new Size() {Id = 5, Name = "S", CM = 90, CategoryId = 5},
+        new Size() {Id = 6, Name = "M", CM = 98, CategoryId = 5},
+        new Size() {Id = 7, Name = "L", CM = 110, CategoryId = 5},
+        new Size() {Id = 8, Name = "XL", CM = 120, CategoryId = 5},
 
-    public static List<Group> groups_category3 = new List<Group>()
-    {
-        new Group() {Id = 4, Name = "Style", Description = "Design of the back of the garment"},
-        new Group() {Id = 5, Name = "Details", Description = "Such as buttons extra fabric or mesh"},
-    };
+        new Size() {Id = 9, Name = "S", CM = 90, CategoryId = 7},
+        new Size() {Id = 10, Name = "M", CM = 98, CategoryId = 7},
+        new Size() {Id = 11, Name = "L", CM = 110, CategoryId = 7},
+        new Size() {Id = 12, Name = "XL", CM = 120, CategoryId = 7},
 
-    public static List<Group> groups_category4 = new List<Group>()
-    {
-        new Group() {Id = 12, Name = "Slacks", Description = "loose wide pants"},
-        new Group() {Id = 13, Name = "Jeans", Description = "jeans"},
-        new Group() {Id = 14, Name = "Hemline", Description = "till where the end of a pants reach"},
-        new Group() {Id = 31, Name = "waist line", Description = "waist line"}
+        new Size() {Id = 9, Name = "28-31", CM = 75, CategoryId = 1},
+        new Size() {Id = 10, Name = "32-34", CM = 85, CategoryId = 1},
+        new Size() {Id = 11, Name = "34-36", CM = 95, CategoryId = 1},
+        new Size() {Id = 12, Name = "36-38", CM = 105, CategoryId = 1},
+
+
+        new Size() {Id = 9, Name = "28-31", CM = 75, CategoryId = 4},
+        new Size() {Id = 10, Name = "32-34", CM = 85, CategoryId = 4},
+        new Size() {Id = 11, Name = "34-36", CM = 95, CategoryId = 4},
+        new Size() {Id = 12, Name = "36-38", CM = 105, CategoryId = 4},
     };
 
 
-    public static List<Group> groups_category6 = new List<Group>()
-    {
-        new Group() {Id = 15, Name = "Details", Description = "Ex : Floral print"},
-        new Group() {Id = 16, Name = "Sleeve", Description = "sleeve of a top garment"},
-        new Group() {Id = 17, Name = "Neckline", Description = "shape of a garment near the neck"},
-        new Group() {Id = 18, Name = "Fabric", Description = "the material a garment is made of"},
-        new Group() {Id = 27, Name = "Shoulder", Description = "Design of the Shoulder"}
-    };
-
-    public static List<Group> groups_category5 = new List<Group>()
-    {
-        new Group() {Id = 19, Name = "Style", Description = "Design"},
-        new Group() {Id = 20, Name = "Sleeve", Description = "Sleeve of a top garment"},
-        new Group() {Id = 21, Name = "Neckline", Description = "the shape of a garment near the neck"},
-        new Group() {Id = 22, Name = "Details", Description = "Special extras on a top Eg: mesh"},
-        new Group() {Id = 23, Name = "Pattern", Description = "Eg: karo"},
-        new Group() {Id = 24, Name = "Cinched", Description = "tight from the neck area"},
-        new Group() {Id = 25, Name = "Fabric", Description = "material the garment is made of"},
-        new Group() {Id = 26, Name = "Hemline", Description = "till where the garment end on the waist"},
-        new Group() {Id = 28, Name = "Shoulder", Description = "How the garment is attached on the shoulder"}
-    };
-
-    public static List<Group> groups_category7 = new List<Group>()
-    {
-        new Group() {Id = 29, Name = "Style", Description = "style"},
-        new Group() {Id = 30, Name = "Details", Description = "details"}
-    };
-
-    public static List<Property> properties = new List<Property>()
-    {
-        new Property() {Id = 1, Name = "ankle", Description = "pants till  ankle", GroupId = 1},
-        new Property() {Id = 3, Name = "Mesh", Description = "Type of fabric details", GroupId = 18},
-        new Property()
-            {Id = 5, Name = "Tulip back ", Description = "tulip cut in the back of the top garment", GroupId = 4},
-        new Property()
-            {Id = 6, Name = "V back", Description = "V open shape from the back of the top garment", GroupId = 4},
-        new Property()
-            {Id = 7, Name = "Y Back", Description = "Y shaped open in the back of the top garment", GroupId = 4},
-        new Property()
-            {Id = 12, Name = "A line", Description = "dress that has a hem much wider than its shoulders", GroupId = 6},
-        new Property() {Id = 13, Name = "Beaded shift", Description = "?????", GroupId = 7},
-        new Property() {Id = 14, Name = "beaded collar", Description = "????? ??? ??? ??? (?????)", GroupId = 6},
-        new Property() {Id = 15, Name = "Bodycon", Description = "Dress that follow the body", GroupId = 6},
-        new Property()
-            {Id = 16, Name = "Box pleated", Description = "a-line shape and a gently exaggerated sleeve", GroupId = 6},
-        new Property() {Id = 17, Name = "Button Up", Description = "Buttoned dress", GroupId = 7},
-        new Property()
-        {
-            Id = 18, Name = "Capri", Description = "close-fitting women's pants that end above the ankle", GroupId = 6
-        },
-        new Property() {Id = 19, Name = "Cargo", Description = "Dress with many pockets", GroupId = 6},
-        new Property() {Id = 20, Name = "Pleated", Description = "???", GroupId = 6},
-        new Property() {Id = 21, Name = "Gathered waistline", Description = "Gathered to the waist", GroupId = 8},
-        new Property() {Id = 22, Name = "Long", Description = "lengthy  dress", GroupId = 9},
-        new Property() {Id = 23, Name = "Midi", Description = "Mid length dress", GroupId = 9},
-        new Property()
-            {Id = 25, Name = "Shawl collar", Description = "???? ????? ??? ??? ??? ???? ??????", GroupId = 10},
-        new Property() {Id = 26, Name = "Short sleeve", Description = "short sleeve top", GroupId = 11},
-        new Property() {Id = 27, Name = "Square", Description = "Square shaped neckline", GroupId = 10},
-        new Property()
-        {
-            Id = 28, Name = "Surplice neck", Description = "??? ?????? ???? ???? ??? ???? ????? ? ?????", GroupId = 10
-        },
-        new Property() {Id = 31, Name = "Turtleneck", Description = "Long neck dress", GroupId = 10},
-        new Property() {Id = 32, Name = "Tweed", Description = "short dress", GroupId = 9},
-        new Property() {Id = 33, Name = "Bootcut", Description = "Cotton fabric pants loose from ankles", GroupId = 12},
-        new Property() {Id = 34, Name = "Boyfriend", Description = "loose jeans or pants (straight fit)", GroupId = 13},
-        new Property() {Id = 35, Name = "Crop", Description = "Short jeans", GroupId = 13},
-        new Property() {Id = 36, Name = "Crop", Description = "Short fabric pants", GroupId = 12},
-        new Property() {Id = 37, Name = "Cuffed Hem", Description = "????? ???? ????? ?? ??????", GroupId = 13},
-        new Property() {Id = 38, Name = "Distressed", Description = "pants with holes", GroupId = 13},
-        new Property() {Id = 39, Name = "Straight Fit", Description = "wide pants", GroupId = 12},
-        new Property() {Id = 40, Name = "Straight Fit", Description = "wide jeans", GroupId = 13},
-        new Property() {Id = 41, Name = "Side slit", Description = "A slit from the knees down", GroupId = 14},
-        new Property() {Id = 43, Name = "Floral", Description = "Flowers print", GroupId = 15},
-        new Property() {Id = 44, Name = "Skinny", Description = "Skin tight pants", GroupId = 12},
-        new Property() {Id = 45, Name = "Skinny ", Description = "Skin tight pants", GroupId = 13},
-        new Property() {Id = 46, Name = "Lace", Description = "knitting thread in patterns", GroupId = 15},
-        new Property() {Id = 47, Name = "Long sleeve", Description = "Long sleeve", GroupId = 16},
-        new Property()
-        {
-            Id = 48, Name = "Peplum", Description = "a short section attached to the waistline of a blouse",
-            GroupId = 000
-        },
-        new Property() {Id = 49, Name = "Plaid", Description = "square pattern", GroupId = 15},
-        new Property() {Id = 51, Name = "Raglan sleeve", Description = "????? ?? ????? ???? ???????", GroupId = 16},
-        new Property() {Id = 52, Name = "Round neck", Description = "round shaped neckline", GroupId = 17},
-        new Property() {Id = 53, Name = "Satin", Description = "Fabric", GroupId = 18},
-        new Property() {Id = 54, Name = "asymmetric", Description = "Shoulder style", GroupId = 27},
-        new Property()
-        {
-            Id = 56, Name = "asymmetrical hem", Description = "the bottom half of the garment is cut in an angle",
-            GroupId = 19
-        },
-        new Property()
-            {Id = 57, Name = "Batwing", Description = "aslo called butterfly wide more fabric sleeves", GroupId = 20},
-        new Property() {Id = 58, Name = "Beaded collar", Description = "beaded on the neckline", GroupId = 21},
-        new Property() {Id = 59, Name = "Bell sleeve", Description = "bell shaped sleeve", GroupId = 20},
-        new Property() {Id = 60, Name = "Belted", Description = "belt on the waist", GroupId = 22},
-        new Property() {Id = 61, Name = "Buttoned", Description = "with buttons", GroupId = 22},
-        new Property() {Id = 62, Name = "caged", Description = "laces like stripes", GroupId = 19},
-        new Property() {Id = 63, Name = "Check-Patterned", Description = "karo", GroupId = 23},
-        new Property() {Id = 64, Name = "Cinched neck", Description = "gathered to the neck", GroupId = 24},
-        new Property() {Id = 65, Name = "Cinched waist", Description = "gathered to the waist", GroupId = 24},
-        new Property() {Id = 66, Name = "Collared", Description = "collared neck top", GroupId = 21},
-        new Property()
-            {Id = 67, Name = "Collarless", Description = "with no collar on the neck Eg: open shoulders", GroupId = 21},
-        new Property() {Id = 68, Name = "color block pocket", Description = "colored pocket on the top", GroupId = 19},
-        new Property() {Id = 69, Name = "Crepe", Description = "light fabric", GroupId = 25},
-        new Property() {Id = 70, Name = "Crochet", Description = "knitted with thick wool", GroupId = 25},
-        new Property()
-            {Id = 71, Name = "Deep V neck", Description = "the point of the V is till the waist line", GroupId = 21},
-        new Property()
-        {
-            Id = 72, Name = "Dolman",
-            Description = "???? ???? ???? ??? ???? ????? ???? ??? ????? ?????? ?? ??? ???? ????? ?????", GroupId = 20
-        },
-        new Property()
-            {Id = 73, Name = "Double breasted", Description = "Double buttons on a coat or blazer", GroupId = 19},
-        new Property()
-            {Id = 74, Name = "drape front", Description = "looks as if the fabric is wrapped ", GroupId = 19},
-        new Property() {Id = 75, Name = "Draped", Description = "draped top", GroupId = 19},
-        new Property() {Id = 76, Name = "Drawstring", Description = "style as a detail", GroupId = 22},
-        new Property()
-            {Id = 77, Name = "Drop waist", Description = "drops below the the waistline A shape", GroupId = 6},
-        new Property()
-        {
-            Id = 78, Name = "Fringe", Description = "fine lines/threads of fabric hanging over from the garment ",
-            GroupId = 22
-        },
-        new Property()
-            {Id = 79, Name = "Horizontal stripes ", Description = "Horizontal stripes pattern top", GroupId = 23},
-        new Property() {Id = 80, Name = "Vertical stripes", Description = "Vertical stripes pattern", GroupId = 23},
-        new Property() {Id = 81, Name = "High waist", Description = "High waist ", GroupId = 26},
-        new Property()
-        {
-            Id = 82, Name = "High slit", Description = "the openning of the dress is righ below the waist", GroupId = 26
-        },
-        new Property()
-        {
-            Id = 83, Name = "illusion neckline",
-            Description = "clear fabric that makes the dress invisible on the shoulders ", GroupId = 21
-        },
-        new Property() {Id = 84, Name = "knit raglan", Description = "wool knitted top", GroupId = 25},
-        new Property() {Id = 85, Name = "notched collar", Description = "type of collar", GroupId = 21},
-        new Property() {Id = 86, Name = "open knit", Description = "gapped knitted top", GroupId = 25},
-        new Property() {Id = 87, Name = "Pleated", Description = "???", GroupId = 19},
-        new Property() {Id = 88, Name = "sheer", Description = "invisible", GroupId = 25},
-        new Property() {Id = 89, Name = "Shirred", Description = "Detailed", GroupId = 22},
-        new Property() {Id = 90, Name = "Side slit", Description = "a slit from the waist down", GroupId = 19},
-        new Property() {Id = 91, Name = "Sleek", Description = "soft dress", GroupId = 6},
-        new Property() {Id = 92, Name = "Sleek", Description = "soft ", GroupId = 25},
-        new Property() {Id = 93, Name = "Sleeveless", Description = "no sleeves", GroupId = 20},
-        new Property()
-            {Id = 94, Name = "Slub knit", Description = "??? ????? ?? ???? ???? ??? ????? ?? ????", GroupId = 25},
-        new Property() {Id = 95, Name = "Split Back", Description = "opened from the back", GroupId = 4},
-        new Property() {Id = 96, Name = "Split neck", Description = "opening in the neck", GroupId = 21},
-        new Property() {Id = 97, Name = "Tie front", Description = "details", GroupId = 22},
-        new Property() {Id = 98, Name = "Twist front", Description = "wrapped style from the front", GroupId = 19},
-        new Property() {Id = 99, Name = "V neck", Description = "V shaped neckline", GroupId = 21},
-        new Property() {Id = 100, Name = "Windowpane", Description = "Grid pattern", GroupId = 23},
-        new Property() {Id = 101, Name = "Woven", Description = "Tightly knitted top", GroupId = 25},
-        new Property() {Id = 102, Name = "Zipper", Description = "a zipper in the top", GroupId = 22},
-        new Property() {Id = 103, Name = "Speckled ", Description = "dotted pattern", GroupId = 23},
-        new Property() {Id = 104, Name = "Bow front", Description = "front bow tie", GroupId = 22},
-        new Property()
-            {Id = 105, Name = "Butterfly", Description = "wide from the sleeve like butterfly", GroupId = 19},
-        new Property() {Id = 106, Name = "Chiffon", Description = "chiffon fabric", GroupId = 25},
-        new Property() {Id = 108, Name = "Draped shawl", Description = "?? ??? ???", GroupId = 22},
-        new Property() {Id = 109, Name = "Peasant", Description = "style with a peasant pattern", GroupId = 23},
-        new Property() {Id = 110, Name = "Racerback", Description = "sport clothing", GroupId = 4},
-        new Property()
-            {Id = 111, Name = "southwestern-patterned", Description = "southwestern-patterned", GroupId = 23},
-        new Property() {Id = 112, Name = "tartan", Description = "tartan pattern", GroupId = 23},
-        new Property() {Id = 113, Name = "Tassel", Description = "decorate with a tassel or tassels.", GroupId = 22},
-        new Property()
-            {Id = 114, Name = "Tie neck", Description = "a tie with the fabric near the neck ", GroupId = 21},
-        new Property() {Id = 115, Name = "Twisted-Hem", Description = "wrapped near the hem line", GroupId = 26},
-        new Property() {Id = 116, Name = "boat neck", Description = "U shaped neckline", GroupId = 17},
-        new Property() {Id = 117, Name = "cap-sleeve", Description = "? ??? ??? ???? (???)", GroupId = 20},
-        new Property() {Id = 118, Name = "M slit", Description = "M shaped slit in a dress ", GroupId = 6},
-        new Property()
-        {
-            Id = 119, Name = "Maxi dress", Description = "long dress that skims the top of the feet or the ankles",
-            GroupId = 9
-        },
-        new Property()
-        {
-            Id = 120, Name = "Off the shoulder", Description = "no shoulder it has sleeve unlike strapless",
-            GroupId = 27
-        },
-        new Property() {Id = 121, Name = "One shoulder", Description = "one shoulder strapped dress", GroupId = 27},
-        new Property() {Id = 122, Name = "Scalloped", Description = "neckline shape", GroupId = 17},
-        new Property()
-        {
-            Id = 123, Name = "Scoop neck",
-            Description =
-                "scoop neck shirt is one in which the scoop-shape neckline drops significantly below normal limits",
-            GroupId = 17
-        },
-        new Property() {Id = 124, Name = "Strapless", Description = "no straps on the shoulders", GroupId = 27},
-        new Property() {Id = 125, Name = "bottom property", Description = "some description", GroupId = 6},
-        new Property() {Id = 126, Name = "TestBottom", Description = "some disc", GroupId = 6},
-        new Property()
-            {Id = 10126, Name = "shoulder strap ", Description = "light strap on the shoulder", GroupId = 28},
-        new Property() {Id = 10127, Name = "U neckline", Description = "U shaped neckline", GroupId = 21},
-        new Property() {Id = 10128, Name = "Skin tight", Description = "the same size of the body", GroupId = 25},
-        new Property() {Id = 10129, Name = "Sporty", Description = "sport clothings", GroupId = 19},
-        new Property() {Id = 10130, Name = "Sleeveless", Description = "no sleeves", GroupId = 20},
-        new Property() {Id = 10131, Name = "Mesh", Description = "mesh fabric present in the garment", GroupId = 7},
-        new Property() {Id = 10132, Name = "High Waist", Description = "High Waist dress", GroupId = 8},
-        new Property() {Id = 10133, Name = "Sleeveless", Description = "no sleeves", GroupId = 11},
-        new Property() {Id = 10134, Name = "Round neck", Description = "Round neckline", GroupId = 10},
-        new Property() {Id = 10135, Name = "Deep V neckline", Description = "Deep V neckline", GroupId = 10},
-        new Property() {Id = 10136, Name = "Round neckline", Description = "round neckline", GroupId = 21},
-        new Property() {Id = 10137, Name = "assymetrical hem", Description = "assymetrical hem", GroupId = 26},
-        new Property() {Id = 10138, Name = "Long sleeves", Description = "long sleeve", GroupId = 20},
-        new Property() {Id = 10139, Name = "Draped Dress", Description = "Draped Dress", GroupId = 7},
-        new Property() {Id = 10140, Name = "V neck", Description = "V neck", GroupId = 10},
-        new Property() {Id = 10141, Name = "Belted", Description = "Belted waist dress", GroupId = 7},
-        new Property() {Id = 10142, Name = "Bowtie", Description = "Bowtie ", GroupId = 7},
-        new Property() {Id = 10143, Name = "Dolphin hem", Description = "Dolphin hem", GroupId = 2},
-        new Property() {Id = 10144, Name = "High Waist", Description = "High Waist", GroupId = 3},
-        new Property() {Id = 10145, Name = "side slit", Description = "ss", GroupId = 3},
-        new Property() {Id = 10146, Name = "asymmetrical hem", Description = "asymmetrical hem", GroupId = 2},
-        new Property() {Id = 10147, Name = "Vented", Description = "holes in the pants", GroupId = 1},
-        new Property() {Id = 10148, Name = "flat front", Description = "flat front", GroupId = 3},
-        new Property() {Id = 10149, Name = "flounce", Description = "f", GroupId = 3},
-        new Property() {Id = 10150, Name = "Collared", Description = "Collared", GroupId = 10},
-        new Property() {Id = 10151, Name = "U neckline", Description = "U shaped neckline", GroupId = 10},
-        new Property() {Id = 10152, Name = "Turtleneck", Description = "turtleneck ", GroupId = 21},
-        new Property() {Id = 10153, Name = "Maxi dress", Description = "Maxi dress", GroupId = 6},
-        new Property() {Id = 10154, Name = "Off-Shoulder ", Description = "Off-Shoulder ", GroupId = 28},
-        new Property() {Id = 10155, Name = "Off-Shoulder ", Description = "Off-Shoulder ", GroupId = 21},
-        new Property() {Id = 10156, Name = "Waist Flounce ", Description = "Flounce", GroupId = 22},
-        new Property()
-            {Id = 10157, Name = "Asymmetrical hem Dress", Description = "Asymmetrical hem Dress", GroupId = 6},
-        new Property() {Id = 10158, Name = "Wide leg", Description = "loose", GroupId = 29},
-        new Property() {Id = 10159, Name = "Vertical stripes", Description = "vertical stripes", GroupId = 29},
-        new Property() {Id = 10160, Name = "Empire", Description = "Empire", GroupId = 29},
-        new Property() {Id = 10161, Name = "wrap", Description = "w", GroupId = 29},
-        new Property() {Id = 10162, Name = "pleated flare", Description = "ee", GroupId = 29},
-        new Property() {Id = 10163, Name = "straight leg", Description = "s", GroupId = 29},
-        new Property() {Id = 10164, Name = "belted", Description = "s", GroupId = 30},
-        new Property() {Id = 10165, Name = "ruffle", Description = "s", GroupId = 30},
-        new Property() {Id = 10166, Name = "drawstring", Description = "s", GroupId = 30},
-        new Property() {Id = 10167, Name = "peplum", Description = "s", GroupId = 30},
-        new Property() {Id = 10168, Name = "Strapless", Description = "a", GroupId = 29},
-        new Property() {Id = 10169, Name = "asymmetric", Description = "a", GroupId = 29},
-        new Property() {Id = 10170, Name = "Culottes", Description = "z", GroupId = 29},
-        new Property() {Id = 10171, Name = "Two colors", Description = "s", GroupId = 29},
-        new Property() {Id = 10172, Name = "Deep V neck", Description = "s", GroupId = 29},
-        new Property() {Id = 10173, Name = "Flared leg", Description = "s", GroupId = 29},
-        new Property()
-            {Id = 10174, Name = "pattern peasant two colors", Description = "pattern peasant two colors", GroupId = 12},
-        new Property() {Id = 10175, Name = "Wide leg", Description = "loose", GroupId = 12},
-        new Property() {Id = 10176, Name = "High Waist", Description = "s", GroupId = 31},
-        new Property() {Id = 10177, Name = "low waist", Description = "a", GroupId = 31},
-        new Property() {Id = 10178, Name = "tulip", Description = "skirt property", GroupId = 3},
-        new Property() {Id = 10179, Name = "Box pleated", Description = "skirt property", GroupId = 3},
-        new Property() {Id = 10180, Name = "A line", Description = "skirt property", GroupId = 3},
-        new Property() {Id = 10181, Name = "Bias ", Description = "skirt property", GroupId = 3},
-        new Property() {Id = 10182, Name = "Layered", Description = "skirt property", GroupId = 3},
-        new Property() {Id = 10183, Name = "flip", Description = "skirt property", GroupId = 3},
-        new Property() {Id = 10184, Name = "full", Description = "skirt property", GroupId = 3},
-        new Property() {Id = 10185, Name = "panelled", Description = "skirt property", GroupId = 3},
-        new Property() {Id = 10186, Name = "bubble", Description = "skirt property", GroupId = 3},
-        new Property() {Id = 10187, Name = "pencil", Description = "skirt property", GroupId = 3}
+    // Groups 
+    public static Dictionary<Group, List<long>> groups_categories = new Dictionary<Group, List<long>>(){
+        {new Group(){Id=1,Name="Details"}, new List<long>(){1, 2,  5, 7}},
+        {new Group(){Id=2,Name="Hemline"}, new List<long>(){1, 4, 5}},
+        {new Group(){Id=3,Name="Style"}, new List<long>(){1, 2, 5, 7}},
+        {new Group(){Id=4,Name="Waistline"}, new List<long>(){2, 4}},
+        {new Group(){Id=5,Name="Height"}, new List<long>(){2}},
+        {new Group(){Id=6,Name="Neckline"}, new List<long>(){2,  5}},
+        {new Group(){Id=7,Name="Sleeve"}, new List<long>(){2,  5}},
+        {new Group(){Id=8,Name="Slacks"}, new List<long>(){4}},
+        {new Group(){Id=9,Name="Jeans"}, new List<long>(){4}},
+        {new Group(){Id=10,Name="Fabric"}, new List<long>(){5}},
+        {new Group(){Id=11,Name="Pattern"}, new List<long>(){5}},
+        {new Group(){Id=12,Name="Cinched"}, new List<long>(){5}},
+        {new Group(){Id=13,Name="Shoulder"}, new List<long>(){5}}
     };
 
 
-    public static List<Garment> garments = new List<Garment>()
+    // property 
+    public static List<Property> properties = new List<Property>(){
+        new Property(){Id=1,Name="ankle",GroupId=1},
+        new Property(){Id=3,Name="Mesh",GroupId=10},
+        new Property(){Id=5,Name="Tulip back",GroupId=3},
+        new Property(){Id=6,Name="V back",GroupId=3},
+        new Property(){Id=7,Name="Y Back",GroupId=3},
+        new Property(){Id=12,Name="A line",GroupId=3},
+        new Property(){Id=13,Name="Beaded shift",GroupId=1},
+        new Property(){Id=14,Name="beaded collar",GroupId=3},
+        new Property(){Id=15,Name="Bodycon",GroupId=3},
+        new Property(){Id=16,Name="Box pleated",GroupId=3},
+        new Property(){Id=17,Name="Button Up",GroupId=1},
+        new Property(){Id=18,Name="Capri",GroupId=3},
+        new Property(){Id=19,Name="Cargo",GroupId=3},
+        new Property(){Id=20,Name="Pleated",GroupId=3},
+        new Property(){Id=21,Name="Gathered waistline",GroupId=4},
+        new Property(){Id=22,Name="Long",GroupId=5},
+        new Property(){Id=23,Name="Midi",GroupId=5},
+        new Property(){Id=25,Name="Shawl collar",GroupId=3},
+        new Property(){Id=26,Name="Short sleeve",GroupId=7},
+        new Property(){Id=27,Name="Square",GroupId=3},
+        new Property(){Id=28,Name="Surplice neck",GroupId=3},
+        new Property(){Id=31,Name="Turtleneck",GroupId=3},
+        new Property(){Id=32,Name="Tweed",GroupId=5},
+        new Property(){Id=33,Name="Bootcut",GroupId=8},
+        new Property(){Id=34,Name="Boyfriend",GroupId=9},
+        new Property(){Id=35,Name="Crop",GroupId=9},
+        new Property(){Id=36,Name="Crop",GroupId=8},
+        new Property(){Id=37,Name="Cuffed Hem",GroupId=9},
+        new Property(){Id=38,Name="Distressed",GroupId=9},
+        new Property(){Id=39,Name="Straight Fit",GroupId=8},
+        new Property(){Id=40,Name="Straight Fit",GroupId=9},
+        new Property(){Id=41,Name="Side slit",GroupId=2},
+        new Property(){Id=43,Name="Floral",GroupId=1},
+        new Property(){Id=44,Name="Skinny",GroupId=8},
+        new Property(){Id=45,Name="Skinny",GroupId=9},
+        new Property(){Id=46,Name="Lace",GroupId=1},
+        new Property(){Id=47,Name="Long sleeve",GroupId=7},
+        new Property(){Id=48,Name="Peplum",GroupId=1},
+        new Property(){Id=49,Name="Plaid",GroupId=1},
+        new Property(){Id=51,Name="Raglan sleeve",GroupId=7},
+        new Property(){Id=52,Name="Round neck",GroupId=3},
+        new Property(){Id=53,Name="Satin",GroupId=10},
+        new Property(){Id=54,Name="asymmetric",GroupId=9},
+        new Property(){Id=56,Name="asymmetrical hem",GroupId=3},
+        new Property(){Id=57,Name="Batwing",GroupId=7},
+        new Property(){Id=58,Name="Beaded collar",GroupId=3},
+        new Property(){Id=59,Name="Bell sleeve",GroupId=7},
+        new Property(){Id=60,Name="Belted",GroupId=1},
+        new Property(){Id=61,Name="Buttoned",GroupId=1},
+        new Property(){Id=62,Name="caged",GroupId=3},
+        new Property(){Id=63,Name="Check-Patterned",GroupId=11},
+        new Property(){Id=64,Name="Cinched neck",GroupId=12},
+        new Property(){Id=65,Name="Cinched waist",GroupId=12},
+        new Property(){Id=66,Name="Collared",GroupId=3},
+        new Property(){Id=67,Name="Collarless",GroupId=3},
+        new Property(){Id=68,Name="color block pocket",GroupId=3},
+        new Property(){Id=69,Name="Crepe",GroupId=10},
+        new Property(){Id=70,Name="Crochet",GroupId=10},
+        new Property(){Id=71,Name="Deep V neck",GroupId=3},
+        new Property(){Id=72,Name="Dolman",GroupId=7},
+        new Property(){Id=73,Name="Double breasted",GroupId=3},
+        new Property(){Id=74,Name="drape front",GroupId=3},
+        new Property(){Id=75,Name="Draped",GroupId=3},
+        new Property(){Id=76,Name="Drawstring",GroupId=1},
+        new Property(){Id=77,Name="Drop waist",GroupId=3},
+        new Property(){Id=78,Name="Fringe",GroupId=1},
+        new Property(){Id=79,Name="Horizontal stripes",GroupId=11},
+        new Property(){Id=80,Name="Vertical stripes",GroupId=11},
+        new Property(){Id=81,Name="High waist",GroupId=2},
+        new Property(){Id=82,Name="High slit",GroupId=2},
+        new Property(){Id=83,Name="illusion neckline",GroupId=3},
+        new Property(){Id=84,Name="knit raglan",GroupId=10},
+        new Property(){Id=85,Name="notched collar",GroupId=3},
+        new Property(){Id=86,Name="open knit",GroupId=10},
+        new Property(){Id=87,Name="Pleated",GroupId=3},
+        new Property(){Id=88,Name="sheer",GroupId=10},
+        new Property(){Id=89,Name="Shirred",GroupId=1},
+        new Property(){Id=90,Name="Side slit",GroupId=3},
+        new Property(){Id=91,Name="Sleek",GroupId=3},
+        new Property(){Id=92,Name="Sleek",GroupId=10},
+        new Property(){Id=93,Name="Sleeveless",GroupId=7},
+        new Property(){Id=94,Name="Slub knit",GroupId=10},
+        new Property(){Id=95,Name="Split Back",GroupId=3},
+        new Property(){Id=96,Name="Split neck",GroupId=3},
+        new Property(){Id=97,Name="Tie front",GroupId=1},
+        new Property(){Id=98,Name="Twist front",GroupId=3},
+        new Property(){Id=99,Name="V neck",GroupId=3},
+        new Property(){Id=100,Name="Windowpane",GroupId=11},
+        new Property(){Id=101,Name="Woven",GroupId=10},
+        new Property(){Id=102,Name="Zipper",GroupId=1},
+        new Property(){Id=103,Name="Speckled",GroupId=11},
+        new Property(){Id=104,Name="Bow front",GroupId=1},
+        new Property(){Id=105,Name="Butterfly",GroupId=3},
+        new Property(){Id=106,Name="Chiffon",GroupId=10},
+        new Property(){Id=108,Name="Draped shawl",GroupId=1},
+        new Property(){Id=109,Name="Peasant",GroupId=11},
+        new Property(){Id=110,Name="Racerback",GroupId=3},
+        new Property(){Id=111,Name="southwestern-patterned",GroupId=11},
+        new Property(){Id=112,Name="tartan",GroupId=11},
+        new Property(){Id=113,Name="Tassel",GroupId=1},
+        new Property(){Id=114,Name="Tie neck",GroupId=3},
+        new Property(){Id=115,Name="Twisted-Hem",GroupId=2},
+        new Property(){Id=116,Name="boat neck",GroupId=3},
+        new Property(){Id=117,Name="cap-sleeve",GroupId=7},
+        new Property(){Id=118,Name="M slit",GroupId=3},
+        new Property(){Id=119,Name="Maxi dress",GroupId=5},
+        new Property(){Id=120,Name="Off the shoulder",GroupId=9},
+        new Property(){Id=121,Name="One shoulder",GroupId=9},
+        new Property(){Id=122,Name="Scalloped",GroupId=3},
+        new Property(){Id=123,Name="Scoop neck",GroupId=3},
+        new Property(){Id=124,Name="Strapless",GroupId=9},
+        new Property(){Id=125,Name="bottom property",GroupId=3},
+        new Property(){Id=126,Name="TestBottom",GroupId=3},
+        new Property(){Id=10126,Name="shoulder strap",GroupId=9},
+        new Property(){Id=10127,Name="U neckline",GroupId=3},
+        new Property(){Id=10128,Name="Skin tight",GroupId=10},
+        new Property(){Id=10129,Name="Sporty",GroupId=3},
+        new Property(){Id=10130,Name="Sleeveless",GroupId=7},
+        new Property(){Id=10131,Name="Mesh",GroupId=1},
+        new Property(){Id=10132,Name="High Waist",GroupId=4},
+        new Property(){Id=10133,Name="Sleeveless",GroupId=7},
+        new Property(){Id=10134,Name="Round neck",GroupId=3},
+        new Property(){Id=10135,Name="Deep V neckline",GroupId=3},
+        new Property(){Id=10136,Name="Round neckline",GroupId=3},
+        new Property(){Id=10137,Name="assymetrical hem",GroupId=2},
+        new Property(){Id=10138,Name="Long sleeves",GroupId=7},
+        new Property(){Id=10139,Name="Draped Dress",GroupId=1},
+        new Property(){Id=10140,Name="V neck",GroupId=3},
+        new Property(){Id=10141,Name="Belted",GroupId=1},
+        new Property(){Id=10142,Name="Bowtie",GroupId=1},
+        new Property(){Id=10143,Name="Dolphin hem",GroupId=2},
+        new Property(){Id=10144,Name="High Waist",GroupId=3},
+        new Property(){Id=10145,Name="side slit",GroupId=3},
+        new Property(){Id=10146,Name="asymmetrical hem",GroupId=2},
+        new Property(){Id=10147,Name="Vented",GroupId=1},
+        new Property(){Id=10148,Name="flat front",GroupId=3},
+        new Property(){Id=10149,Name="flounce",GroupId=3},
+        new Property(){Id=10150,Name="Collared",GroupId=3},
+        new Property(){Id=10151,Name="U neckline",GroupId=3},
+        new Property(){Id=10152,Name="Turtleneck",GroupId=3},
+        new Property(){Id=10153,Name="Maxi dress",GroupId=3},
+        new Property(){Id=10154,Name="Off-Shoulder",GroupId=9},
+        new Property(){Id=10155,Name="Off-Shoulder",GroupId=3},
+        new Property(){Id=10156,Name="Waist Flounce",GroupId=1},
+        new Property(){Id=10157,Name="Asymmetrical hem Dress",GroupId=3},
+        new Property(){Id=10158,Name="Wide leg",GroupId=3},
+        new Property(){Id=10159,Name="Vertical stripes",GroupId=3},
+        new Property(){Id=10160,Name="Empire",GroupId=3},
+        new Property(){Id=10161,Name="wrap",GroupId=3},
+        new Property(){Id=10162,Name="pleated flare",GroupId=3},
+        new Property(){Id=10163,Name="straight leg",GroupId=3},
+        new Property(){Id=10164,Name="belted",GroupId=1},
+        new Property(){Id=10165,Name="ruffle",GroupId=1},
+        new Property(){Id=10166,Name="drawstring",GroupId=1},
+        new Property(){Id=10167,Name="peplum",GroupId=1},
+        new Property(){Id=10168,Name="Strapless",GroupId=3},
+        new Property(){Id=10169,Name="asymmetric",GroupId=3},
+        new Property(){Id=10170,Name="Culottes",GroupId=3},
+        new Property(){Id=10171,Name="Two colors",GroupId=3},
+        new Property(){Id=10172,Name="Deep V neck",GroupId=3},
+        new Property(){Id=10173,Name="Flared leg",GroupId=3},
+        new Property(){Id=10174,Name="pattern peasant two colors",GroupId=8},
+        new Property(){Id=10175,Name="Wide leg",GroupId=8},
+        new Property(){Id=10176,Name="High Waist",GroupId=4},
+        new Property(){Id=10177,Name="low waist",GroupId=4},
+        new Property(){Id=10178,Name="tulip",GroupId=3},
+        new Property(){Id=10179,Name="Box pleated",GroupId=3},
+        new Property(){Id=10180,Name="A line",GroupId=3},
+        new Property(){Id=10181,Name="Bias",GroupId=3},
+        new Property(){Id=10182,Name="Layered",GroupId=3},
+        new Property(){Id=10183,Name="flip",GroupId=3},
+        new Property(){Id=10184,Name="full",GroupId=3},
+        new Property(){Id=10185,Name="panelled",GroupId=3},
+        new Property(){Id=10186,Name="bubble",GroupId=3},
+        new Property(){Id=10187,Name="pencil",GroupId=3}
+    };
+
+
+    // Garments
+    public static List<Garment> garments = new List<Garment>(){
+        new Garment(){Id=1,Name="A line Dress",Brand="Lazorde",Price=66.5M,CategoryId=2,StoreId=3},
+        new Garment(){Id=2,Name="Athletic Tank",Brand="adidas",Price=15M,CategoryId=5,StoreId=2 },
+        new Garment(){Id=4,Name="Athletic Tank",Brand="adidas",Price=17M,CategoryId=5,StoreId=3},
+        new Garment(){Id=5,Name="Mesh Pleated Jersey Dress",Brand="Coala",Price=19M,CategoryId=2,StoreId=2 },
+        new Garment(){Id=6,Name="Midi Bodycon dress",Brand="Havana",Price=55M,CategoryId=2,StoreId=2 },
+        new Garment(){Id=7,Name="Mesh Pleated Jersey Dress",Brand="Coala",Price=43M,CategoryId=2,StoreId=2 },
+        new Garment(){Id=8,Name="Capri styled dress",Brand="Mangos",Price=69.99M,CategoryId=2,StoreId=3},
+        new Garment(){Id=9,Name="assymetrical hem shirt",Brand="Mangos",Price=15M,CategoryId=5,StoreId=2 },
+        new Garment(){Id=10,Name="asymmetrical hem Top",Brand="Coala",Price=23M,CategoryId=5,StoreId=2 },
+        new Garment(){Id=11,Name="asymmetrical hem Shirt",Brand="Havana",Price=30M,CategoryId=5,StoreId=3},
+        new Garment(){Id=12,Name="asymmetrical hem long shirt",Brand="Berchika",Price=37M,CategoryId=5,StoreId=2 },
+        new Garment(){Id=13,Name="asymmetrical hem Top",Brand="Coala",Price=20M,CategoryId=5,StoreId=2 },
+        new Garment(){Id=14,Name="asymmetrical hem Top",Brand="Havana",Price=15M,CategoryId=5,StoreId=2 },
+        new Garment(){Id=15,Name="asymmetrical hem Top",Brand="Mangos",Price=25M,CategoryId=5,StoreId=2 },
+        new Garment(){Id=16,Name="asymmetrical hem Top",Brand="Lazorde",Price=22M,CategoryId=5,StoreId=2 },
+        new Garment(){Id=17,Name="asymmetrical hem Top",Brand="Havana",Price=30M,CategoryId=5,StoreId=3},
+        new Garment(){Id=18,Name="Bodycon Dress",Brand="Berchika",Price=39.99M,CategoryId=2,StoreId=3},
+        new Garment(){Id=19,Name="Bodycon Dress",Brand="Mangos",Price=39.99M,CategoryId=2,StoreId=2 },
+        new Garment(){Id=20,Name="Bodycon Dress",Brand="Coala",Price=64.99M,CategoryId=2,StoreId=2 },
+        new Garment(){Id=21,Name="Vertical camuflage",Brand="CarkoQ",Price=19.99M,CategoryId=5,StoreId=2 },
+        new Garment(){Id=22,Name="Chiffon sleeves",Brand="Mangos",Price=29.99M,CategoryId=5,StoreId=3},
+        new Garment(){Id=23,Name="Belted waist dress",Brand="Mangos",Price=49.99M,CategoryId=2,StoreId=3},
+        new Garment(){Id=24,Name="Belted Dress",Brand="Mangos",Price=19.99M,CategoryId=2,StoreId=2 },
+        new Garment(){Id=25,Name="Belted waist dress",Brand="Chivara",Price=24.99M,CategoryId=2,StoreId=2 },
+        new Garment(){Id=26,Name="Brush Stroke",Brand="Berchika",Price=19.99M,CategoryId=5,StoreId=3},
+        new Garment(){Id=27,Name="Button Up",Brand="Chivara",Price=14M,CategoryId=5,StoreId=3},
+        new Garment(){Id=28,Name="Buttoned with bowtie",Brand="Havana",Price=13M,CategoryId=5,StoreId=3},
+        new Garment(){Id=29,Name="Button Up with cinched waist",Brand="Coala",Price=19.99M,CategoryId=5,StoreId=3},
+        new Garment(){Id=30,Name="Draped Dress",Brand="Havana",Price=34.99M,CategoryId=2,StoreId=2 },
+        new Garment(){Id=31,Name="Gathered waistline Dress",Brand="Mangos",Price=19M,CategoryId=2,StoreId=2 },
+        new Garment(){Id=32,Name="Gathered waistline Dress",Brand="Sawsan Sweing",Price=24M,CategoryId=2,StoreId=3},
+        new Garment(){Id=33,Name="Gathered waistline Dress",Brand="Sawsan Sweing ",Price=63M,CategoryId=2,StoreId=3},
+        new Garment(){Id=34,Name="Crochet knitted ",Brand="Coala",Price=70M,CategoryId=5,StoreId=3},
+        new Garment(){Id=35,Name="Short Bootcut pants",Brand="Centerpoint ",Price=15M,CategoryId=4,StoreId=3},
+        new Garment(){Id=36,Name="Crop pants",Brand="Mangos",Price=12M,CategoryId=4,StoreId=3},
+        new Garment(){Id=37,Name="Bootcut",Brand="Coala",Price=15M,CategoryId=4,StoreId=3},
+        new Garment(){Id=38,Name="Diamond pattern dress",Brand="Mangos",Price=22M,CategoryId=2,StoreId=3},
+        new Garment(){Id=39,Name="Drop waist dress",Brand="Mangos",Price=39.99M,CategoryId=2,StoreId=3},
+        new Garment(){Id=40,Name="Drop waist dress",Brand="Coala",Price=30M,CategoryId=2,StoreId=3},
+        new Garment(){Id=41,Name="Drop waist dress",Brand="Havana",Price=29.99M,CategoryId=2,StoreId=3},
+        new Garment(){Id=42,Name="Drop waist dress",Brand="Lazorde",Price=40M,CategoryId=2,StoreId=2 },
+        new Garment(){Id=43,Name="Bodycon Dress",Brand="Lazorde",Price=40M,CategoryId=2,StoreId=3},
+        new Garment(){Id=44,Name="Bodycon Dress",Brand="Lazorde",Price=40M,CategoryId=2,StoreId=2 },
+        new Garment(){Id=45,Name="chiffon speckled top",Brand="Lora",Price=17M,CategoryId=5,StoreId=2 },
+        new Garment(){Id=46,Name="Front Draped top",Brand="Berchika",Price=21.5M,CategoryId=5,StoreId=2 },
+        new Garment(){Id=47,Name="Front Draped top",Brand="Mangos",Price=20M,CategoryId=5,StoreId=3},
+        new Garment(){Id=48,Name="Front Draped top",Brand="Coala",Price=29.99M,CategoryId=5,StoreId=3},
+        new Garment(){Id=49,Name="Front bowtie top",Brand="Coala",Price=29M,CategoryId=5,StoreId=3},
+        new Garment(){Id=50,Name="Drop waist dress",Brand="Coala",Price=49.99M,CategoryId=2,StoreId=3},
+        new Garment(){Id=51,Name="Asymmetrical hem Dress",Brand="Mangos",Price=35M,CategoryId=2,StoreId=3},
+        new Garment(){Id=52,Name="Mesh Pleated Jersey Dress",Brand="Havana",Price=53M,CategoryId=2,StoreId=3},
+        new Garment(){Id=53,Name="Front Draped Drop waist dress",Brand="Lazorde",Price=37M,CategoryId=2,StoreId=3},
+        new Garment(){Id=54,Name="Chiffon speckled top",Brand="Berchika",Price=15M,CategoryId=5,StoreId=2 },
+        new Garment(){Id=55,Name="A line dress",Brand="Mangos",Price=44M,CategoryId=2,StoreId=2 },
+        new Garment(){Id=56,Name="Long Drop waist",Brand="Mangos",Price=33M,CategoryId=2,StoreId=2 },
+        new Garment(){Id=57,Name="Drop waist dress",Brand="Coala",Price=53M,CategoryId=2,StoreId=3},
+        new Garment(){Id=58,Name="Chiffon speckled top",Brand="Lazorde",Price=19.99M,CategoryId=5,StoreId=2 },
+        new Garment(){Id=59,Name="Turtleneck knit raglan",Brand="Havana",Price=60M,CategoryId=5,StoreId=3},
+        new Garment(){Id=60,Name="Maxi dress",Brand="Mangos",Price=26M,CategoryId=2,StoreId=2 },
+        new Garment(){Id=61,Name="Maxi dress",Brand="Mangos",Price=27M,CategoryId=2,StoreId=2 },
+        new Garment(){Id=62,Name="Off-Shoulder ",Brand="Berchika",Price=22M,CategoryId=5,StoreId=2 },
+        new Garment(){Id=63,Name="Off-Shoulder ",Brand="Havana",Price=19.99M,CategoryId=5,StoreId=3},
+        new Garment(){Id=64,Name="Off-Shoulder waist flounce",Brand="Havana",Price=19.99M,CategoryId=5,StoreId=2 },
+        new Garment(){Id=65,Name="Off-Shoulder Bust flounce",Brand="Coala",Price=33M,CategoryId=5,StoreId=2 },
+        new Garment(){Id=66,Name="Two buttons Off-Shoulder ",Brand="Lazorde",Price=24M,CategoryId=5,StoreId=3},
+        new Garment(){Id=67,Name="A line dress",Brand="Coala",Price=66M,CategoryId=2,StoreId=2 },
+        new Garment(){Id=68,Name="Asymmetrical hem Dress",Brand="Havana",Price=29.99M,CategoryId=2,StoreId=3},
+        new Garment(){Id=69,Name="Batwing ",Brand="Mangos",Price=24.99M,CategoryId=5,StoreId=3},
+        new Garment(){Id=70,Name="southwestern-patterned jumbsuit",Brand="Mangos",Price=0M,CategoryId=7,StoreId=3},
+        new Garment(){Id=71,Name="Bright Textured jumbsuit",Brand="Havana",Price=22M,CategoryId=7,StoreId=3},
+        new Garment(){Id=74,Name="reddish jumbsuit",Brand="Havana",Price=37.99M,CategoryId=7,StoreId=2 },
+        new Garment(){Id=75,Name="Jumbsuit ",Brand="Berchika",Price=36M,CategoryId=7,StoreId=2 },
+        new Garment(){Id=76,Name="JumbSuit ",Brand="Lazorde",Price=33M,CategoryId=7,StoreId=2 },
+        new Garment(){Id=77,Name="Jubmbsuit",Brand="Coala",Price=29.99M,CategoryId=7,StoreId=2 },
+        new Garment(){Id=78,Name="Jubmbsuit",Brand="Havana",Price=26M,CategoryId=7,StoreId=3},
+        new Garment(){Id=79,Name="Jubmbsuit",Brand="Lazorde",Price=22M,CategoryId=7,StoreId=3},
+        new Garment(){Id=82,Name="Jubmbsuit",Brand="Lazorde",Price=44M,CategoryId=7,StoreId=2 },
+        new Garment(){Id=83,Name="Jubmbsuit",Brand="Coala",Price=33M,CategoryId=7,StoreId=3},
+        new Garment(){Id=84,Name="peplum jumbsuit",Brand="Havana",Price=29.99M,CategoryId=7,StoreId=3},
+        new Garment(){Id=85,Name="Culottes jumbsuit",Brand="Havana",Price=54M,CategoryId=7,StoreId=3},
+        new Garment(){Id=86,Name="Jubmbsuit",Brand="Mangos",Price=33M,CategoryId=7,StoreId=3},
+        new Garment(){Id=87,Name="Jubmbsuit",Brand="Havana",Price=44M,CategoryId=7,StoreId=3},
+        new Garment(){Id=89,Name="Jubmbsuit",Brand="Lazorde",Price=33M,CategoryId=7,StoreId=3},
+        new Garment(){Id=90,Name="Dolman sleeve top",Brand="Havana",Price=20M,CategoryId=5,StoreId=3},
+        new Garment(){Id=91,Name="patterned joggers",Brand="Havana",Price=25M,CategoryId=4,StoreId=3},
+        new Garment(){Id=92,Name="patterned joggers",Brand="Havana",Price=19.99M,CategoryId=4,StoreId=2 },
+        new Garment(){Id=93,Name="drawstring joggers",Brand="Lazorde",Price=20M,CategoryId=4,StoreId=3},
+        new Garment(){Id=94,Name="drawstring joggers",Brand="Coala",Price=20M,CategoryId=4,StoreId=3},
+        new Garment(){Id=95,Name="drawstring joggers",Brand="Mangos",Price=20M,CategoryId=4,StoreId=3},
+        new Garment(){Id=96,Name="drawstring joggers",Brand="Havana",Price=15M,CategoryId=4,StoreId=3},
+        new Garment(){Id=97,Name="Print skirt",Brand="Lookas",Price=22M,CategoryId=1,StoreId=2 },
+        new Garment(){Id=98,Name="Panelled skirt ",Brand="Lazorde",Price=40M,CategoryId=1,StoreId=2 },
+        new Garment(){Id=99,Name="Tall skirt",Brand="Havana",Price=22M,CategoryId=1,StoreId=2 },
+        new Garment(){Id=100,Name="Full skirt",Brand="Havana",Price=33M,CategoryId=1,StoreId=2 },
+        new Garment(){Id=101,Name="wrap end skirt",Brand="Havana",Price=37M,CategoryId=1,StoreId=3},
+        new Garment(){Id=102,Name="full skirt",Brand="Coala",Price=22M,CategoryId=1,StoreId=2 },
+        new Garment(){Id=103,Name="pencil style skirt",Brand="Havana",Price=33M,CategoryId=1,StoreId=2 },
+        new Garment(){Id=104,Name="full skirt",Brand="Mangos",Price=41M,CategoryId=1,StoreId=3},
+        new Garment(){Id=105,Name="pencil style skirt",Brand="Lazorde",Price=53M,CategoryId=1,StoreId=2 },
+        new Garment(){Id=106,Name="Panelled skirt",Brand="Lookas",Price=42M,CategoryId=1,StoreId=3},
+        new Garment(){Id=109,Name="A Line skirt",Brand="Berchika",Price=33M,CategoryId=1,StoreId=2 },
+        new Garment(){Id=110,Name="pencil style skirt",Brand="Havana",Price=33M,CategoryId=1,StoreId=2 },
+        new Garment(){Id=111,Name="Full skirt",Brand="Berchika",Price=22M,CategoryId=1,StoreId=3},
+        new Garment(){Id=112,Name="pencil style skirt",Brand="Mangos",Price=22M,CategoryId=1,StoreId=3},
+        new Garment(){Id=113,Name="Light jeans",Brand="Denims",Price=22M,CategoryId=4,StoreId=3},
+        new Garment(){Id=114,Name="High Waist jeans",Brand="Denims",Price=22M,CategoryId=4,StoreId=2 },
+        new Garment(){Id=115,Name="Light jeans",Brand="Denims",Price=22M,CategoryId=4,StoreId=3},
+        new Garment(){Id=116,Name="Dark blue jeans",Brand="Denims",Price=33M,CategoryId=4,StoreId=2 },
+        new Garment(){Id=117,Name="High Waist jeans",Brand="Denims",Price=22M,CategoryId=4,StoreId=3},
+        new Garment(){Id=118,Name="Light jeans",Brand="Denims",Price=22M,CategoryId=4,StoreId=3},
+        new Garment(){Id=119,Name="Light jeans",Brand="Denims",Price=33M,CategoryId=4,StoreId=3},
+        new Garment(){Id=120,Name="Light jeans",Brand="Denims",Price=33M,CategoryId=4,StoreId=2 },
+        new Garment(){Id=121,Name="blended grey black jeans",Brand="Denims",Price=37.99M,CategoryId=4,StoreId=2 },
+        new Garment(){Id=122,Name="Boyfriend jeans",Brand="Denims",Price=33M,CategoryId=4,StoreId=3},
+        new Garment(){Id=123,Name="Cuffed Hem",Brand="Denims",Price=22M,CategoryId=4,StoreId=3},
+        new Garment(){Id=124,Name="Skinny jeans",Brand="Denims",Price=44M,CategoryId=4,StoreId=2 },
+        new Garment(){Id=125,Name="Distressed jeans",Brand="Denims",Price=44M,CategoryId=4,StoreId=2 },
+        new Garment(){Id=126,Name="Distressed jeans",Brand="Denims",Price=33M,CategoryId=4,StoreId=2 },
+        new Garment(){Id=127,Name="Boyfriend jeans",Brand="Denims",Price=24.99M,CategoryId=4,StoreId=2 },
+        new Garment(){Id=128,Name="Distressed jeans",Brand="Mangos",Price=22M,CategoryId=4,StoreId=2 },
+        new Garment(){Id=129,Name="Distressed jeans",Brand="Denims",Price=33M,CategoryId=4,StoreId=2 },
+        new Garment(){Id=130,Name="Boyfriend jeans",Brand="Denims",Price=29.99M,CategoryId=4,StoreId=3},
+        new Garment(){Id=131,Name="Distressed jeans",Brand="Denims",Price=33M,CategoryId=4,StoreId=2 },
+        new Garment(){Id=132,Name="Boyfriend jeans",Brand="Denims",Price=22M,CategoryId=4,StoreId=2 },
+        new Garment(){Id=133,Name="Slacks ",Brand="Mangos",Price=17M,CategoryId=4,StoreId=3},
+        new Garment(){Id=134,Name="A Line Jeans skirt",Brand="Denims",Price=39.99M,CategoryId=1,StoreId=2 },
+        new Garment(){Id=135,Name="pencil style jeans skirt ",Brand="Denims",Price=19.99M,CategoryId=1,StoreId=2 },
+        new Garment(){Id=136,Name="Acid wash jeans",Brand="Denims",Price=29.99M,CategoryId=4,StoreId=2 },
+        new Garment(){Id=137,Name="Skinny jeans",Brand="Denims",Price=30M,CategoryId=4,StoreId=3},
+        new Garment(){Id=138,Name="Full skirt",Brand="Berchika",Price=50M,CategoryId=1,StoreId=3},
+        new Garment(){Id=139,Name="Full skirt",Brand="Sawsan Sweing ",Price=59.99M,CategoryId=1,StoreId=3},
+        new Garment(){Id=140,Name="M slit Dress",Brand="Havana",Price=77M,CategoryId=2,StoreId=3},
+        new Garment(){Id=141,Name="Dark skinny jeans",Brand="Denims",Price=29.99M,CategoryId=4,StoreId=3}
+    };
+
+
+    public static Dictionary<long, List<long>> colors_garments = new Dictionary<long, List<long>>
     {
-        new Garment()
-        {
-            Id = 1, Name = "A line Dress", Description = "A line Dress", Brand = "Lazorde", Price = new decimal(66.5),
-            CategoryId = 2, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 2, Name = "Athletic Tank", Description = "Sports Tank top", Brand = "adidas", Price = new decimal(5),
-            CategoryId = 5, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 4, Name = "Athletic Tank", Description = "sport clothing", Brand = "adidas", Price = new decimal(7),
-            CategoryId = 5, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 5, Name = "Mesh Pleated Jersey Dress", Description = "Mesh Pleated Jersey Dress", Brand = "Coala",
-            Price = new decimal(19), CategoryId = 2, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 6, Name = "Midi Bodycon dress", Description = "Midi Bodycon dress", Brand = "Havana",
-            Price = new decimal(5), CategoryId = 2, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 7, Name = "Mesh Pleated Jersey Dress", Description = "Mesh Pleated Jersey Dress", Brand = "Coala",
-            Price = new decimal(43), CategoryId = 2, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 8, Name = "Capri styled dress", Description = "Capri styled dress", Brand = "Mangos",
-            Price = new decimal(9.99), CategoryId = 2, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 9, Name = "assymetrical hem shirt", Description = "assymetrical hem shirt", Brand = "Mangos",
-            Price = new decimal(5), CategoryId = 5, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 10, Name = "asymmetrical hem Top", Description = "asymmetrical hem Top", Brand = "Coala",
-            Price = new decimal(3), CategoryId = 5, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 11, Name = "asymmetrical hem Shirt", Description = "asymmetrical hem Shirt", Brand = "Havana",
-            Price = new decimal(0), CategoryId = 5, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 12, Name = "asymmetrical hem long shirt", Description = "asymmetrical hem Top", Brand = "Berchika",
-            Price = new decimal(7), CategoryId = 5, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 13, Name = "asymmetrical hem Top", Description = "Chiffon shirt", Brand = "Coala",
-            Price = new decimal(0), CategoryId = 5, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 14, Name = "asymmetrical hem Top", Description = "asymmetrical hem shoulder straps", Brand = "Havana",
-            Price = new decimal(5), CategoryId = 5, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 15, Name = "asymmetrical hem Top", Description = "asymmetrical hem Top", Brand = "Mangos",
-            Price = new decimal(5), CategoryId = 5, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 16, Name = "asymmetrical hem Top", Description = "asymmetrical hem Top", Brand = "Lazorde",
-            Price = new decimal(2), CategoryId = 5, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 17, Name = "asymmetrical hem Top", Description = "asymmetrical hem Top", Brand = "Havana",
-            Price = new decimal(0), CategoryId = 5, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 18, Name = "Bodycon Dress", Description = "Bodycon Dress", Brand = "Berchika",
-            Price = new decimal(9.99), CategoryId = 2, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 19, Name = "Bodycon Dress", Description = "Bodycon Dress", Brand = "Mangos", Price = new decimal(9.99),
-            CategoryId = 2, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 20, Name = "Bodycon Dress", Description = "Bodycon with flared waist dress", Brand = "Coala",
-            Price = new decimal(4.99), CategoryId = 2, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 21, Name = "Vertical camuflage ", Description = "Vertical camuflage ", Brand = "CarkoQ",
-            Price = new decimal(9.99), CategoryId = 5, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 22, Name = "Chiffon sleeves ", Description = "Chiffon sleeves ", Brand = "Mangos",
-            Price = new decimal(9.99), CategoryId = 5, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 23, Name = "Belted waist dress", Description = "Belted waist dress", Brand = "Mangos",
-            Price = new decimal(9.99), CategoryId = 2, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 24, Name = "Belted Dress", Description = "Belted Dress", Brand = "Mangos", Price = new decimal(9.99),
-            CategoryId = 2, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 25, Name = "Belted waist dress", Description = "Belted waist dress", Brand = "Chivara",
-            Price = new decimal(4.99), CategoryId = 2, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 26, Name = "Brush Stroke", Description = "Brush Stroke", Brand = "Berchika", Price = new decimal(9.99),
-            CategoryId = 5, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 27, Name = "Button Up ", Description = "Button Up ", Brand = "Chivara", Price = new decimal(4),
-            CategoryId = 5, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 28, Name = "Buttoned with bowtie", Description = "Buttoned with bowtie", Brand = "Havana",
-            Price = new decimal(3), CategoryId = 5, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 29, Name = "Button Up with cinched waist", Description = "Button Up with cinched waist",
-            Brand = "Coala", Price = new decimal(9.99), CategoryId = 5, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 30, Name = "Draped Dress ", Description = "Draped Dress ", Brand = "Havana", Price = new decimal(4.99),
-            CategoryId = 2, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 31, Name = "Gathered waistline Dress", Description = "Gathered waistline Dress", Brand = "Mangos",
-            Price = new decimal(9), CategoryId = 2, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 32, Name = "Gathered waistline Dress", Description = "Gathered waistline Dress",
-            Brand = "Sawsan Sweing ", Price = new decimal(4), CategoryId = 2, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 33, Name = "Gathered waistline Dress", Description = "Gathered waistline Dress with bowtie",
-            Brand = "Sawsan Sweing ", Price = new decimal(3), CategoryId = 2, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 34, Name = "Crochet knitted ", Description = "Crochet knitted ", Brand = "Coala",
-            Price = new decimal(0), CategoryId = 5, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 35, Name = "Short Bootcut pants", Description = "Short Bootcut pants", Brand = "Centerpoint ",
-            Price = new decimal(5), CategoryId = 4, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 36, Name = "Crop pants", Description = "Crop pants", Brand = "Mangos", Price = new decimal(2),
-            CategoryId = 4, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 37, Name = "Bootcut", Description = "bootcut", Brand = "Coala", Price = new decimal(5), CategoryId = 4,
-            StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 38, Name = "Diamond pattern dress", Description = "Diamond pattern drop waist dress", Brand = "Mangos",
-            Price = new decimal(2), CategoryId = 2, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 39, Name = "Drop waist dress", Description = "Drop waist dress", Brand = "Mangos",
-            Price = new decimal(9.99), CategoryId = 2, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 40, Name = "Drop waist dress", Description = "Drop waist dress", Brand = "Coala",
-            Price = new decimal(0), CategoryId = 2, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 41, Name = "Drop waist dress", Description = "Drop waist dress", Brand = "Havana",
-            Price = new decimal(9.99), CategoryId = 2, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 42, Name = "Drop waist dress", Description = "Drop waist dress", Brand = "Lazorde",
-            Price = new decimal(0), CategoryId = 2, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 43, Name = "Bodycon Dress", Description = "Bodycon Dress", Brand = "Lazorde", Price = new decimal(0),
-            CategoryId = 2, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 44, Name = "Bodycon Dress", Description = "Bodycon Dress", Brand = "Lazorde", Price = new decimal(0),
-            CategoryId = 2, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 45, Name = "chiffon speckled top", Description = "chiffon speckled top", Brand = "Lora",
-            Price = new decimal(7), CategoryId = 5, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 46, Name = "Front Draped top", Description = "front Draped top", Brand = "Berchika",
-            Price = new decimal(1.5), CategoryId = 5, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 47, Name = "Front Draped top", Description = "Front Draped top", Brand = "Mangos",
-            Price = new decimal(0), CategoryId = 5, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 48, Name = "Front Draped top", Description = "Front Draped top", Brand = "Coala",
-            Price = new decimal(9.99), CategoryId = 5, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 49, Name = "Front bowtie top", Description = "Front bowtie top", Brand = "Coala",
-            Price = new decimal(9), CategoryId = 5, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 50, Name = "Drop waist dress", Description = "Drop waist dress", Brand = "Coala",
-            Price = new decimal(9.99), CategoryId = 2, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 51, Name = "Asymmetrical hem Dress", Description = "Asymmetrical hem Dress", Brand = "Mangos",
-            Price = new decimal(5), CategoryId = 2, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 52, Name = "Mesh Pleated Jersey Dress", Description = "Mesh Pleated Jersey Dress", Brand = "Havana",
-            Price = new decimal(53), CategoryId = 2, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 53, Name = "Front Draped Drop waist dress", Description = "Front Draped Drop waist dress",
-            Brand = "Lazorde", Price = new decimal(7), CategoryId = 2, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 54, Name = "Chiffon speckled top", Description = "chiffon speckled top", Brand = "Berchika",
-            Price = new decimal(5), CategoryId = 5, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 55, Name = "A line dress", Description = "A line dress", Brand = "Mangos", Price = new decimal(4),
-            CategoryId = 2, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 56, Name = "Long Drop waist", Description = "Long Drop waist", Brand = "Mangos",
-            Price = new decimal(3), CategoryId = 2, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 57, Name = "Drop waist dress", Description = "Drop waist dress", Brand = "Coala",
-            Price = new decimal(3), CategoryId = 2, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 58, Name = "Chiffon speckled top", Description = "Chiffon speckled top", Brand = "Lazorde",
-            Price = new decimal(9.99), CategoryId = 5, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 59, Name = "Turtleneck knit raglan", Description = "Turtleneck knit raglan", Brand = "Havana",
-            Price = new decimal(0), CategoryId = 5, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 60, Name = "Maxi dress", Description = "Maxi dress", Brand = "Mangos", Price = new decimal(6),
-            CategoryId = 2, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 61, Name = "Maxi dress", Description = "Maxi dress", Brand = "Mangos", Price = new decimal(7),
-            CategoryId = 2, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 62, Name = "Off-Shoulder ", Description = "Off-Shoulder ", Brand = "Berchika", Price = new decimal(2),
-            CategoryId = 5, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 63, Name = "Off-Shoulder ", Description = "Off-Shoulder ", Brand = "Havana", Price = new decimal(9.99),
-            CategoryId = 5, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 64, Name = "Off-Shoulder waist flounce", Description = "Off-Shoulder waist flounce", Brand = "Havana",
-            Price = new decimal(9.99), CategoryId = 5, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 65, Name = "Off-Shoulder Bust flounce", Description = "Off-Shoulder Bust flounce", Brand = "Coala",
-            Price = new decimal(3), CategoryId = 5, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 66, Name = "Two buttons Off-Shoulder ", Description = "Two buttons Off-Shoulder ", Brand = "Lazorde",
-            Price = new decimal(4), CategoryId = 5, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 67, Name = "A line dress", Description = "A line dress", Brand = "Coala", Price = new decimal(6),
-            CategoryId = 2, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 68, Name = "Asymmetrical hem Dress", Description = "Asymmetrical hem Dress", Brand = "Havana",
-            Price = new decimal(9.99), CategoryId = 2, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 69, Name = "Batwing ", Description = "Batwing ", Brand = "Mangos", Price = new decimal(4.99),
-            CategoryId = 5, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 70, Name = "southwestern-patterned jumbsuit",
-            Description = "southwestern-patterned jumbsuit with Wide legs", Brand = "Mangos", Price = new decimal(10),
-            CategoryId = 7, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 71, Name = "Bright Textured jumbsuit", Description = "Bright Textured jumbsuit with waist belt",
-            Brand = "Havana", Price = new decimal(2), CategoryId = 7, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 74, Name = "reddish jumbsuit", Description = "reddish jumbsuit with wide legs and belted",
-            Brand = "Havana", Price = new decimal(7.99), CategoryId = 7, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 75, Name = "Jumbsuit ", Description = "strapless wide legged Jumbsuit ", Brand = "Berchika",
-            Price = new decimal(6), CategoryId = 7, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 76, Name = "JumbSuit ", Description = "jumbsuit with waist detail and straps", Brand = "Lazorde",
-            Price = new decimal(3), CategoryId = 7, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 77, Name = "Jubmbsuit", Description = "jumbsuit with waist belt detail and straps", Brand = "Coala",
-            Price = new decimal(9.99), CategoryId = 7, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 78, Name = "Jubmbsuit", Description = "strapless jumbsuit with waist detail ", Brand = "Havana",
-            Price = new decimal(6), CategoryId = 7, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 79, Name = "Jubmbsuit", Description = "jumbsuit with chinched waist and wide straps",
-            Brand = "Lazorde", Price = new decimal(2), CategoryId = 7, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 82, Name = "Jubmbsuit", Description = "jumbsuit with chinched waist and straps", Brand = "Lazorde",
-            Price = new decimal(4), CategoryId = 7, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 83, Name = "Jubmbsuit", Description = "strapless jumbsuit with high waist ", Brand = "Coala",
-            Price = new decimal(3), CategoryId = 7, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 84, Name = "peplum jumbsuit", Description = "jumbsuit with peplum on bust and pockets",
-            Brand = "Havana", Price = new decimal(9.99), CategoryId = 7, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 85, Name = "Culottes jumbsuit", Description = "Culottes style jumbsuit with back bow",
-            Brand = "Havana", Price = new decimal(4), CategoryId = 7, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 86, Name = "Jubmbsuit", Description = "jumbsuit with chinched waist and straps", Brand = "Mangos",
-            Price = new decimal(3), CategoryId = 7, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 87, Name = "Jubmbsuit", Description = "front bow tie jumbsuit with flared legs", Brand = "Havana",
-            Price = new decimal(4), CategoryId = 7, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 89, Name = "Jubmbsuit", Description = "jumbsuit with pockets ", Brand = "Lazorde",
-            Price = new decimal(3), CategoryId = 7, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 90, Name = "Dolman sleeve top", Description = "Dolman sleeve top     ", Brand = "Havana",
-            Price = new decimal(0), CategoryId = 5, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 91, Name = "patterned joggers", Description = "patterned joggers with drawstring", Brand = "Havana",
-            Price = new decimal(5), CategoryId = 4, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 92, Name = "patterned joggers", Description = "patterned joggers", Brand = "Havana",
-            Price = new decimal(9.99), CategoryId = 4, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 93, Name = "drawstring joggers", Description = "high waist drawstring joggers", Brand = "Lazorde",
-            Price = new decimal(0), CategoryId = 4, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 94, Name = "drawstring joggers", Description = "drawstring joggers", Brand = "Coala",
-            Price = new decimal(0), CategoryId = 4, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 95, Name = "drawstring joggers", Description = "drawstring joggers", Brand = "Mangos",
-            Price = new decimal(0), CategoryId = 4, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 96, Name = "drawstring joggers", Description = "drawstring joggers", Brand = "Havana",
-            Price = new decimal(5), CategoryId = 4, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 97, Name = "Print skirt", Description = "Print skirt", Brand = "Lookas", Price = new decimal(22),
-            CategoryId = 1, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 98, Name = "Panelled skirt ", Description = "Panelled skirt ", Brand = "Lazorde",
-            Price = new decimal(40), CategoryId = 1, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 99, Name = "Tall skirt", Description = "Tall skirt", Brand = "Havana", Price = new decimal(2),
-            CategoryId = 1, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 100, Name = "Full skirt", Description = "Full skirt", Brand = "Havana", Price = new decimal(3),
-            CategoryId = 1, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 101, Name = "wrap end skirt", Description = "wrap end skirt", Brand = "Havana", Price = new decimal(7),
-            CategoryId = 1, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 102, Name = "full skirt", Description = "full skirt", Brand = "Coala", Price = new decimal(2),
-            CategoryId = 1, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 103, Name = "pencil style skirt", Description = "pencil style skirt", Brand = "Havana",
-            Price = new decimal(3), CategoryId = 1, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 104, Name = "full skirt", Description = "Full skirt", Brand = "Mangos", Price = new decimal(1),
-            CategoryId = 1, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 105, Name = "pencil style skirt", Description = "grey pencil style skirt", Brand = "Lazorde",
-            Price = new decimal(3), CategoryId = 1, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 106, Name = "Panelled skirt", Description = "Panelled skirt", Brand = "Lookas",
-            Price = new decimal(42), CategoryId = 1, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 109, Name = "A Line skirt", Description = "A Line skirt with chiffon ", Brand = "Berchika",
-            Price = new decimal(3), CategoryId = 1, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 110, Name = "pencil style skirt", Description = "pencil style skirt", Brand = "Havana",
-            Price = new decimal(3), CategoryId = 1, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 111, Name = "Full skirt", Description = "Full skirt", Brand = "Berchika", Price = new decimal(2),
-            CategoryId = 1, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 112, Name = "pencil style skirt", Description = "pencil style skirt", Brand = "Mangos",
-            Price = new decimal(2), CategoryId = 1, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 113, Name = "Light jeans", Description = "Distressed jeans", Brand = "Denims", Price = new decimal(2),
-            CategoryId = 4, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 114, Name = "High Waist jeans", Description = "High Waist straight fit jeans", Brand = "Denims",
-            Price = new decimal(2), CategoryId = 4, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 115, Name = "Light jeans", Description = "Distressed jeans", Brand = "Denims", Price = new decimal(2),
-            CategoryId = 4, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 116, Name = "Dark blue jeans", Description = "Dark blue jeans", Brand = "Denims",
-            Price = new decimal(3), CategoryId = 4, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 117, Name = "High Waist jeans", Description = "blended blue jeans", Brand = "Denims",
-            Price = new decimal(2), CategoryId = 4, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 118, Name = "Light jeans", Description = "Light jeans", Brand = "Denims", Price = new decimal(2),
-            CategoryId = 4, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 119, Name = "Light jeans", Description = "High waist skinny jeans", Brand = "Denims",
-            Price = new decimal(3), CategoryId = 4, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 120, Name = "Light jeans", Description = "Low waist distressed jeans", Brand = "Denims",
-            Price = new decimal(3), CategoryId = 4, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 121, Name = "blended grey black jeans",
-            Description = "blended grey black jeans with cuffed hem and low waist", Brand = "Denims",
-            Price = new decimal(7.99), CategoryId = 4, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 122, Name = "Boyfriend jeans", Description = "Boyfriend jeans ", Brand = "Denims",
-            Price = new decimal(3), CategoryId = 4, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 123, Name = "Cuffed Hem", Description = "Dark blue jeans with cuffed hem", Brand = "Denims",
-            Price = new decimal(2), CategoryId = 4, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 124, Name = "Skinny jeans", Description = "light blue Skinny jeans", Brand = "Denims",
-            Price = new decimal(4), CategoryId = 4, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 125, Name = "Distressed jeans", Description = "Distressed jeans", Brand = "Denims",
-            Price = new decimal(4), CategoryId = 4, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 126, Name = "Distressed jeans", Description = "Distressed light jeans", Brand = "Denims",
-            Price = new decimal(3), CategoryId = 4, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 127, Name = "Boyfriend jeans", Description = "Boyfriend jeans", Brand = "Denims",
-            Price = new decimal(4.99), CategoryId = 4, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 128, Name = "Distressed jeans", Description = "Distressed light jeans", Brand = "Mangos",
-            Price = new decimal(2), CategoryId = 4, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 129, Name = "Distressed jeans", Description = "Distressed light jeans WITH cuffed hems",
-            Brand = "Denims", Price = new decimal(3), CategoryId = 4, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 130, Name = "Boyfriend jeans", Description = "Boyfriend jeans", Brand = "Denims",
-            Price = new decimal(9.99), CategoryId = 4, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 131, Name = "Distressed jeans", Description = "Distressed jeans with cuffed hems", Brand = "Denims",
-            Price = new decimal(3), CategoryId = 4, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 132, Name = "Boyfriend jeans", Description = "MOM JEANS", Brand = "Denims", Price = new decimal(2),
-            CategoryId = 4, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 133, Name = "Slacks ", Description = "chinched ends slacks", Brand = "Mangos", Price = new decimal(7),
-            CategoryId = 4, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 134, Name = "A Line Jeans skirt", Description = "A Line Jeans skirt from denim", Brand = "Denims",
-            Price = new decimal(9.99), CategoryId = 1, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 135, Name = "pencil style jeans skirt ", Description = "pencil style jeans skirt from denim",
-            Brand = "Denims", Price = new decimal(9.99), CategoryId = 1, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 136, Name = "Acid wash jeans", Description = "Acid wash jeans", Brand = "Denims",
-            Price = new decimal(9.99), CategoryId = 4, StoreId = 2
-        },
-        new Garment()
-        {
-            Id = 137, Name = "Skinny jeans", Description = "Skinny jeans", Brand = "Denims", Price = new decimal(0),
-            CategoryId = 4, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 138, Name = "Full skirt", Description = "White Full skirt", Brand = "Berchika",
-            Price = new decimal(10), CategoryId = 1, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 139, Name = "Full skirt", Description = "Golden full skirt", Brand = "Sawsan Sweing ",
-            Price = new decimal(9.99), CategoryId = 1, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 140, Name = "M slit Dress", Description = "M slit Dress", Brand = "Havana", Price = new decimal(7),
-            CategoryId = 2, StoreId = 1
-        },
-        new Garment()
-        {
-            Id = 141, Name = "Dark skinny jeans", Description = "Dark skinny jeans", Brand = "Denims",
-            Price = new decimal(9.99), CategoryId = 4, StoreId = 1
-        },
+        {1, new List<long>() {1, 2}},
+        {2, new List<long>() {3, 1, 4}},
+        {4, new List<long>() {5, 6, 2}},
+        {5, new List<long>() {6}},
+        {6, new List<long>() {5, 7, 6, 3, 8}},
+        {7, new List<long>() {9, 5, 7, 6, 3, 2, 8}},
+        {8, new List<long>() {5, 7, 1}},
+        {9, new List<long>() {5, 3, 4, 2, 8}},
+        {10, new List<long>() {9, 5, 3, 2, 8}},
+        {11, new List<long>() {9, 5, 7}},
+        {12, new List<long>() {6, 3, 8}},
+        {13, new List<long>() {5}},
+        {14, new List<long>() {9}},
+        {15, new List<long>() {5, 3, 2, 8}},
+        {16, new List<long>() {9, 5, 7, 3}},
+        {17, new List<long>() {9, 5, 7, 6, 2}},
+        {18, new List<long>() {9, 5}},
+        {19, new List<long>() {9, 5}},
+        {20, new List<long>() {9}},
+        {21, new List<long>() {9}},
+        {22, new List<long>() {9, 5, 7, 3}},
+        {23, new List<long>() {5}},
+        {24, new List<long>() {5, 7, 6}},
+        {25, new List<long>() {8}},
+        {26, new List<long>() {9, 7, 8}},
+        {27, new List<long>() {5}},
+        {28, new List<long>() {2}},
+        {29, new List<long>() {6}},
+        {30, new List<long>() {8}},
+        {31, new List<long>() {9}},
+        {32, new List<long>() {3}},
+        {33, new List<long>() {9}},
+        {34, new List<long>() {9, 5, 3, 8}},
+        {35, new List<long>() {7, 3}},
+        {36, new List<long>() {5}},
+        {37, new List<long>() {9, 3}},
+        {38, new List<long>() {6}},
+        {39, new List<long>() {5, 6}},
+        {40, new List<long>() {6}},
+        {41, new List<long>() {5}},
+        {42, new List<long>() {3, 4}},
+        {43, new List<long>() {5, 6}},
+        {44, new List<long>() {8}},
+        {45, new List<long>() {9, 5, 6, 3}},
+        {46, new List<long>() {6, 3}},
+        {47, new List<long>() {3}},
+        {48, new List<long>() {6}},
+        {49, new List<long>() {3}},
+        {50, new List<long>() {5}},
+        {51, new List<long>() {4, 2}},
+        {52, new List<long>() {5}},
+        {53, new List<long>() {9, 3, 1, 4, 2, 8}},
+        {54, new List<long>() {9}},
+        {55, new List<long>() {9, 6, 3}},
+        {56, new List<long>() {9, 6}},
+        {57, new List<long>() {5}},
+        {58, new List<long>() {9}},
+        {59, new List<long>() {5}},
+        {60, new List<long>() {5}},
+        {61, new List<long>() {9, 3}},
+        {62, new List<long>() {8}},
+        {63, new List<long>() {5}},
+        {64, new List<long>() {3}},
+        {65, new List<long>() {3}},
+        {66, new List<long>() {4}},
+        {67, new List<long>() {9, 2}},
+        {68, new List<long>() {9, 5, 1}},
+        {69, new List<long>() {9}},
+        {70, new List<long>() {6, 3}},
+        {71, new List<long>() {9, 3}},
+        {74, new List<long>() {9, 6}},
+        {75, new List<long>() {6, 4}},
+        {76, new List<long>() {9, 6, 3}},
+        {77, new List<long>() {3}},
+        {78, new List<long>() {3}},
+        {79, new List<long>() {9, 5}},
+        {82, new List<long>() {9, 5}},
+        {83, new List<long>() {9, 5}},
+        {84, new List<long>() {9, 3}},
+        {85, new List<long>() {9}},
+        {86, new List<long>() {7}},
+        {87, new List<long>() {6}},
+        {89, new List<long>() {9}},
+        {90, new List<long>() {9, 3}},
+        {91, new List<long>() {9, 5}},
+        {92, new List<long>() {9, 3, 1}},
+        {93, new List<long>() {9, 5}},
+        {94, new List<long>() {9, 5, 8}},
+        {95, new List<long>() {9, 5, 3, 1}},
+        {96, new List<long>() {9, 6}},
+        {97, new List<long>() {9}},
+        {98, new List<long>() {7}},
+        {99, new List<long>() {7}},
+        {100, new List<long>() {3}},
+        {101, new List<long>() {3}},
+        {102, new List<long>() {9}},
+        {103, new List<long>() {3}},
+        {104, new List<long>() {9, 6, 3}},
+        {105, new List<long>() {9, 5, 3, 8}},
+        {106, new List<long>() {5, 6, 3}},
+        {109, new List<long>() {5, 7, 6, 3}},
+        {110, new List<long>() {9, 5, 7, 3}},
+        {111, new List<long>() {9, 7, 3}},
+        {112, new List<long>() {9, 5, 7, 6, 4, 8}},
+        {113, new List<long>() {5}},
+        {114, new List<long>() {3}},
+        {115, new List<long>() {5}},
+        {116, new List<long>() {3}},
+        {117, new List<long>() {3}},
+        {118, new List<long>() {3}},
+        {119, new List<long>() {3}},
+        {120, new List<long>() {9}},
+        {121, new List<long>() {5}},
+        {122, new List<long>() {3}},
+        {123, new List<long>() {3}},
+        {124, new List<long>() {9, 3}},
+        {125, new List<long>() {3}},
+        {126, new List<long>() {9}},
+        {127, new List<long>() {3}},
+        {128, new List<long>() {9}},
+        {129, new List<long>() {9}},
+        {130, new List<long>() {3}},
+        {131, new List<long>() {9}},
+        {132, new List<long>() {3}},
+        {133, new List<long>() {9, 5, 7, 3}},
+        {134, new List<long>() {3}},
+        {135, new List<long>() {3}},
+        {136, new List<long>() {5, 3}},
+        {137, new List<long>() {3}},
+        {138, new List<long>() {9, 6, 3}},
+        {139, new List<long>() {9, 1}},
+        {140, new List<long>() {9, 5, 6}},
+        {141, new List<long>() {5, 3}},
     };
 
 
@@ -1130,186 +671,6 @@ public class Data
     };
 
 
-    public static List<Color> colors = new List<Color>
-    {
-        new Color() {Id = 1, Name = "Yellow", HEX = "#F1C40F"},
-        new Color() {Id = 2, Name = "Orange", HEX = "#F39C12"},
-        new Color() {Id = 5, Name = "Blue", HEX = "#2E86C1"},
-        new Color() {Id = 9, Name = "Green", HEX = "#229954"},
-        new Color() {Id = 10, Name = "Black", HEX = "#000000"},
-        new Color() {Id = 14, Name = "Red", HEX = "#B03A2E"},
-        new Color() {Id = 24, Name = "Beige", HEX = "#FCF3CF"},
-        new Color() {Id = 59, Name = "Pink", HEX = "#F5B7B1"},
-        new Color() {Id = 92, Name = "White", HEX = "#FFFFFF"},
-    };
-
-
-    public static Dictionary<long, List<long>> colors_garments = new Dictionary<long, List<long>>
-    {
-        {1, new List<long>() {1, 2}},
-        {2, new List<long>() {3, 1, 4}},
-        {4, new List<long>() {5, 6, 2}},
-        {5, new List<long>() {6}},
-        {6, new List<long>() {5, 7, 6, 3, 8}},
-        {7, new List<long>() {9, 5, 7, 6, 3, 2, 8}},
-        {8, new List<long>() {5, 7, 1}},
-        {9, new List<long>() {5, 3, 4, 2, 8}},
-        {10, new List<long>() {9, 5, 3, 2, 8}},
-        {11, new List<long>() {9, 5, 7}},
-        {12, new List<long>() {6, 3, 8}},
-        {13, new List<long>() {5}},
-        {14, new List<long>() {9}},
-        {15, new List<long>() {5, 3, 2, 8}},
-        {16, new List<long>() {9, 5, 7, 3}},
-        {17, new List<long>() {9, 5, 7, 6, 2}},
-        {18, new List<long>() {9, 5}},
-        {19, new List<long>() {9, 5}},
-        {20, new List<long>() {9}},
-        {21, new List<long>() {9}},
-        {22, new List<long>() {9, 5, 7, 3}},
-        {23, new List<long>() {5}},
-        {24, new List<long>() {5, 7, 6}},
-        {25, new List<long>() {8}},
-        {26, new List<long>() {9, 7, 8}},
-        {27, new List<long>() {5}},
-        {28, new List<long>() {2}},
-        {29, new List<long>() {6}},
-        {30, new List<long>() {8}},
-        {31, new List<long>() {9}},
-        {32, new List<long>() {3}},
-        {33, new List<long>() {9}},
-        {34, new List<long>() {9, 5, 3, 8}},
-        {35, new List<long>() {7, 3}},
-        {36, new List<long>() {5}},
-        {37, new List<long>() {9, 3}},
-        {38, new List<long>() {6}},
-        {39, new List<long>() {5, 6}},
-        {40, new List<long>() {6}},
-        {41, new List<long>() {5}},
-        {42, new List<long>() {3, 4}},
-        {43, new List<long>() {5, 6}},
-        {44, new List<long>() {8}},
-        {45, new List<long>() {9, 5, 6, 3}},
-        {46, new List<long>() {6, 3}},
-        {47, new List<long>() {3}},
-        {48, new List<long>() {6}},
-        {49, new List<long>() {3}},
-        {50, new List<long>() {5}},
-        {51, new List<long>() {4, 2}},
-        {52, new List<long>() {5}},
-        {53, new List<long>() {9, 3, 1, 4, 2, 8}},
-        {54, new List<long>() {9}},
-        {55, new List<long>() {9, 6, 3}},
-        {56, new List<long>() {9, 6}},
-        {57, new List<long>() {5}},
-        {58, new List<long>() {9}},
-        {59, new List<long>() {5}},
-        {60, new List<long>() {5}},
-        {61, new List<long>() {9, 3}},
-        {62, new List<long>() {8}},
-        {63, new List<long>() {5}},
-        {64, new List<long>() {3}},
-        {65, new List<long>() {3}},
-        {66, new List<long>() {4}},
-        {67, new List<long>() {9, 2}},
-        {68, new List<long>() {9, 5, 1}},
-        {69, new List<long>() {9}},
-        {70, new List<long>() {6, 3}},
-        {71, new List<long>() {9, 3}},
-        {74, new List<long>() {9, 6}},
-        {75, new List<long>() {6, 4}},
-        {76, new List<long>() {9, 6, 3}},
-        {77, new List<long>() {3}},
-        {78, new List<long>() {3}},
-        {79, new List<long>() {9, 5}},
-        {82, new List<long>() {9, 5}},
-        {83, new List<long>() {9, 5}},
-        {84, new List<long>() {9, 3}},
-        {85, new List<long>() {9}},
-        {86, new List<long>() {7}},
-        {87, new List<long>() {6}},
-        {89, new List<long>() {9}},
-        {90, new List<long>() {9, 3}},
-        {91, new List<long>() {9, 5}},
-        {92, new List<long>() {9, 3, 1}},
-        {93, new List<long>() {9, 5}},
-        {94, new List<long>() {9, 5, 8}},
-        {95, new List<long>() {9, 5, 3, 1}},
-        {96, new List<long>() {9, 6}},
-        {97, new List<long>() {9}},
-        {98, new List<long>() {7}},
-        {99, new List<long>() {7}},
-        {100, new List<long>() {3}},
-        {101, new List<long>() {3}},
-        {102, new List<long>() {9}},
-        {103, new List<long>() {3}},
-        {104, new List<long>() {9, 6, 3}},
-        {105, new List<long>() {9, 5, 3, 8}},
-        {106, new List<long>() {5, 6, 3}},
-        {109, new List<long>() {5, 7, 6, 3}},
-        {110, new List<long>() {9, 5, 7, 3}},
-        {111, new List<long>() {9, 7, 3}},
-        {112, new List<long>() {9, 5, 7, 6, 4, 8}},
-        {113, new List<long>() {5}},
-        {114, new List<long>() {3}},
-        {115, new List<long>() {5}},
-        {116, new List<long>() {3}},
-        {117, new List<long>() {3}},
-        {118, new List<long>() {3}},
-        {119, new List<long>() {3}},
-        {120, new List<long>() {9}},
-        {121, new List<long>() {5}},
-        {122, new List<long>() {3}},
-        {123, new List<long>() {3}},
-        {124, new List<long>() {9, 3}},
-        {125, new List<long>() {3}},
-        {126, new List<long>() {9}},
-        {127, new List<long>() {3}},
-        {128, new List<long>() {9}},
-        {129, new List<long>() {9}},
-        {130, new List<long>() {3}},
-        {131, new List<long>() {9}},
-        {132, new List<long>() {3}},
-        {133, new List<long>() {9, 5, 7, 3}},
-        {134, new List<long>() {3}},
-        {135, new List<long>() {3}},
-        {136, new List<long>() {5, 3}},
-        {137, new List<long>() {3}},
-        {138, new List<long>() {9, 6, 3}},
-        {139, new List<long>() {9, 1}},
-        {140, new List<long>() {9, 5, 6}},
-        {141, new List<long>() {5, 3}},
-    };
-
-    public static List<Size> sizes = new List<Size>
-    {
-        new Size() {Id = 1, Name = "S", CM = 90, CategoryId = 2},
-        new Size() {Id = 2, Name = "M", CM = 98, CategoryId = 2},
-        new Size() {Id = 3, Name = "L", CM = 110, CategoryId = 2},
-        new Size() {Id = 4, Name = "XL", CM = 120, CategoryId = 2},
-
-        new Size() {Id = 5, Name = "S", CM = 90, CategoryId = 5},
-        new Size() {Id = 6, Name = "M", CM = 98, CategoryId = 5},
-        new Size() {Id = 7, Name = "L", CM = 110, CategoryId = 5},
-        new Size() {Id = 8, Name = "XL", CM = 120, CategoryId = 5},
-
-        new Size() {Id = 9, Name = "S", CM = 90, CategoryId = 7},
-        new Size() {Id = 10, Name = "M", CM = 98, CategoryId = 7},
-        new Size() {Id = 11, Name = "L", CM = 110, CategoryId = 7},
-        new Size() {Id = 12, Name = "XL", CM = 120, CategoryId = 7},
-
-        new Size() {Id = 9, Name = "28-31", CM = 75, CategoryId = 1},
-        new Size() {Id = 10, Name = "32-34", CM = 85, CategoryId = 1},
-        new Size() {Id = 11, Name = "34-36", CM = 95, CategoryId = 1},
-        new Size() {Id = 12, Name = "36-38", CM = 105, CategoryId = 1},
-
-
-        new Size() {Id = 9, Name = "28-31", CM = 75, CategoryId = 4},
-        new Size() {Id = 10, Name = "32-34", CM = 85, CategoryId = 4},
-        new Size() {Id = 11, Name = "34-36", CM = 95, CategoryId = 4},
-        new Size() {Id = 12, Name = "36-38", CM = 105, CategoryId = 4},
-    };
-
     public static Dictionary<string, List<string>> shapes = new Dictionary<string, List<string>>
     {
         {
@@ -1365,7 +726,7 @@ public class Data
                 "color block pocket", "Collarless", "Collared", "caged", "Belted", "beaded collar", "Cinched Waist",
                 "Round neck", "raglan sleeve", "Puff Sleeve", "Distressed", "peplum", "Lace-Paneled", "lace", "Flared",
                 "Fit", "Cuffed Hem", "Tweed", "Turtleneck", "suspender", "Surplice Neck", "Short Sleeve",
-                "Puff sleeves", "chiffon", "Midi", "", "gathered waistline", "pleated", "paneled", "maxi", "capri",
+                "Puff sleeves", "chiffon", "Midi", "gathered waistline", "pleated", "paneled", "maxi", "capri",
                 "Skinny", "Crop", "bootcut", "mesh ", "tulip-back", "V-Back", "ankle", "dolphin hem", "Vented"
             }
         },
@@ -1406,8 +767,8 @@ public class Data
             }
         }
     };
-    
-   public static List<User> users = new List<User>()
+
+    public static List<User> users = new List<User>()
    {
        new User(){FirstName = "Test User 1", LastName = "Test Uesr 1", Email = "testuser1@gmail.com", EmailConfirmed = true, UserName = "testusre1"},
        new User(){FirstName = "Test User 2", LastName = "Test Uesr 2", Email = "testuser2@gmail.com", EmailConfirmed = true, UserName = "testusre2"}
@@ -1415,18 +776,18 @@ public class Data
 
 
 
-   public static List<Store> stores = new List<Store>()
+    public static List<Store> stores = new List<Store>()
    {
        new Store() {Id = 1, Name = "first Store", IsApprove = true, UserId = 2},
        new Store() {Id = 2, Name = "second Store", IsApprove = true, UserId = 3}
    };
-        
-        
+
+
     public static List<Location> locations = new List<Location>()
     {
-        new Location(){Id = 1, City = "Amman", Country = "Jordan", StoreId = 1, Street = "Street xxx", PhoneNumaber = "079275755"}, 
-        new Location(){Id = 1, City = "Irbed", Country = "Jordan", StoreId = 2, Street = "Street yyy", PhoneNumaber = "079275756"}, 
+        new Location(){Id = 1, City = "Amman", Country = "Jordan", StoreId = 3, Street = "Street xxx", PhoneNumaber = "079275755"},
+        new Location(){Id = 1, City = "Irbed", Country = "Jordan", StoreId = 2, Street = "Street yyy", PhoneNumaber = "079275756"},
     };
-    
+
 
 }
