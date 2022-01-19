@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace application.persistence
 {
-    public interface IBodySizesRepository : IRepository<BodySizes, long>
+    public interface IBodySizesRepository : IRepository<BodySize, long>
     {
     }
 }

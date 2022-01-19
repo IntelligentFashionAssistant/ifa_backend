@@ -367,7 +367,7 @@ namespace api.Controllers
             catch(Exception ex)
             {
                 response.AddError(ex.Message);
-                return NotFound(response);
+                return BadRequest(response);
             }
             return Ok(response);
         }

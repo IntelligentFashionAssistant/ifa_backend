@@ -1,5 +1,6 @@
 using application.persistence;
 using domain.Entitys;
+using Microsoft.EntityFrameworkCore;
 using Propertys;
 
 namespace application.services;
@@ -23,6 +24,12 @@ public class SizeRepository : ISizeRepository
     public Size GetById(long id)
     {
         return _appDbContext.Sizes.Single(el => el.Id == id); 
+    }
+
+    public ICollection<Size> GetSizeByUserId(long id)
+    {
+        return _appDbContext.Users.Where(user => user.Id == id)
+            .Include(user => user.Sizes).Single().Sizes.ToList();
     }
 
     public ICollection<Size> GetAll()

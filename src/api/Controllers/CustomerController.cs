@@ -42,8 +42,6 @@ namespace api.Controllers
                     Email = data.Email,
                     City = data.City,
                     Country = data.Country,
-                    BirthDate = data.BirthDate,
-                    Password = data.Password,
                     Street = data.Street,
                     HouseNumber = data.HouseNumber,
                     Username = data.Username,

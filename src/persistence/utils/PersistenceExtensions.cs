@@ -16,8 +16,8 @@ public static class PersistenceExtensions
     public static void AddApplicationDbContext(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddDbContext<AppDbContext>(
-             //options => options.UseSqlServer("Server=SCS\\SQLEXPRESS;Database=IFA;Trusted_Connection=True;MultipleActiveResultSets=true")
-             options => options.UseSqlServer("Server=localhost,1433;Database=IFA2;User ID=SA;Password=Aamm-1970")
+             options => options.UseSqlServer("Server=SCS\\SQLEXPRESS;Database=IFA;Trusted_Connection=True;MultipleActiveResultSets=true")
+             //options => options.UseSqlServer("Server=localhost,1433;Database=IFA2;User ID=SA;Password=Aamm-1970")
         );
     }
 

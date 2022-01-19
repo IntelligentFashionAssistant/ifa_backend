@@ -188,9 +188,9 @@ namespace api.Controllers
         [HttpPost("CreateGarment")]
         public async  Task<IActionResult> CreateGarment([FromForm] GarmentApiDto.Requst garmentApiDto)
         {
-            //TODO 
-            //var user = await _userManager.GetUserAsync(User);
-            //long storeId = await _storeService.GetStoreByUserId(user.Id);
+            
+            var user = await _userManager.GetUserAsync(User);
+            long storeId = await _storeService.GetStoreByUserId(user.Id);
 
 
             var respons = new ResponsApiDto<GarmentApiDto, string>();
@@ -210,7 +210,7 @@ namespace api.Controllers
                     Brand = garmentApiDto.Brand,
                     Price = garmentApiDto.Price,
                     CategoryId = garmentApiDto.CategoryId,
-                    StoreId = garmentApiDto.StoreId,
+                    StoreId = storeId,
                     Images = images,
                     ColorsOfId = garmentApiDto.Colors,
                     Properties = garmentApiDto.Properties,
@@ -229,8 +229,10 @@ namespace api.Controllers
                         CategoryId = data.CategoryId,
                         StoreId = data.StoreId,
                         Images = data.Images,
-                        Colors = data.Colors,
-                        Sizes = data.Sizes
+                        ColorsOfId = garmentApiDto.Colors,
+                        Properties = garmentApiDto.Properties,
+                         SizesOfId = garmentApiDto.Sizes
+                        
                         //Properties = data.Properties.Select(p => p).ToList(),
                     };
                    
@@ -253,7 +255,8 @@ namespace api.Controllers
 
             try
             {
-                if (garmentApiDto.ImagesFiles.Count > 0)
+                 
+                if (garmentApiDto.ImagesFiles != null)
                 {
                     images = await _imageService.SaveListOfImages(garmentApiDto.ImagesFiles);
 

@@ -18,7 +18,7 @@ namespace Propertys.Repositories
             _appDbContext = appDbContext;
         }
 
-        public BodySizes Create(BodySizes obj)
+        public BodySize Create(BodySize obj)
         {
             _appDbContext.Add(obj);
             _appDbContext.SaveChanges();
@@ -28,22 +28,22 @@ namespace Propertys.Repositories
 
         public void DeleteById(long id)
         {
-            _appDbContext.Remove(new BodySizes { Id = id });
+            _appDbContext.Remove(new BodySize { Id = id });
             _appDbContext.SaveChanges();
 
         }
 
-        public ICollection<BodySizes> GetAll()
+        public ICollection<BodySize> GetAll()
         {
             return _appDbContext.BodySizes.ToList();
         }
 
-        public BodySizes GetById(long id)
+        public BodySize GetById(long id)
         {
             return _appDbContext.BodySizes.Single(bodySizes => bodySizes.Id == id);
         }
 
-        public BodySizes Update(BodySizes obj)
+        public BodySize Update(BodySize obj)
         {
             _appDbContext.Update(obj);
             _appDbContext.SaveChanges();

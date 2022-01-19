@@ -34,7 +34,7 @@ namespace application.services
     public async Task<CustomerDto> CalculateBodyShape(ClaimsPrincipal userClaim, BodySizesDto bodySizesDto)
         {
             var  user = await _userManager.GetUserAsync(userClaim);
-            var bodySizes = new BodySizes()
+            var bodySizes = new BodySize()
             {
                  BustSize = bodySizesDto.BustSize,
                  HipSize = bodySizesDto.HipSize,
@@ -54,7 +54,7 @@ namespace application.services
             user.Sizes = _calculateUserSizes(bodySizes);
             // save entered body sizes
             bodySizes = _bodySizesRepository.Create(bodySizes); 
-            user.BodySizesId = bodySizes.Id;
+            user.BodySizeId = bodySizes.Id;
             user.ShapeId = calculatedBodyShape.Id;
             var res = await _userManager.UpdateAsync(user);
             if (res.Succeeded)
@@ -73,10 +73,10 @@ namespace application.services
                     HouseNumber = updatedUser.HouseNumber,
                     Street = updatedUser.Street,
                     Username = updatedUser.UserName,
-                    BustSize = user.BodySizes.BustSize,
-                    HipSize = user.BodySizes.HipSize,
-                    WaistSize = user.BodySizes.WaistSize,
-                    ShoulderSize = user.BodySizes.ShoulderSize,
+                    BustSize = user.BodySize.BustSize,
+                    HipSize = user.BodySize.HipSize,
+                    WaistSize = user.BodySize.WaistSize,
+                    ShoulderSize = user.BodySize.ShoulderSize,
                     Shape = updatedUser.Shape?.Name
                 };
             }
@@ -90,26 +90,26 @@ namespace application.services
         }
 
 
-    private ICollection<Size> _calculateUserSizes(BodySizes bodySizes)
+    private ICollection<Size> _calculateUserSizes(BodySize bodySizes)
     {
         var categories = _categoryRepository.GetAll();
         var sizes = new List<Size>();
 
         
         // TODO : check category names 
-        var topCategories = new List<string>() {"tshirt", "top", "dress"};
-        var bottomCategories = new List<string>() {"pants", "skirt"};
+        var topCategories = new List<string>() { "Jumpsuit", "Top", "Dress" };
+        var bottomCategories = new List<string>() { "Pants", "Skirt" };
         foreach (var category in categories) // pants, tops, dress
         {
             // pants : 32 34  => 32
             // tops : M L XL => M
-            if (topCategories.Contains(category.Name.ToLower()))
+            if (topCategories.Contains(category.Name))
             {
-                sizes.Add(_sizeRepository.GetByCategoryId(category.Id).Single(s => Math.Abs(s.CM - bodySizes.BustSize) < 2));
+                sizes.Add(_sizeRepository.GetByCategoryId(category.Id).Where(s => Math.Abs(s.CM - bodySizes.BustSize) < 20).FirstOrDefault());
             }
             else
             {
-                sizes.Add(_sizeRepository.GetByCategoryId(category.Id).Single(s => Math.Abs(s.CM - bodySizes.WaistSize) < 2));
+                sizes.Add(_sizeRepository.GetByCategoryId(category.Id).Where(s => Math.Abs(s.CM - bodySizes.WaistSize) < 20).FirstOrDefault());
             }
         }
 
@@ -135,7 +135,7 @@ namespace application.services
         /// </summary>
         /// <param name="b"></param>
         /// <returns></returns>
-        private Shape _calculateBodyShape(BodySizes b)
+        private Shape _calculateBodyShape(BodySize b)
         {
             // TODO : return the correct shape
             Shape shape = null; 

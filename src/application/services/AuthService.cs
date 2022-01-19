@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using domain.Entitys;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -55,15 +56,12 @@ public class AuthService : IAuthService
 
     private async Task<List<Claim>> GetClaims()
     {
+        var fullName = _user.FirstName + ' ' + _user.LastName;
         var claims = new List<Claim> {new Claim("email", _user.Email)};
-        //claims.Add(new Claim("id", _user.Id.ToString()));
         claims.Add(new Claim(ClaimTypes.NameIdentifier, _user.Id.ToString()));
         var roles = await _userManager.GetRolesAsync(_user);
         claims.Add(new Claim("role", roles.First()));
-        // foreach (var role in roles)
-        // {
-        //     claims.Add(new Claim("role", role));
-        // }
+        claims.Add(new Claim("FullName", fullName));
         return claims;
     }
 
@@ -75,9 +73,27 @@ public class AuthService : IAuthService
             // issuer: jwtSettings.GetSection("validIssuer").Value,
             // audience: jwtSettings.GetSection("validAudience").Value,
             claims: claims,
-            expires: DateTime.Now.AddMinutes(5),
+            expires: DateTime.Now.AddHours(5),
             signingCredentials: signingCredentials
         );
         return tokenOptions;
+    }
+
+    public async Task<string> ConfirmEmailAsync(string userId, string token)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user == null)
+             throw new NotImplementedException("User not found");
+
+        var decodedToken = WebEncoders.Base64UrlDecode(token);
+        string normalToken = Encoding.UTF8.GetString(decodedToken);
+
+        var result = await _userManager.ConfirmEmailAsync(user, normalToken);
+
+        if (result.Succeeded)
+            return "Email confirmed successfully!";
+               
+
+         throw new NotImplementedException("Email did not confirm");
     }
 }

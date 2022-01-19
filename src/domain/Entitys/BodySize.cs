@@ -3,7 +3,7 @@
 
 namespace domain.Entitys
 {
-   public class BodySizes
+   public class BodySize
     {
         public long Id { get; set; }
         public float ShoulderSize { get; set; }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace repository.Migrations
 {
-    public partial class v1 : Migration
+    public partial class v : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -62,6 +62,7 @@ namespace repository.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HEX = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -198,7 +199,7 @@ namespace repository.Migrations
                     HouseNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phtot = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BodySizesId = table.Column<long>(type: "bigint", nullable: true),
+                    BodySizeId = table.Column<long>(type: "bigint", nullable: true),
                     ShapeId = table.Column<long>(type: "bigint", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -219,8 +220,8 @@ namespace repository.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_BodySizes_BodySizesId",
-                        column: x => x.BodySizesId,
+                        name: "FK_AspNetUsers_BodySizes_BodySizeId",
+                        column: x => x.BodySizeId,
                         principalTable: "BodySizes",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -426,6 +427,7 @@ namespace repository.Migrations
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumaber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StoreId = table.Column<long>(type: "bigint", nullable: false)
                 },
@@ -618,15 +620,15 @@ namespace repository.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1L, "72303163-1c6f-46b7-9b0f-2488317811cf", "Admin", "ADMIN" },
-                    { 2L, "4708ddb8-4ea9-42c5-abaa-f9a7301bf714", "Customer", "CUSTOMER" },
-                    { 3L, "0ab78f57-052b-48bc-9cf9-4761fa9a3602", "ShopOwner", "SHOPOWNER" }
+                    { 1L, "17c25429-53ac-4c65-8859-1787e4a3e7e2", "Admin", "ADMIN" },
+                    { 2L, "e649ea50-904b-4bcc-8ebd-26abf1615a5c", "Customer", "CUSTOMER" },
+                    { 3L, "e56ec7eb-eb04-4f7c-a989-1595c6f48368", "ShopOwner", "SHOPOWNER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "BirthDate", "BodySizesId", "City", "ConcurrencyStamp", "Country", "CreatedAt", "Email", "EmailConfirmed", "FirstName", "HouseNumber", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Phtot", "SecurityStamp", "ShapeId", "Street", "TwoFactorEnabled", "UserName" },
-                values: new object[] { 1L, 0, null, null, null, "d802a31f-4a9d-4742-b1df-f0855ccb7129", null, new DateTime(2022, 1, 10, 3, 0, 5, 248, DateTimeKind.Local).AddTicks(7602), "admin@admin.com", false, null, null, null, false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAEAACcQAAAAEEQCZq5v/KQC5upsL4R34AomnW9CdwwpmA6a015EaYrTmadcSSkLfVBm8B+0Lkakwg==", null, false, null, null, null, null, false, "admin" });
+                columns: new[] { "Id", "AccessFailedCount", "BirthDate", "BodySizeId", "City", "ConcurrencyStamp", "Country", "CreatedAt", "Email", "EmailConfirmed", "FirstName", "HouseNumber", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Phtot", "SecurityStamp", "ShapeId", "Street", "TwoFactorEnabled", "UserName" },
+                values: new object[] { 1L, 0, null, null, null, "27a02084-8c15-4158-a8a2-ea3f9ec5817e", null, new DateTime(2022, 1, 18, 1, 35, 18, 297, DateTimeKind.Local).AddTicks(8684), "admin@admin.com", false, null, null, null, false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAEAACcQAAAAEGy5mLNvxdxrindGhnwEAD4vokb5Kc0UO54MBm2miWkcg5TPxPW51soNs0K46VUkmA==", null, false, null, null, null, null, false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -666,9 +668,9 @@ namespace repository.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_BodySizesId",
+                name: "IX_AspNetUsers_BodySizeId",
                 table: "AspNetUsers",
-                column: "BodySizesId");
+                column: "BodySizeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_ShapeId",

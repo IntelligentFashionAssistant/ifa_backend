@@ -1,9 +1,11 @@
 ﻿using System.Security.Claims;
+using System.Text;
 using application.DTOs;
 using application.exceptions;
 using application.persistence;
 using domain.Entitys;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace application.services
 {
@@ -102,7 +104,17 @@ namespace application.services
                     PhoneNumaber = obj.Locations.First().PhoneNumaber,
                 });
 
-                await _mailingService.SendEmailAsync(user.Email, "IFA", "Coinfarm");
+                var confirmEmailToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+                var encodedEmailToken = Encoding.UTF8.GetBytes(confirmEmailToken);
+                var validEmailToken = WebEncoders.Base64UrlEncode(encodedEmailToken);
+
+                string url = $"http://localhost:5001/auth/confirmemail?userid={user.Id}&token={validEmailToken}";
+
+                await _mailingService.SendEmailAsync(user.Email, "Confirm your email", $"<h1>Welcome to Auth Demo</h1>" +
+                    $"<p>Please confirm your email by <a href='{url}'>Clicking here</a></p>");
+
+                //await _mailingService.SendEmailAsync(user.Email, "IFA", "Coinfarm");
                 return new StoreDto
                 {
                     Id = user.Id,
@@ -238,7 +250,7 @@ namespace application.services
                     UserName = feedback.User.FirstName + ' ' + feedback.User.LastName,
                     UserImage =feedback.User.Phtot
                 }).ToList(),
-                Rank = (data.StoreFeedbacks.Count() > 0) ? data.StoreFeedbacks.Sum(feedback => feedback.Rate) / data.StoreFeedbacks.Count() : 1
+                Rank = (data.StoreFeedbacks.Count() > 0) ? data.StoreFeedbacks.Sum(feedback => feedback.Rate) / data.StoreFeedbacks.Count() : 0
 
            };
 
@@ -296,7 +308,7 @@ namespace application.services
                 LastName = store.User.LastName,
                 Email = store.User.Email,
                 Username = store.User.UserName,
-                StorePhoto = (store.PhotoStore) == null ? "http://localhost:5001/Images/img.png" : "http://localhost:5001/Images/" + store.PhotoStore,
+                StorePhoto = (store.PhotoStore) == null ? "img.png" :store.PhotoStore,
                 Locations = store.Locations.Select(l => new LocationDto { 
                   Id = l.Id,
                   City = l.City,

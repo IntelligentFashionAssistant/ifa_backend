@@ -12,8 +12,8 @@ using Propertys;
 namespace repository.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220113164348_v2")]
-    partial class v2
+    [Migration("20220117233520_v")]
+    partial class v
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,7 +54,7 @@ namespace repository.Migrations
                     b.ToTable("ColorGarment");
                 });
 
-            modelBuilder.Entity("domain.Entitys.BodySizes", b =>
+            modelBuilder.Entity("domain.Entitys.BodySize", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -113,6 +113,10 @@ namespace repository.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("HEX")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -406,7 +410,7 @@ namespace repository.Migrations
                     b.Property<DateTime?>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("BodySizesId")
+                    b.Property<long?>("BodySizeId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("City")
@@ -482,7 +486,7 @@ namespace repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BodySizesId");
+                    b.HasIndex("BodySizeId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -501,14 +505,14 @@ namespace repository.Migrations
                         {
                             Id = 1L,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6db85941-46a8-4b03-a8c6-cfd152a96bc2",
-                            CreatedAt = new DateTime(2022, 1, 13, 18, 43, 45, 396, DateTimeKind.Local).AddTicks(3532),
+                            ConcurrencyStamp = "27a02084-8c15-4158-a8a2-ea3f9ec5817e",
+                            CreatedAt = new DateTime(2022, 1, 18, 1, 35, 18, 297, DateTimeKind.Local).AddTicks(8684),
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOA+FzMpPUW0zYnm2AW6Zl6n2pw5EAexSi8Ybxd6gUM4paOyAmmsEfB0ZAeay5z6jQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGy5mLNvxdxrindGhnwEAD4vokb5Kc0UO54MBm2miWkcg5TPxPW51soNs0K46VUkmA==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "admin"
@@ -608,21 +612,21 @@ namespace repository.Migrations
                         new
                         {
                             Id = 1L,
-                            ConcurrencyStamp = "f28f83f3-8ec7-4adb-8039-d18bbbf84f88",
+                            ConcurrencyStamp = "17c25429-53ac-4c65-8859-1787e4a3e7e2",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2L,
-                            ConcurrencyStamp = "23321d65-12fa-45d2-b151-b0b9738b0f36",
+                            ConcurrencyStamp = "e649ea50-904b-4bcc-8ebd-26abf1615a5c",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = 3L,
-                            ConcurrencyStamp = "d5757276-3c2b-4d92-aa28-c20e3c52446b",
+                            ConcurrencyStamp = "e56ec7eb-eb04-4f7c-a989-1595c6f48368",
                             Name = "ShopOwner",
                             NormalizedName = "SHOPOWNER"
                         });
@@ -890,15 +894,15 @@ namespace repository.Migrations
 
             modelBuilder.Entity("domain.Entitys.User", b =>
                 {
-                    b.HasOne("domain.Entitys.BodySizes", "BodySizes")
+                    b.HasOne("domain.Entitys.BodySize", "BodySize")
                         .WithMany()
-                        .HasForeignKey("BodySizesId");
+                        .HasForeignKey("BodySizeId");
 
                     b.HasOne("domain.Entitys.Shape", "Shape")
                         .WithMany()
                         .HasForeignKey("ShapeId");
 
-                    b.Navigation("BodySizes");
+                    b.Navigation("BodySize");
 
                     b.Navigation("Shape");
                 });

@@ -16,8 +16,8 @@ namespace domain.Entitys
         public string? HouseNumber { get; set; }
         public string? Phtot { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public long? BodySizesId { get; set; }
-        public BodySizes? BodySizes { get; set; }
+        public long? BodySizeId { get; set; }
+        public BodySize? BodySize { get; set; }
         public long? ShapeId { get; set; }
         public Shape? Shape { get; set; }
         public ICollection<Size>? Sizes { get; set; }

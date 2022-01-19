@@ -47,4 +47,33 @@ public class AuthController : Controller
         }
         return Ok(response);
     }
+
+    [HttpGet("ConfirmEmail")]
+    public async Task<IActionResult> ConfirmEmail(string userId, string token)
+    {
+        var response = new ResponsApiDto<string, string>();
+
+        if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(token))
+            return NotFound();
+
+        try
+        {
+            var result = await _authservice.ConfirmEmailAsync(userId, token);
+            return Redirect($"http://localhost:4200/auth");
+            response.Data = result;
+        }
+        catch (Exception ex)
+        {
+            response.AddError(ex.Message);
+            return BadRequest(response); 
+        }
+
+
+        //if (result.IsSuccess)
+        //{
+        //    return Redirect($"{_configuration["AppUrl"]}/ConfirmEmail.html");
+        //}
+
+        return Ok(response);
+    }
 }

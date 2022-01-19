@@ -108,7 +108,6 @@ namespace Propertys.Repositories
             garment.Name =obj.Name ;
             garment.Price = obj.Price;
             garment.CategoryId = obj.CategoryId;
-            garment.Properties =obj.Properties ;
 
 
             if (obj.Properties.ToList().Count > 0)
@@ -120,6 +119,8 @@ namespace Propertys.Repositories
             {
                 garment.Properties.Add(_appDbContext.Properties.Single(p => p.Id == prop.Id));
             }
+
+
             if (obj.Sizes.ToList().Count > 0)
             {
                 garment.Sizes.Clear();

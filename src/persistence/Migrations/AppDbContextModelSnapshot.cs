@@ -52,7 +52,7 @@ namespace repository.Migrations
                     b.ToTable("ColorGarment");
                 });
 
-            modelBuilder.Entity("domain.Entitys.BodySizes", b =>
+            modelBuilder.Entity("domain.Entitys.BodySize", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -408,7 +408,7 @@ namespace repository.Migrations
                     b.Property<DateTime?>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("BodySizesId")
+                    b.Property<long?>("BodySizeId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("City")
@@ -484,7 +484,7 @@ namespace repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BodySizesId");
+                    b.HasIndex("BodySizeId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -503,14 +503,14 @@ namespace repository.Migrations
                         {
                             Id = 1L,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f5384d4d-779c-49d1-ba7d-ce8503a4f37c",
-                            CreatedAt = new DateTime(2022, 1, 15, 3, 39, 58, 226, DateTimeKind.Local).AddTicks(6182),
+                            ConcurrencyStamp = "27a02084-8c15-4158-a8a2-ea3f9ec5817e",
+                            CreatedAt = new DateTime(2022, 1, 18, 1, 35, 18, 297, DateTimeKind.Local).AddTicks(8684),
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIzV7epA3/O6x4kZC5pFsirVteAjfMtqMKRDOEDiSTFoccHu3QcBudCJyu/gNkEkmg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGy5mLNvxdxrindGhnwEAD4vokb5Kc0UO54MBm2miWkcg5TPxPW51soNs0K46VUkmA==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "admin"
@@ -610,21 +610,21 @@ namespace repository.Migrations
                         new
                         {
                             Id = 1L,
-                            ConcurrencyStamp = "cffd802c-7c2d-4737-8414-5c128674975f",
+                            ConcurrencyStamp = "17c25429-53ac-4c65-8859-1787e4a3e7e2",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2L,
-                            ConcurrencyStamp = "8ed24e9f-9d83-4b4f-ae05-3bad367b8158",
+                            ConcurrencyStamp = "e649ea50-904b-4bcc-8ebd-26abf1615a5c",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = 3L,
-                            ConcurrencyStamp = "179c8cf5-3c01-4117-b2cf-6d642ae96190",
+                            ConcurrencyStamp = "e56ec7eb-eb04-4f7c-a989-1595c6f48368",
                             Name = "ShopOwner",
                             NormalizedName = "SHOPOWNER"
                         });
@@ -892,15 +892,15 @@ namespace repository.Migrations
 
             modelBuilder.Entity("domain.Entitys.User", b =>
                 {
-                    b.HasOne("domain.Entitys.BodySizes", "BodySizes")
+                    b.HasOne("domain.Entitys.BodySize", "BodySize")
                         .WithMany()
-                        .HasForeignKey("BodySizesId");
+                        .HasForeignKey("BodySizeId");
 
                     b.HasOne("domain.Entitys.Shape", "Shape")
                         .WithMany()
                         .HasForeignKey("ShapeId");
 
-                    b.Navigation("BodySizes");
+                    b.Navigation("BodySize");
 
                     b.Navigation("Shape");
                 });

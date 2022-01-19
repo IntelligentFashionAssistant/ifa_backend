@@ -34,7 +34,7 @@ namespace api.ApiDTOs
             public long StoreId { get; set; }
             public long CategoryId { get; set; }
             public ICollection<long> Colors { get; set; }
-            public ICollection<IFormFile> ImagesFiles { get; set; }
+            public ICollection<IFormFile>? ImagesFiles { get; set; }
             public ICollection<long> Properties { get; set; }
             public ICollection<long> Sizes { get; set; }
         }

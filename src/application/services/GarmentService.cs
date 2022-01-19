@@ -14,17 +14,19 @@ public class GarmentService : IGarmentService
     private readonly UserManager<User> _userManager;
     private readonly IPropertyService _propertyService;
     private readonly IShapeRepository _shapeRepository;
+    private readonly ISizeRepository _sizeRepository;
 
     public GarmentService(IGarmentRepository garmentRepository, UserManager<User> userManager,
-        IPropertyService propertyService, IShapeRepository shapeRepository)
+        IPropertyService propertyService, IShapeRepository shapeRepository, ISizeRepository sizeRepository)
     {
         _garmentRepository = garmentRepository;
         _userManager = userManager;
         _propertyService = propertyService;
         _shapeRepository = shapeRepository;
+        _sizeRepository = sizeRepository;
     }
 
-    
+
     public async Task LikeOrDislikeGarment(ClaimsPrincipal userClaim, long garmentId)
     {
         var user = await _userManager.GetUserAsync(userClaim);
@@ -37,7 +39,7 @@ public class GarmentService : IGarmentService
         {
             user.Garments.Add(garment);
         }
-        
+
         var res = await _userManager.UpdateAsync(user);
         if (!res.Succeeded)
         {
@@ -51,13 +53,13 @@ public class GarmentService : IGarmentService
     {
         return (await GetUserGarments(userClaim, pageNumber, pageSize))
             .Where(garment =>
-                garment.Category == searchKeyword
-                || garment.Name == searchKeyword).ToList();
+                garment.Category.ToLower().Contains(searchKeyword.ToLower())
+                || garment.Name.ToLower().Contains(searchKeyword.ToLower())).ToList();
     }
 
     public async Task<ICollection<GarmentDto>> GetUserGarmentsByCategory(ClaimsPrincipal userClaim, long categoryId, int pageNumber, int pageSize)
     {
-        return (await GetUserGarments(userClaim,pageNumber, pageSize))
+        return (await GetUserGarments(userClaim, pageNumber, pageSize))
             .Where(garment => garment.CategoryId == categoryId).ToList();
     }
 
@@ -65,64 +67,71 @@ public class GarmentService : IGarmentService
     public async Task<ICollection<GarmentDto>> GetUserGarments(ClaimsPrincipal userClaim, int pageNumber, int pageSize)
     {
         var user = await _userManager.GetUserAsync(userClaim);
-        if (user.ShapeId != null)
+        var userSizes = _sizeRepository.GetSizeByUserId(user.Id);
+
+        if (user.ShapeId == null)
         {
             throw new Exception("you should enter the body sizes to get the appropriate garments for you");
         }
-        
-        var shape = _shapeRepository.GetById(user.ShapeId ?? 1);
-        return _garmentRepository.GetAll()
-            // .Where(garment => categoryId == 0 || (garment.CategoryId == categoryId))
-            .Where(garment =>
-                ((garment.Properties.Count(property => shape.Properties.Contains(property)) / garment.Properties.Count()) > 0.6))
-            // true / false 
-            .Where(garment =>
-            {
-                // TODO : fix runtime
-                foreach (var garmentSize in garment.Sizes)
-                {
-                    foreach (var userSize in user.Sizes)
-                    {
-                        if (garmentSize.CategoryId == userSize.CategoryId &&
-                            garmentSize.Id == userSize.Id)
-                        {
-                            return true;
-                        }
-                    }
-                }
 
-                return false;
-            }).Skip((pageNumber - 1) * pageSize)  
-            .Take(pageSize)// TODO paging meta data
-            .Select(garment => new GarmentDto()
+        var shape = _shapeRepository.GetById(user.ShapeId ?? 1);
+        var shpeName = shape.Properties.Select(p => p.Name).ToList();
+        var data = _garmentRepository.GetAll()
+           .Where(garment => garment.Properties.All(p => shpeName.Contains(p.Name))).ToList();
+
+        data = data.Where(garment =>
+       {
+           // TODO : fix runtime
+           foreach (var garmentSize in garment.Sizes)
+           {
+               foreach (var userSize in userSizes)
+               {
+                   if (garmentSize.CategoryId == userSize.CategoryId &&
+                       garmentSize.Id == userSize.Id)
+                   {
+                       return true;
+                   }
+               }
+           }
+
+           return false;
+       })
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize).ToList();// TODO paging meta data
+
+
+        var x = data.Select(garment => new GarmentDto()
+        {
+            Id = garment.Id,
+            Brand = garment.Brand,
+            Description = garment.Description,
+            Name = garment.Name,
+            Price = garment.Price,
+            Category = garment.Category.Name,
+            CategoryId = garment.CategoryId,
+            CreatedAt = garment.CreatedAt,
+            StoreId = garment.StoreId,
+            Colors = garment.Colors.Select(color => color.Name).ToList(),
+            Images = garment.Images.Select(photo => photo.Path).ToList(),
+            Sizes = garment.Sizes.Select(size => size.Name).ToList(),
+            StoreDto = new StoreDto()
             {
-                Id = garment.Id,
-                Brand = garment.Brand,
-                Description = garment.Description,
-                Name = garment.Name,
-                Price = garment.Price,
-                Category = garment.Category.Name,
-                CreatedAt = garment.CreatedAt,
-                StoreId = garment.StoreId,
-                Colors = garment.Colors.Select(color => color.Name).ToList(),
-                Images = garment.Images.Select(photo => photo.Path).ToList(),
-                Sizes = garment.Sizes.Select(size => size.Name).ToList(),
-                StoreDto = new StoreDto()
+                Id = garment.Store.Id,
+                StoreName = garment.Store.Name,
+
+                Locations = garment.Store.Locations.Select(l => new LocationDto()
                 {
-                    Id = garment.Store.Id,
-                    StoreName = garment.Store.Name,
-                    
-                    Locations = garment.Store.Locations.Select(l => new LocationDto()
-                    {
-                        City = l.City,
-                        Country = l.Country,
-                        Street = l.Street,
-                        PhoneNumaber = l.PhoneNumaber
-                    }).ToList(),
-                    Rank = garment.Store.StoreFeedbacks.Sum(feedback => feedback.Rate) / garment.Store.StoreFeedbacks.Count
-                }
-            })
-            .ToList();
+                    City = l.City,
+                    Country = l.Country,
+                    Street = l.Street,
+                    PhoneNumaber = l.PhoneNumaber
+                }).ToList(),
+                Rank = (garment.Store.StoreFeedbacks.Count() > 0) ? garment.Store.StoreFeedbacks.Sum(feedback => feedback.Rate) / garment.Store.StoreFeedbacks.Count() : 0
+            }
+        })
+      .ToList();
+
+        return x;
     }
 
 
@@ -142,7 +151,7 @@ public class GarmentService : IGarmentService
             Colors = garment.Colors.Select(color => color.Name).ToList(),
             Images = garment.Images.Select(photo => photo.Path).ToList(),
             Sizes = garment.Sizes.Select(size => size.Name).ToList(),
-            
+
         };
     }
 
@@ -191,14 +200,14 @@ public class GarmentService : IGarmentService
             Name = obj.Name,
             Price = obj.Price,
             StoreId = obj.StoreId,
-            Colors = obj.ColorsOfId.Select(colorId => new Color {Id = colorId}).ToList(),
-            Images = obj.Images.Select(photo => new Image {Path = photo}).ToList(),
+            Colors = obj.ColorsOfId.Select(colorId => new Color { Id = colorId }).ToList(),
+            Images = obj.Images.Select(photo => new Image { Path = photo }).ToList(),
             Properties = obj.Properties.Select(property => new Property { Id = property }).ToList(),
-            Sizes = obj.SizesOfId.Select(sizeId => new Size(){Id = sizeId}).ToList()
+            Sizes = obj.SizesOfId.Select(sizeId => new Size() { Id = sizeId }).ToList()
         });
-         obj.Id = garment.Id;
-         obj.CreatedAt = garment.CreatedAt;
-        return obj ;
+        obj.Id = garment.Id;
+        obj.CreatedAt = garment.CreatedAt;
+        return obj;
     }
 
     public void DeleteById(long id)
