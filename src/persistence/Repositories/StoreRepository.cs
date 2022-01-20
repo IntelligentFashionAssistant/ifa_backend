@@ -17,15 +17,16 @@ public class StoreRepository : IStoreRepository
 
     public async Task<Store> GetById(long id)
     {
-        return  _appDbContext.Stores.Where(store => store.Id == id)
+        return _appDbContext.Stores.Where(store => store.Id == id)
                 .Include(store => store.User)
                 .Include(store => store.StoreFeedbacks).ThenInclude(f => f.User)
-                .Include(store =>store.Locations)
+                .Include(store => store.Locations)
+                .AsNoTracking()
                 .Single();
     }
     public async Task<long> GetByUserId(long userId)
     {
-        return _appDbContext.Stores.Single(store => store.UserId == userId).Id;
+        return _appDbContext.Stores.AsNoTracking().Single(store => store.UserId == userId).Id;
     }
 
     public async Task<ICollection<Store>> GetAll()
@@ -52,7 +53,9 @@ public class StoreRepository : IStoreRepository
 
     public async Task<Store> Update(Store obj)
     {
-        _appDbContext.Update(obj);
+        var stroe = _appDbContext.Stores.Single(s => s.Id == obj.Id);
+
+        stroe.Name = obj.Name;
         _appDbContext.SaveChanges();
         return obj;
     }
@@ -76,7 +79,7 @@ public class StoreRepository : IStoreRepository
                       .ToList();
         return garments;
         }
-
+    
     public bool Approved(long storeId)
     {
         var store = _appDbContext.Stores.Single(store => store.Id == storeId);
@@ -88,6 +91,18 @@ public class StoreRepository : IStoreRepository
 
         return true;
     }
+
+    //public bool Cancel(long storeId)
+    //{
+    //    var store = _appDbContext.Stores.Single(store => store.Id == storeId);
+    //    if (store == null)
+    //        return false;
+
+    //    store.IsApprove = false;
+    //    _appDbContext.SaveChanges();
+
+    //    return true;
+    //}
 
     public async Task<string>  AddPhoto(string photo , long storeId)
     {

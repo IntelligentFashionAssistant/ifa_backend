@@ -43,7 +43,6 @@ namespace api.Controllers
                     City = data.City,
                     Country = data.Country,
                     Street = data.Street,
-                    HouseNumber = data.HouseNumber,
                     Username = data.Username,
                     PhoneNumber = data.PhoneNumber,
                     BustSize = data.BustSize,
@@ -82,7 +81,6 @@ namespace api.Controllers
                         Country = data.Country,
                         BirthDate = data.BirthDate,
                         Street = data.Street,
-                        HouseNumber = data.HouseNumber,
                         Username = data.Username,
                         PhoneNumber = data.PhoneNumber,
                     };
@@ -115,19 +113,18 @@ namespace api.Controllers
                  Email = data.Email,
                  City = data.City,
                  Country = data.Country,
-                 BirthDate = data.BirthDate,
                  Street = data.Street,
-                 HouseNumber = data.HouseNumber,
                  Username = data.Username,
                  PhoneNumber = data.PhoneNumber,
              }).ToList();
-             return Ok(respons);
             }
             catch (Exception ex)
             {
                 respons.AddError(ex.Message);
                 return BadRequest(respons);
             }
+            return Ok(respons);
+
         }
 
         /// <summary>
@@ -153,7 +150,6 @@ namespace api.Controllers
                     Country = userApiDto.Country,
                     BirthDate = userApiDto.BirthDate,
                     Street = userApiDto.Street,
-                    HouseNumber = userApiDto.HouseNumber,
                     Username = userApiDto.Username,
                     Password = userApiDto.Password
                 });
@@ -171,7 +167,6 @@ namespace api.Controllers
                         BirthDate = data.BirthDate,
                         Password = data.Password,
                         Street = data.Street,
-                        HouseNumber = data.HouseNumber,
                         Username = data.Username,
                     };
                     
@@ -205,7 +200,6 @@ namespace api.Controllers
                     Country = userApiDto.Country,
                     BirthDate = userApiDto.BirthDate,
                     Street = userApiDto.Street,
-                    HouseNumber = userApiDto.HouseNumber,
                     Username = userApiDto.Username,
                     PhoneNumber = userApiDto.PhoneNumber,
                 });
@@ -222,7 +216,6 @@ namespace api.Controllers
                         BirthDate = data.BirthDate,
                         Password = data.Password,
                         Street = data.Street,
-                        HouseNumber = data.HouseNumber,
                         Username = data.Username,
                         PhoneNumber = data.PhoneNumber,
                     };

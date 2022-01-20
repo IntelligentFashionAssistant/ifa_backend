@@ -6,5 +6,9 @@ namespace application.persistence
     {
         ICollection<Color> GetColors();
         ICollection<Size> GetSizeByCategory(long categoryId);
+        ICollection<Garment> GetGarmentFavoriteToUser(long userId);
+        void RemoveUser(User user, long garmentId);
+        void AddUser(User user, long garmentId);
+        bool UserExists(User user, long garmentId);
     }
 }

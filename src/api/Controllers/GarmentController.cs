@@ -31,13 +31,13 @@ namespace api.Controllers
         }
 
 
-        [HttpPost("toggle-like/{id:int}")]
+        [HttpPost("toggle-like/{garmentId:long}")]
         public async Task<IActionResult> LikeOrDislikeGarment(long garmentId)
         {
             var respons = new ResponsApiDto<ICollection<GarmentApiDto>, string>();
             try
             {
-                _garmentServices.LikeOrDislikeGarment(User, garmentId);
+               await _garmentServices.LikeOrDislikeGarment(User, garmentId);
                 return Ok();
             }
             catch (Exception e)
@@ -93,6 +93,26 @@ namespace api.Controllers
             try
             {
                 var garments = await _garmentServices.GetUserGarments(User, pageApiDto.PageNumber, pageApiDto.PageSize);
+                respons.Data = Mapper.FromGarmentDtoToGarmentApiDto(garments);
+                return Ok(respons);
+            }
+            catch (Exception e)
+            {
+                // todo : better error message
+                respons.AddError("error");
+                return NotFound(respons);
+            }
+
+        }
+
+        [HttpGet("FavoriteGarments")]
+        public async Task<IActionResult> GetGarmentFavoriteToUser()
+        {
+            var respons = new ResponsApiDto<ICollection<GarmentApiDto>, string>();
+
+            try
+            {
+                var garments = await _garmentServices.GetGarmentFavoriteToUser(User);
                 respons.Data = Mapper.FromGarmentDtoToGarmentApiDto(garments);
                 return Ok(respons);
             }

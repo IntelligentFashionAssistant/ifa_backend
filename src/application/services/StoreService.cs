@@ -147,26 +147,32 @@ namespace application.services
 
         public async Task DeleteById(long id)
         {
-            var store = await _storeRepository.GetById(id);
-            var user = await _userManager.FindByIdAsync((store.UserId).ToString());
+            var user = await _userManager.FindByIdAsync((id).ToString());
             if (user != null)
             {
                 var result = await _userManager.DeleteAsync(user);
             }
             else
             {
-                throw new NullReferenceException();
+
+                throw new NullReferenceException("User not found");
             }
+                       
         }
 
         public async Task<StoreDto> Edit(StoreDto obj)
         {
-            var store = await _storeRepository.GetById(obj.Id);
-            var user = await _userManager.FindByIdAsync((store.UserId).ToString());
+
+            throw new NotImplementedException();
+        }
+
+        public async Task<StoreDto> Edit(StoreDto obj , ClaimsPrincipal claimsPrincipal)
+        {
+            var user = await _userManager.GetUserAsync(claimsPrincipal);
+            var storeId = await _storeRepository.GetByUserId(user.Id);
 
             user.FirstName = obj.FirstName;
             user.LastName = obj.LastName;
-            user.BirthDate = obj.BirthDate;
             user.UserName = obj.Username;
             var result = await _userManager.UpdateAsync(user);
 
@@ -174,9 +180,8 @@ namespace application.services
             {
                 var newStore = await _storeRepository.Update(new Store
                 {
-                    Id = store.Id,
+                    Id = storeId,
                     Name = obj.StoreName,
-                    UserId = user.Id,
                 });
                 return new StoreDto
                 {
@@ -201,7 +206,6 @@ namespace application.services
                 throw new NullReferenceException(error);
             }
         }
-
         public async Task<ICollection<StoreDto>> GetAll()
         {
             var data = await _storeRepository.GetAll();
@@ -317,6 +321,20 @@ namespace application.services
                   PhoneNumaber =l.PhoneNumaber,
                 }).ToList(),
             };
+        }
+
+        public async Task<bool> Cancel(StoreCancelDto obj)
+        {
+            var store = await _storeRepository.GetById(obj.StoreId);
+             if(store != null)
+            {
+               await  _mailingService.SendEmailAsync(store.User.Email, obj.Subject, obj.Body);
+
+               await this.DeleteById(store.UserId);
+                return true;
+            }
+            
+                throw new Exception("Store not found");         
         }
     }
 }

@@ -12,5 +12,6 @@ namespace application.services
         Task LikeOrDislikeGarment(ClaimsPrincipal user, long garmentId);
         ICollection<ColorDto> GetColors();
         ICollection<SizeDto> GetSizeByCategory(long categoryId);
+        Task<ICollection<GarmentDto>> GetGarmentFavoriteToUser(ClaimsPrincipal userClaim);
     }
 }

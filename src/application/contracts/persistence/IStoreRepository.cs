@@ -10,5 +10,6 @@ namespace application.persistence
         Task<ICollection<Store>> GetAllNotApproved();
         Task<string> AddPhoto(string photo, long storeId);
         Task<Store> Profile(long storeId);
+        //Task<bool> Cancel(long storeId);
     }
 }

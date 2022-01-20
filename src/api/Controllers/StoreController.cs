@@ -213,14 +213,13 @@ namespace api.Controllers
 
             try
             {
-                var data = await _storeService.Edit(new StoreDto
+                var data = await _storeService.Edit(new StoreDto 
                 {
-                    Id = storeApiDto.Id,
                     FirstName = storeApiDto.FirstName,
                     LastName = storeApiDto.LastName,
                     Username = storeApiDto.Username,
                     StoreName = storeApiDto.StoreName,
-                });
+                }, User);
                 if (data != null)
                 {
                     response.Data = new StoreApiDto
@@ -229,7 +228,6 @@ namespace api.Controllers
                         FirstName = data.FirstName,
                         LastName = data.LastName,
                         StoreName = data.StoreName,
-                        BirthDate = data.BirthDate,
                         Username = data.Username,
                         Email = data.Email,
                     };
@@ -244,23 +242,23 @@ namespace api.Controllers
             return Ok(response);
         }
         
-        [HttpDelete]
-        public async Task<IActionResult> DeleteStore(long storeId)
-        {
-            var response = new ResponsApiDto<long, string>();
+        //[HttpDelete]
+        //public async Task<IActionResult> DeleteStore(long storeId)
+        //{
+        //    var response = new ResponsApiDto<long, string>();
 
-            try{
-              await  _storeService.DeleteById(storeId);
-                 response.Data = storeId;
-            }
-            catch (Exception ex)
-            {
-                response.AddError(ex.Message);
-                return NotFound(response);
-            }
+        //    try{
+        //      await  _storeService.DeleteById(storeId);
+        //         response.Data = storeId;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.AddError(ex.Message);
+        //        return NotFound(response);
+        //    }
 
-            return Ok(response);
-        }
+        //    return Ok(response);
+        //}
 
         [HttpGet("GetGarmentsByCategory")]
         public async Task<IActionResult> GetGarmentsByCategory(long categoryId)
@@ -369,6 +367,30 @@ namespace api.Controllers
                 response.AddError(ex.Message);
                 return BadRequest(response);
             }
+            return Ok(response);
+        }
+
+        [HttpPost("Cancel")]
+        public async Task<IActionResult> Cancel(StoreCancelApiDto storeCancelApiDto)
+        {
+            var response = new ResponsApiDto<long, string>();
+
+            try
+            {
+                var data = await _storeService.Cancel(new StoreCancelDto
+                {
+                    StoreId = storeCancelApiDto.StoreId,
+                    Subject = storeCancelApiDto.Subject,
+                    Body = storeCancelApiDto.Body,
+                });
+                response.Data = storeCancelApiDto.StoreId; 
+            }
+            catch(Exception ex)
+            {
+                response.AddError(ex.Message);
+                return NotFound(response);
+            }
+
             return Ok(response);
         }
 

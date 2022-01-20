@@ -21,7 +21,7 @@ namespace application.services
         private readonly ISizeRepository _sizeRepository;
         private readonly ICategoryRepository _categoryRepository;
 
-        public CustomerService(UserManager<User> userManager, IShapeRepository shapeRepository, IBodySizesRepository bodySizesRepository, ISizeRepository sizeRepository, ICategoryRepository categoryRepository)
+     public CustomerService(UserManager<User> userManager, IShapeRepository shapeRepository, IBodySizesRepository bodySizesRepository, ISizeRepository sizeRepository, ICategoryRepository categoryRepository)
         {
             _userManager = userManager;
             _shapeRepository = shapeRepository;
@@ -115,8 +115,8 @@ namespace application.services
 
         return sizes;
     }
-    
-    
+          
+    // TODO check maxand min value and update BodySize
         /// <summary>
         /// Hourglass
         /// If (bust - hips) ≤ 1" AND (hips - bust) < 3.6" AND (bust - waist) ≥ 9" OR (hips - waist) ≥ 10"
@@ -155,6 +155,7 @@ namespace application.services
                 shape = _shapeRepository.GetShapeByName("HourGlass");
                 
             }
+            /// If (hips - bust) > 2" AND (hips - waist) ≥ 7" AND (high hip/waist) ≥ 1.193
             else if (((b.HipSize - b.BustSize) > 2) && ((b.HipSize - b.WaistSize) >= 7) &&
                      ((b.HipSize - b.WaistSize) >= 1.193))
             {
@@ -162,16 +163,16 @@ namespace application.services
             }
             else if (((b.HipSize - b.BustSize) >= 3.6) && ((b.HipSize - b.WaistSize) > 9))
             {
-                shape = _shapeRepository.GetShapeByName("HourGlass");
+                shape = _shapeRepository.GetShapeByName("Triangle");
             }
             else if (((b.BustSize - b.HipSize) >= 3.6) && ((b.BustSize - b.WaistSize) > 9))
             {
-                shape = _shapeRepository.GetShapeByName("HourGlass");
+                shape = _shapeRepository.GetShapeByName("Inverted triangle");
             }
             else if (((b.HipSize - b.BustSize) < 3.6) && ((b.BustSize - b.HipSize) < 3.6) &&
                      ((b.BustSize - b.WaistSize) < 9) && ((b.HipSize / b.WaistSize) < 10))
             {
-                shape = _shapeRepository.GetShapeByName("HourGlass");
+                shape = _shapeRepository.GetShapeByName("Rectangle");
             }
             else
             {
@@ -210,21 +211,18 @@ namespace application.services
         }
         public async Task<ICollection<CustomerDto>> GetAll()
         {
-            var users = await _userManager.Users.ToListAsync();
+            var users = await _userManager.GetUsersInRoleAsync("Customer");
             return users.Select(user => new CustomerDto
                 {
                     Id = user.Id,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     PhoneNumber = user.PhoneNumber,
-                    BirthDate = user.BirthDate,
                     City = user.City,
                     Country = user.Country,
                     Email = user.Email,
-                    HouseNumber = user.HouseNumber,
                     Street = user.Street,
                     Username = user.UserName,
-
                 }
             ).ToList();
         }

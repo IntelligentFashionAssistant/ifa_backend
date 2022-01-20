@@ -30,21 +30,18 @@ public class GarmentService : IGarmentService
     public async Task LikeOrDislikeGarment(ClaimsPrincipal userClaim, long garmentId)
     {
         var user = await _userManager.GetUserAsync(userClaim);
-        var garment = _garmentRepository.GetById(garmentId);
-        if (user.Garments.Contains(garment))
+        if (user == null)
+            throw new Exception("user not found");
+
+        if (_garmentRepository.UserExists(user , garmentId))
         {
-            user.Garments.Remove(garment);
+            _garmentRepository.RemoveUser(user, garmentId);
         }
         else
         {
-            user.Garments.Add(garment);
+            _garmentRepository.AddUser(user , garmentId);
         }
 
-        var res = await _userManager.UpdateAsync(user);
-        if (!res.Succeeded)
-        {
-            throw new Exception("internal server error");
-        }
     }
 
 
@@ -255,6 +252,41 @@ public class GarmentService : IGarmentService
             Name = size.Name,
             CM = size.CM,
             CategoryId = size.CategoryId,
+        }).ToList();
+    }
+
+    public async Task<ICollection<GarmentDto>> GetGarmentFavoriteToUser(ClaimsPrincipal userClaim)
+    {
+        var user = await _userManager.GetUserAsync(userClaim);
+
+        var garments = _garmentRepository.GetGarmentFavoriteToUser(user.Id);
+
+        return garments.Select(garment => new GarmentDto
+        {
+            Id = garment.Id,
+            Brand = garment.Brand,
+            Description = garment.Description,
+            Name = garment.Name,
+            Price = garment.Price,
+            Category = garment.Category.Name,
+            CreatedAt = garment.CreatedAt,
+            StoreId = garment.StoreId,
+            StoreDto = new StoreDto
+            {
+                StoreName = garment.Store.Name,
+                Locations = garment.Store.Locations.Select(l => new LocationDto
+                {
+                    Id = l.Id,
+                    City = l.City,
+                    Country = l.Country,
+                    PhoneNumaber = l.PhoneNumaber,
+                    Street = l.Street,
+
+                }).ToList(),
+            },
+            Colors = garment.Colors.Select(color => color.Name).ToList(),
+            Images = garment.Images.Select(photo => photo.Path).ToList(),
+            Sizes = garment.Sizes.Select(size => size.Name).ToList()
         }).ToList();
     }
 }

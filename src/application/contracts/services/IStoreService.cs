@@ -12,6 +12,8 @@ namespace application.services
         Task<ICollection<StoreDto>> GetAllNotApproved();
         Task<string> AddPhoto(string photo, ClaimsPrincipal claimsPrincipal);
         Task<StoreDto> Profile(ClaimsPrincipal claimsPrincipal);
+        Task<bool> Cancel(StoreCancelDto obj);
+        Task<StoreDto> Edit(StoreDto obj, ClaimsPrincipal claimsPrincipal);
 
     }
 }

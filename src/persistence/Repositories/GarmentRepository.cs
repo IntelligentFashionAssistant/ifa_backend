@@ -23,9 +23,11 @@ namespace Propertys.Repositories
                           .Include(g => g.Properties)
                           .Include(g => g.Colors)
                           .Include(g => g.Images)
+                          .Include(g => g.Users)
                           .Include(g => g.Category).Single();
             return garment;
         }
+
 
         public ICollection<Garment> GetAll()
         {
@@ -154,7 +156,29 @@ namespace Propertys.Repositories
 
             return garment;
         }
+        public void RemoveUser(User user , long garmentId)
+        {
+            var g = _appDbContext.Garments.Single(g => g.Id == garmentId);
 
+            g.Users.Remove(user);
+
+            _appDbContext.SaveChanges();
+        }
+        public void AddUser(User user, long garmentId)
+        {
+            var g = _appDbContext.Garments.Single(g => g.Id == garmentId);
+
+            g.Users.Add(user);
+
+            _appDbContext.SaveChanges();
+        }
+        public bool UserExists(User user, long garmentId)
+        {
+            var g = _appDbContext.Garments.Include(g => g.Users).Single(g => g.Id == garmentId);
+
+          return  g.Users.Any(u => u.Id == user.Id);
+
+        }
         public void DeleteById(long id)
         {
             _appDbContext.Remove(new Garment { Id = id });
@@ -173,6 +197,27 @@ namespace Propertys.Repositories
                    .Where(Size => Size.CategoryId == categoryId)
                    .AsNoTracking()
                    .ToList();
+        }
+
+        public ICollection<Garment> GetGarmentFavoriteToUser(long userId)
+        {
+            var garments = _appDbContext.Garments
+                            .Include(g => g.Users)
+                            .Include(g => g.Images)
+                            .Include(g => g.Category)
+                            .Include(g => g.Colors)
+                            .Include(g => g.Properties)
+                            .Include(g => g.Store)
+                            .ThenInclude(s => s.User)
+                            .Include(g => g.Store)
+                            .ThenInclude(s => s.Locations)
+                            .Include(g => g.Store)
+                            .ThenInclude(s => s.StoreFeedbacks)
+                            .Include(g => g.Sizes)
+                            .Where(g => g.Users.Any(user => user.Id == userId))
+                            .AsNoTracking().ToList();
+
+            return garments;                
         }
 
     }
