@@ -12,10 +12,11 @@ namespace api.Controllers
     public class CustomerController : Controller
     {
          private readonly ICustomerService _customerService;
-
-        public CustomerController(ICustomerService customerService)
+         private readonly IAuthService _authservice;
+        public CustomerController(ICustomerService customerService, IAuthService authService)
         {
             _customerService = customerService;
+            this._authservice = authService;
         }
 
         [HttpPost("/calculatebodyshape")]
@@ -23,6 +24,7 @@ namespace api.Controllers
         {
             var bodySizesDto = new BodySizesDto()
             {
+                Id = bodySizesApiDto.Id,
                 BustSize = bodySizesApiDto.BustSize,
                 HipSize = bodySizesApiDto.HipSize,
                 ShoulderSize = bodySizesApiDto.ShoulderSize,
@@ -134,13 +136,13 @@ namespace api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUser(CustomerApiDto userApiDto)
         {
-            if (!ModelState.IsValid)
-            {
-                BadRequest(userApiDto);
-            }
             var respons = new ResponsApiDto<CustomerApiDto,string>();
+
             try
             {
+
+                await _authservice.EmailIsExist(userApiDto.Email);
+
                 var data = await _customerService.Create(new CustomerDto
                 {
                     FirstName = userApiDto.FirstName,

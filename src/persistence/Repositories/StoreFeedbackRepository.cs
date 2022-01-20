@@ -25,6 +25,7 @@ public class StoreFeedbackRepository : IStoreFeedbackRepository
 
     public StoreFeedback Create(StoreFeedback obj)
     {
+
         _appDbContext.StoreFeedbacks.Add(obj);
         _appDbContext.SaveChanges();
         return obj;

@@ -34,27 +34,50 @@ namespace application.services
     public async Task<CustomerDto> CalculateBodyShape(ClaimsPrincipal userClaim, BodySizesDto bodySizesDto)
         {
             var  user = await _userManager.GetUserAsync(userClaim);
-            var bodySizes = new BodySize()
-            {
-                 BustSize = bodySizesDto.BustSize,
-                 HipSize = bodySizesDto.HipSize,
-                 ShoulderSize =bodySizesDto.ShoulderSize, 
-                  WaistSize = bodySizesDto.WaistSize, 
-            };
-
+            //var bodySizes = new BodySize()
+            //{
+            //     Id = bodySizesDto.Id, 
+            //     BustSize = bodySizesDto.BustSize,
+            //     HipSize = bodySizesDto.HipSize,
+            //     ShoulderSize =bodySizesDto.ShoulderSize, 
+            //     WaistSize = bodySizesDto.WaistSize, 
+            //};
+            var bodySize = new BodySize() ;
             // calculate body shape based on entered body Sizes 
             // and throw an exception if the entered sizes are not valid
-            var calculatedBodyShape = _calculateBodyShape(bodySizes);
+            var calculatedBodyShape = _calculateBodyShape(bodySizesDto);
             if (calculatedBodyShape == null)
             {
                 throw new ArgumentException("the enterd sizes are not valid");
             }
             
             // calculate user sizes 
-            user.Sizes = _calculateUserSizes(bodySizes);
+            user.Sizes = _calculateUserSizes(bodySizesDto);
             // save entered body sizes
-            bodySizes = _bodySizesRepository.Create(bodySizes); 
-            user.BodySizeId = bodySizes.Id;
+            if(bodySizesDto.Id == 0)
+            {
+
+            bodySize = _bodySizesRepository.Create(new BodySize
+            {
+                Id  = bodySizesDto.Id,
+                BustSize = bodySizesDto.BustSize,
+               ShoulderSize = bodySizesDto.ShoulderSize,
+               HipSize = bodySizesDto.HipSize,
+               WaistSize = bodySizesDto.WaistSize,
+            });
+            }
+            else
+            {
+             bodySize = _bodySizesRepository.Update(new BodySize
+             {
+                 Id = bodySizesDto.Id,
+                 BustSize = bodySizesDto.BustSize,
+                 ShoulderSize = bodySizesDto.ShoulderSize,
+                 HipSize = bodySizesDto.HipSize,
+                 WaistSize = bodySizesDto.WaistSize,
+             });
+            }
+            user.BodySizeId = bodySize.Id;
             user.ShapeId = calculatedBodyShape.Id;
             var res = await _userManager.UpdateAsync(user);
             if (res.Succeeded)
@@ -90,7 +113,7 @@ namespace application.services
         }
 
 
-    private ICollection<Size> _calculateUserSizes(BodySize bodySizes)
+    private ICollection<Size> _calculateUserSizes(BodySizesDto bodySizes)
     {
         var categories = _categoryRepository.GetAll();
         var sizes = new List<Size>();
@@ -135,42 +158,31 @@ namespace application.services
         /// </summary>
         /// <param name="b"></param>
         /// <returns></returns>
-        private Shape _calculateBodyShape(BodySize b)
+        private Shape _calculateBodyShape(BodySizesDto b)
         {
             // TODO : return the correct shape
             Shape shape = null; 
-            if (((b.BustSize - b.HipSize) <= 1) && ((b.HipSize - b.BustSize) < 3.6) &&
-                ((b.BustSize - b.WaistSize) >= 9) || ((b.HipSize - b.WaistSize) >= 10))
+
+            if (((b.BustSize - b.HipSize) <= 2.5) && ((b.HipSize - b.BustSize) < 9.14) &&
+                ((b.BustSize - b.WaistSize) >= 22.9) || ((b.HipSize - b.WaistSize) >= 25.4))
             {
                 shape = _shapeRepository.GetShapeByName("HourGlass");
-            }
-            else if (((b.HipSize - b.BustSize) >= 3.6) && ((b.HipSize - b.BustSize) < 10) &&
-                     ((b.HipSize - b.WaistSize) >= 9) && ((b.HipSize / b.WaistSize) < 1.193))
+            } 
+            else if (((b.HipSize - b.BustSize) > 9.14) && ((b.HipSize - b.WaistSize) < 22.9))
             {
-                shape = _shapeRepository.GetShapeByName("HourGlass");
+                shape = _shapeRepository.GetShapeByName("Apple");
+
             }
-            else if (((b.BustSize - b.HipSize) > 1) && ((b.BustSize - b.HipSize) < 10) &&
-                     ((b.BustSize - b.WaistSize) >= 9))
-            {
-                shape = _shapeRepository.GetShapeByName("HourGlass");
-                
-            }
-            /// If (hips - bust) > 2" AND (hips - waist) ≥ 7" AND (high hip/waist) ≥ 1.193
-            else if (((b.HipSize - b.BustSize) > 2) && ((b.HipSize - b.WaistSize) >= 7) &&
-                     ((b.HipSize - b.WaistSize) >= 1.193))
-            {
-                shape = _shapeRepository.GetShapeByName("HourGlass");
-            }
-            else if (((b.HipSize - b.BustSize) >= 3.6) && ((b.HipSize - b.WaistSize) > 9))
+            else if (((b.HipSize - b.BustSize) >= 9.14) && ((b.HipSize - b.WaistSize) > 22.9))
             {
                 shape = _shapeRepository.GetShapeByName("Triangle");
             }
-            else if (((b.BustSize - b.HipSize) >= 3.6) && ((b.BustSize - b.WaistSize) > 9))
+            else if (((b.BustSize - b.HipSize) >= 9.14) && ((b.BustSize - b.WaistSize) > 22.9))
             {
                 shape = _shapeRepository.GetShapeByName("Inverted triangle");
             }
-            else if (((b.HipSize - b.BustSize) < 3.6) && ((b.BustSize - b.HipSize) < 3.6) &&
-                     ((b.BustSize - b.WaistSize) < 9) && ((b.HipSize / b.WaistSize) < 10))
+            else if (((b.HipSize - b.BustSize) < 9.14) && ((b.BustSize - b.HipSize) < 9.14) &&
+                     ((b.BustSize - b.WaistSize) < 22.9) && ((b.HipSize / b.WaistSize) < 25.4))
             {
                 shape = _shapeRepository.GetShapeByName("Rectangle");
             }

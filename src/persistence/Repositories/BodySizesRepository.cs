@@ -45,8 +45,14 @@ namespace Propertys.Repositories
 
         public BodySize Update(BodySize obj)
         {
-            _appDbContext.Update(obj);
-            _appDbContext.SaveChanges();
+            var body = _appDbContext.BodySizes.Single(body => body.Id == obj.Id);
+
+            body.ShoulderSize = obj.ShoulderSize;
+            body.WaistSize = obj.WaistSize;
+            body.BustSize = obj.BustSize;
+            body.HipSize = obj.HipSize;
+
+             _appDbContext.SaveChanges();
 
             return obj;
         }

@@ -310,15 +310,29 @@ public class SeedController : Controller
                 if(garment.CategoryId == categoryId)
                 {
                     var temp = new List<long>();
-                    var index = rand.Next(1,listOfSizes.Count);
+                    var index = rand.Next(2,listOfSizes.Count+1);//[2, 4+1]
                     for (var i = 0; i < index; i++) 
                     {
-                        var e = rand. Next(1 ,listOfSizes.Count);
+                        var e = rand. Next(0 ,listOfSizes.Count);//[0, 4 ]
                         if(!temp.Contains(e))
                         {
                             garment.Sizes.Add(listOfSizes[e]);
                             temp.Add(e);
 
+                        }
+                        else
+                        {
+                            if(e == listOfSizes.Count -1 )
+                            {
+                                e -= 1;
+                            }
+                            else
+                            {
+                                e += 1;
+                            }
+
+                            garment.Sizes.Add(listOfSizes[e]);
+                            temp.Add(e);
                         }
 
                     }

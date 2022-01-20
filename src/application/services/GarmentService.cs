@@ -73,8 +73,10 @@ public class GarmentService : IGarmentService
 
         var shape = _shapeRepository.GetById(user.ShapeId ?? 1);
         var shpeName = shape.Properties.Select(p => p.Name).ToList();
-        var data = _garmentRepository.GetAll()
-           .Where(garment => garment.Properties.All(p => shpeName.Contains(p.Name))).ToList();
+
+        var data = _garmentRepository.GetAll();
+
+            data = data.Where(garment => garment.Properties.All(p => shpeName.Contains(p.Name))).ToList();
 
         data = data.Where(garment =>
        {
