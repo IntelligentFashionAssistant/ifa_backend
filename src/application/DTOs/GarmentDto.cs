@@ -15,6 +15,7 @@ namespace application.DTOs
         public long StoreId { get; set; }
         public long CategoryId { get; set; }
         public string Category { get; set; }
+        public bool IsLike { get; set; }             
         public ICollection<string> Colors { get; set; }
         public ICollection<long> ColorsOfId { get; set; }
         public ICollection<string> Images { get; set; }

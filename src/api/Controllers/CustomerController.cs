@@ -145,13 +145,7 @@ namespace api.Controllers
 
                 var data = await _customerService.Create(new CustomerDto
                 {
-                    FirstName = userApiDto.FirstName,
-                    LastName = userApiDto.LastName,
                     Email = userApiDto.Email,
-                    City = userApiDto.City,
-                    Country = userApiDto.Country,
-                    BirthDate = userApiDto.BirthDate,
-                    Street = userApiDto.Street,
                     Username = userApiDto.Username,
                     Password = userApiDto.Password
                 });
@@ -248,6 +242,50 @@ namespace api.Controllers
             }
 
             return BadRequest(respons);
+        }
+
+        [HttpGet("profile")]
+        public async Task<IActionResult> Profile()
+        {
+            var respons = new ResponsApiDto<CustomerApiDto, string>();
+
+            try
+            {
+                var data = await _customerService.Profile(User);
+
+                if(data != null)
+                {
+                    respons.Data = new CustomerApiDto
+                    {
+                        Id = data.Id,
+                        FirstName = data.FirstName,
+                        LastName = data.LastName,
+                        Email = data.Email,
+                        PhoneNumber = data.PhoneNumber,
+                        Photo = data.Photo,
+                        Country = data.Country,
+                        BirthDate = data.BirthDate,
+                        City = data.City,
+                        Street = data.Street,
+                        Shape = data.Shape,
+                        BustSize = data.BustSize,
+                        HipSize = data.HipSize,
+                        ShoulderSize = data.ShoulderSize,
+                        WaistSize = data.WaistSize,
+                        Username = data.Username,
+                        Sizes = data.Sizes,
+
+                    };
+
+                }
+            }
+            catch (Exception ex)
+            {
+                respons.AddError(ex.Message);
+                return BadRequest(respons);
+            }
+
+            return Ok(respons);
         }
     }
 }

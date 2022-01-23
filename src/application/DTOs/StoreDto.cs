@@ -20,5 +20,6 @@ namespace application.DTOs
         public DateTime CreatedAt { get; set; }
         public ICollection<StoreFeedbackDto> StoreFeedbackDto { get; set; }
         public float Rank { get; set; }
+        public ICollection<GarmentDto> Garments { get; set; }
     }
 }

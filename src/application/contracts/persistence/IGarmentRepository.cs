@@ -10,5 +10,6 @@ namespace application.persistence
         void RemoveUser(User user, long garmentId);
         void AddUser(User user, long garmentId);
         bool UserExists(User user, long garmentId);
+        Garment GetUserById(long id);
     }
 }

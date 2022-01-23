@@ -13,5 +13,7 @@ namespace application.services
         ICollection<ColorDto> GetColors();
         ICollection<SizeDto> GetSizeByCategory(long categoryId);
         Task<ICollection<GarmentDto>> GetGarmentFavoriteToUser(ClaimsPrincipal userClaim);
+        GarmentDto GetUserById(long id);
+        Task<ICollection<long>> GetUserGarmentsByStoreId(ClaimsPrincipal userClaim, long StoreId, int pageNumber, int pageSize);
     }
 }

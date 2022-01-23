@@ -83,6 +83,63 @@ namespace api.Controllers
             return Ok(response);
         }
 
+        [HttpGet("GetStoreWithGarments")]
+        public async Task<IActionResult> GetStoreWithGarments([FromQuery] long storeId, [FromQuery] PageApiDto pageApiDto)
+        {
+            var response = new ResponsApiDto<StoreApiDto, string>();
+
+            try
+            {
+                var data = await _storeService.GetByIdWithGarments(User, storeId, pageApiDto.PageNumber, pageApiDto.PageSize);
+
+                if (data != null)
+                {
+                    response.Data = new StoreApiDto
+                    {
+                        Id = data.Id,
+                        StoreName = data.StoreName,
+                        FirstName = data.FirstName,
+                        CreatedAt = data.CreatedAt,
+                        Email = data.Email,
+                        Username = data.Username,
+                        LastName = data.LastName,
+                        Rank = data.Rank,
+                        StroePhoto = data.StorePhoto,
+                        Locations = data.Locations.Select(location => new LocationApiDto
+                        {
+                            Id = location.Id,
+                            Country = location.Country,
+                            City = location.City,
+                            Street = location.Street,
+                            PhoneNumber = location.PhoneNumaber,
+                        }).ToList(),
+                        Garments = data.Garments.Select(g => new GarmentApiDto
+                        {
+                            Name = g.Name,
+                            Brand = g.Brand,
+                            Images = g.Images,
+                            Id = g.Id,
+                        }).ToList(),
+                        StoreFeedbacks = data.StoreFeedbackDto.Select(f => new StoreFeedbackApiDto
+                        {
+                            Id = f.Id,
+                            Header = f.Header,
+                            Body = f.Body,
+                            UserName = f.UserName,
+                            UserImage = f.UserImage,
+                        }).ToList(),
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                response.AddError(ex.Message);
+                return NotFound(response);
+            }
+
+            return Ok(response);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAllStoresApproved()
         {
@@ -241,24 +298,25 @@ namespace api.Controllers
             }
             return Ok(response);
         }
-        
-        //[HttpDelete]
-        //public async Task<IActionResult> DeleteStore(long storeId)
-        //{
-        //    var response = new ResponsApiDto<long, string>();
 
-        //    try{
-        //      await  _storeService.DeleteById(storeId);
-        //         response.Data = storeId;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        response.AddError(ex.Message);
-        //        return NotFound(response);
-        //    }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteStore(long storeId)
+        {
+            var response = new ResponsApiDto<long, string>();
 
-        //    return Ok(response);
-        //}
+            try
+            {
+                await _storeService.DeleteById(storeId);
+                response.Data = storeId;
+            }
+            catch (Exception ex)
+            {
+                response.AddError(ex.Message);
+                return NotFound(response);
+            }
+
+            return Ok(response);
+        }
 
         [HttpGet("GetGarmentsByCategory")]
         public async Task<IActionResult> GetGarmentsByCategory(long categoryId)

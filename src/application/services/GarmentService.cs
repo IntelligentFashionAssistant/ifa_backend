@@ -78,7 +78,7 @@ public class GarmentService : IGarmentService
 
             data = data.Where(garment => garment.Properties.All(p => shpeName.Contains(p.Name))).ToList();
 
-        data = data.Where(garment =>
+           data = data.Where(garment =>
        {
            // TODO : fix runtime
            foreach (var garmentSize in garment.Sizes)
@@ -96,8 +96,7 @@ public class GarmentService : IGarmentService
            return false;
        })
             .Skip((pageNumber - 1) * pageSize)
-            .Take(pageSize).ToList();// TODO paging meta data
-
+            .Take(pageSize).ToList();
 
         var x = data.Select(garment => new GarmentDto()
         {
@@ -113,26 +112,20 @@ public class GarmentService : IGarmentService
             Colors = garment.Colors.Select(color => color.Name).ToList(),
             Images = garment.Images.Select(photo => photo.Path).ToList(),
             Sizes = garment.Sizes.Select(size => size.Name).ToList(),
-            StoreDto = new StoreDto()
-            {
-                Id = garment.Store.Id,
-                StoreName = garment.Store.Name,
-
-                Locations = garment.Store.Locations.Select(l => new LocationDto()
-                {
-                    City = l.City,
-                    Country = l.Country,
-                    Street = l.Street,
-                    PhoneNumaber = l.PhoneNumaber
-                }).ToList(),
-                Rank = (garment.Store.StoreFeedbacks.Count() > 0) ? garment.Store.StoreFeedbacks.Sum(feedback => feedback.Rate) / garment.Store.StoreFeedbacks.Count() : 0
-            }
+            IsLike = (garment.Users.Where(u => u.Id == user.Id).SingleOrDefault() != null) ,
         })
       .ToList();
 
         return x;
     }
 
+    public async Task<ICollection<long>> GetUserGarmentsByStoreId(ClaimsPrincipal userClaim, long StoreId, int pageNumber, int pageSize)
+    {
+        return (await GetUserGarments(userClaim, pageNumber, pageSize))
+               .Where(garment => garment.StoreId == StoreId)
+               .Select(garment => garment.Id)
+               .ToList();
+    }
 
     public GarmentDto GetById(long id)
     {
@@ -168,19 +161,6 @@ public class GarmentService : IGarmentService
             Category = garment.Category.Name,
             CreatedAt = garment.CreatedAt,
             StoreId = garment.StoreId,
-            StoreDto = new StoreDto
-            {
-                StoreName = garment.Store.Name,
-                Locations = garment.Store.Locations.Select(l => new LocationDto
-                {
-                    Id = l.Id,
-                    City = l.City,
-                    Country = l.Country,
-                    PhoneNumaber = l.PhoneNumaber,
-                    Street = l.Street,
-
-                }).ToList(),
-            },
             Colors = garment.Colors.Select(color => color.Name).ToList(),
             Images = garment.Images.Select(photo => photo.Path).ToList(),
             Sizes = garment.Sizes.Select(size => size.Name).ToList()
@@ -273,22 +253,45 @@ public class GarmentService : IGarmentService
             Category = garment.Category.Name,
             CreatedAt = garment.CreatedAt,
             StoreId = garment.StoreId,
-            StoreDto = new StoreDto
-            {
-                StoreName = garment.Store.Name,
-                Locations = garment.Store.Locations.Select(l => new LocationDto
-                {
-                    Id = l.Id,
-                    City = l.City,
-                    Country = l.Country,
-                    PhoneNumaber = l.PhoneNumaber,
-                    Street = l.Street,
-
-                }).ToList(),
-            },
             Colors = garment.Colors.Select(color => color.Name).ToList(),
             Images = garment.Images.Select(photo => photo.Path).ToList(),
             Sizes = garment.Sizes.Select(size => size.Name).ToList()
         }).ToList();
+    }
+
+    public GarmentDto GetUserById(long id)
+    {
+        var garment = _garmentRepository.GetUserById(id);
+
+        return new GarmentDto
+        {
+            Id = garment.Id,
+            Brand = garment.Brand,
+            Description = garment.Description,
+            Name = garment.Name,
+            Price = garment.Price,
+            StoreId = garment.StoreId,
+            Category = garment.Category.Name,
+            CreatedAt = garment.CreatedAt,
+            Colors = garment.Colors.Select(color => color.Name).ToList(),
+            Images = garment.Images.Select(photo => photo.Path).ToList(),
+            StoreDto = new StoreDto
+            {
+                Id = garment.Store.Id,
+                StoreName = garment.Store.Name,
+
+                Locations = garment.Store.Locations.Select(l => new LocationDto()
+                {
+                    City = l.City,
+                    Country = l.Country,
+                    Street = l.Street,
+                    PhoneNumaber = l.PhoneNumaber
+                }).ToList(),
+                Rank = (garment.Store.StoreFeedbacks.Count() > 0) ?
+                        garment.Store.StoreFeedbacks
+                        .Sum(feedback => feedback.Rate) / garment.Store.StoreFeedbacks
+                        .Count() : 0
+            },        
+        };
     }
 }

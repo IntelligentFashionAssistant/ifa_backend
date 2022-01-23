@@ -31,7 +31,7 @@ public class AuthController : Controller
     }
 
     [HttpPost("CheckEmail")]
-    public async Task<IActionResult> CheckEmail(string userEmail)
+    public async Task<IActionResult> CheckEmail([FromForm] string userEmail)
     {
         var response = new ResponsApiDto<bool, string>();
 

@@ -8,5 +8,6 @@ namespace application.services
     public interface ICustomerService : IAsnycService<CustomerDto, long>
     {
         Task<CustomerDto> CalculateBodyShape(ClaimsPrincipal userClaim, BodySizesDto bodySizesDto);
+        Task<CustomerDto> Profile(ClaimsPrincipal userClaim);
     }
 }

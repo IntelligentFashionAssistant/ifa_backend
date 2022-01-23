@@ -14,6 +14,7 @@ namespace application.services
         Task<StoreDto> Profile(ClaimsPrincipal claimsPrincipal);
         Task<bool> Cancel(StoreCancelDto obj);
         Task<StoreDto> Edit(StoreDto obj, ClaimsPrincipal claimsPrincipal);
+        Task<StoreDto> GetByIdWithGarments( ClaimsPrincipal claimsPrincipal, long storeId, int pageNumber, int pageSize);
 
     }
 }

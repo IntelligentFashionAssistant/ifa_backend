@@ -29,7 +29,8 @@ public class SizeRepository : ISizeRepository
     public ICollection<Size> GetSizeByUserId(long id)
     {
         return _appDbContext.Users.Where(user => user.Id == id)
-            .Include(user => user.Sizes).Single().Sizes.ToList();
+               .Include(user => user.Sizes).ThenInclude(s => s.Category)
+               .Single().Sizes .ToList();
     }
 
     public ICollection<Size> GetAll()

@@ -16,17 +16,21 @@ namespace application.services
         private readonly IStoreFeedbackRepository _storeFeedbackRepository;
         private readonly IStoreRepository _storeRepository;
         private readonly IMailingService _mailingService;
+        private readonly IGarmentService _garmentService;
+
         public StoreService(UserManager<User> userManager,
                             ILocationRepository locationRepository,
                             IStoreFeedbackRepository storeFeedbackRepository,
                             IStoreRepository storeRepository,
-                            IMailingService mailingService)
+                            IMailingService mailingService,
+                            IGarmentService garmentService)
         {
             _userManager = userManager;
             _locationRepository = locationRepository;
             _storeFeedbackRepository = storeFeedbackRepository;
             _storeRepository = storeRepository;
             _mailingService = mailingService;
+            _garmentService = garmentService;
         }
 
 
@@ -336,5 +340,53 @@ namespace application.services
             
                 throw new Exception("Store not found");         
         }
+
+        public async Task<StoreDto> GetByIdWithGarments(ClaimsPrincipal claimsPrincipal,long storeId,int pageNumber, int pageSize)
+        {
+
+            var garmentIds =await _garmentService.GetUserGarmentsByStoreId(claimsPrincipal, storeId, pageNumber, pageSize); 
+
+            var data = await _storeRepository.GetByIdWithGarments(storeId, garmentIds.ToList());
+
+            return new StoreDto
+            {
+                Id = data.Id,
+                StoreName = data.Name,
+                FirstName = data.User.FirstName,
+                LastName = data.User.LastName,
+                Email = data.User.Email,
+                Username = data.User.UserName,
+                BirthDate = data.User.BirthDate,
+                StorePhoto = data.PhotoStore,
+                Locations = data.Locations.Select(l => new LocationDto
+                {
+                    Id = l.Id,
+                    Country = l.Country,
+                    City = l.City,
+                    Street = l.Street,
+                    PhoneNumaber = l.PhoneNumaber,
+                }).ToList(),
+                StoreFeedbackDto = data.StoreFeedbacks.Select(feedback => new StoreFeedbackDto()
+                {
+                    Body = feedback.Body,
+                    Header = feedback.Header,
+                    Rate = feedback.Rate,
+                    UserName = feedback.User.FirstName + ' ' + feedback.User.LastName,
+                    UserImage = feedback.User.Phtot
+                }).ToList(),
+                Rank = (data.StoreFeedbacks.Count() > 0) ? data.StoreFeedbacks.Sum(feedback => feedback.Rate) / data.StoreFeedbacks.Count() : 0,
+                Garments = data.Garments.Select(g => new GarmentDto
+                {
+                    Id = g.Id,
+                    Name = g.Name,
+                    Brand = g.Brand,
+                    Images = g.Images.Select(img => img.Path).ToList(),
+                }).ToList(),
+
+            };
+
+        }
+
+        
     }
 }

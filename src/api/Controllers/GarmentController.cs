@@ -156,6 +156,51 @@ namespace api.Controllers
         }
 
 
+        [HttpGet("GetGarmentUserById/{id:int}")]
+        public IActionResult GetGarmentUserById(long id)
+        {
+            var respons = new ResponsApiDto<GarmentApiDto, string>();
+            var data = _garmentServices.GetUserById(id);
+
+            if (data != null)
+            {
+                respons.Data = new GarmentApiDto
+                {
+                    Id = data.Id,
+                    Name = data.Name,
+                    Description = data.Description,
+                    Brand = data.Brand,
+                    Price = data.Price,
+                    StoreId = data.StoreId,
+                    Category = data.Category,
+                    Images = data.Images,
+                    Colors = data.Colors,
+                    CreatedAt = data.CreatedAt,
+                    StoreApiDto = new StoreApiDto
+                    {
+                        Id = data.StoreDto.Id,
+                        StoreName = data.StoreDto.StoreName,
+
+                        Locations = data.StoreDto.Locations.Select(l => new LocationApiDto()
+                        {
+                            City = l.City,
+                            Country = l.Country,
+                            Street = l.Street,
+                            PhoneNumber = l.PhoneNumaber
+                        }).ToList(),
+
+                        Rank = data.StoreDto.Rank,
+                    },
+                };
+                return Ok(respons);
+            }
+
+            respons.AddError("Not found");
+            return NotFound(respons);
+        }
+
+
+
         [HttpGet()]
         public IActionResult GetAllGaremnts()
         {
@@ -178,20 +223,7 @@ namespace api.Controllers
                         StoreId = garmet.StoreId,
                         Images = garmet.Images,
                         Colors = garmet.Colors,
-                        Sizes = garmet.Sizes,
-                        StoreApiDto = new StoreApiDto
-                        {
-                            StoreName = garmet.StoreDto.StoreName,
-                            Locations = garmet.StoreDto.Locations.Select(l => new LocationApiDto
-                            {
-                                Country = l.Country,
-                                City = l.City,
-                                Street = l.Street,
-                                PhoneNumber = l.PhoneNumaber,
-                                Id = l.Id,
-                            }).ToList(),
-                        },
-                        //Properties = garmet.Properties.Select(p => p).ToList(),
+                        Sizes = garmet.Sizes,      
                     }).ToList();
 
                 }

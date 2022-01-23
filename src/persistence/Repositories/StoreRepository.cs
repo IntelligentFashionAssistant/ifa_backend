@@ -24,6 +24,21 @@ public class StoreRepository : IStoreRepository
                 .AsNoTracking()
                 .Single();
     }
+
+    public async Task<Store> GetByIdWithGarments(long id, List<long> garmentIds)
+    {
+          
+
+        return _appDbContext.Stores.Where(store => store.Id == id)
+                .Include(store => store.User)
+                .Include(store => store.StoreFeedbacks).ThenInclude(f => f.User)
+                .Include(store => store.Locations)
+                .Include(s => s.Garments.Where(g => garmentIds.Contains(g.Id)))
+                .ThenInclude(g => g.Images)
+                .AsNoTracking()
+                .Single();
+    }
+
     public async Task<long> GetByUserId(long userId)
     {
         return _appDbContext.Stores.AsNoTracking().Single(store => store.UserId == userId).Id;

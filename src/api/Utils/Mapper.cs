@@ -20,19 +20,7 @@ public class Mapper
             Images = data.Images,
             Colors = data.Colors,
             Sizes = data.Sizes,
-            StoreApiDto = new StoreApiDto()
-            {
-                Id = data.StoreDto.Id,
-                StoreName = data.StoreDto.StoreName,
-               
-                Locations = data.StoreDto.Locations.Select(l => new LocationApiDto()
-                {
-                    City = l.City,
-                    Country = l.Country,
-                    Street = l.Street,
-                    PhoneNumber = l.PhoneNumaber,
-                }).ToList()
-            }
+            IsLike = data.IsLike,
         }).ToList();
     }
 }

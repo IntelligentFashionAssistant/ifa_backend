@@ -193,7 +193,6 @@ namespace application.services
 
             return shape;
         }
-
         public async Task<CustomerDto> GetById(long id)
         {
             var user = await _userManager.FindByIdAsync((id).ToString());
@@ -242,16 +241,10 @@ namespace application.services
         {
             var user = new User()
             {
-                FirstName = obj.FirstName,
-                LastName = obj.LastName,
                 Email = obj.Email,
-                Country = obj.Country,
                 City = obj.City,
                 BirthDate = obj.BirthDate,
-                Street = obj.Street,
                 UserName = obj.Username,
-                HouseNumber = obj.HouseNumber,
-                PhoneNumber = obj.PhoneNumber,
                 
             };
             var result = await _userManager.CreateAsync(user, obj.Password);
@@ -332,6 +325,40 @@ namespace application.services
                 throw new NullReferenceException("User not found");
             }
         }
+
+        public async Task<CustomerDto> Profile(ClaimsPrincipal userClaim)
+        {
+            var user = await _userManager.GetUserAsync(userClaim);
+
+            if (user == null)
+                throw new Exception("user not found");
+
+            var bodySize =  _bodySizesRepository.GetById(user.BodySizeId ?? 0);
+            var shape = _shapeRepository.GetById(user.ShapeId ?? 0);
+            var userSizes = _sizeRepository.GetSizeByUserId(user.Id);
+            return new CustomerDto
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Photo = user.Phtot,
+                Country = user.Country,
+                BirthDate = user.BirthDate,
+                City = user.City,
+                Street = user.Street,
+                Shape = shape.Name,
+                BustSize = bodySize.BustSize,
+                HipSize = bodySize.HipSize,
+                ShoulderSize = bodySize.ShoulderSize,
+                WaistSize = bodySize.WaistSize,
+                Username = user.UserName,
+                Sizes = userSizes.ToDictionary(x => x.Category.Name, x => x.Name),
+            };
+             
+            
+     }
 
     }
 }
