@@ -11,5 +11,6 @@ namespace application.persistence
         void AddUser(User user, long garmentId);
         bool UserExists(User user, long garmentId);
         Garment GetUserById(long id);
+        bool CheckGarmentIsLike(long garmentId, long userId);
     }
 }

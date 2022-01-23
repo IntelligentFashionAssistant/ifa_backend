@@ -98,7 +98,8 @@ public class GarmentService : IGarmentService
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize).ToList();
 
-        var x = data.Select(garment => new GarmentDto()
+        var x = data.Select(garment =>
+        new GarmentDto()
         {
             Id = garment.Id,
             Brand = garment.Brand,
@@ -112,7 +113,7 @@ public class GarmentService : IGarmentService
             Colors = garment.Colors.Select(color => color.Name).ToList(),
             Images = garment.Images.Select(photo => photo.Path).ToList(),
             Sizes = garment.Sizes.Select(size => size.Name).ToList(),
-            IsLike = (garment.Users.Where(u => u.Id == user.Id).SingleOrDefault() != null) ,
+            IsLike = _garmentRepository.CheckGarmentIsLike(garment.Id, user.Id) ,
         })
       .ToList();
 

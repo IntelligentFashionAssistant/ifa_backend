@@ -50,7 +50,6 @@ namespace Propertys.Repositories
                             .Include(g => g.Colors)
                             .Include(g => g.Properties)
                             .Include(g => g.Sizes)
-                            .Include(g => g.Users)
                             .AsNoTracking().ToList();
             return garments;
         }
@@ -192,12 +191,10 @@ namespace Propertys.Repositories
             _appDbContext.Remove(new Garment { Id = id });
             _appDbContext.SaveChanges();
         }
-
         public ICollection<Color> GetColors()
         {
             return _appDbContext.Colors.AsNoTracking().ToList();
         }
-
         public ICollection<Size> GetSizeByCategory(long categoryId)
         {
 
@@ -206,7 +203,6 @@ namespace Propertys.Repositories
                    .AsNoTracking()
                    .ToList();
         }
-
         public ICollection<Garment> GetGarmentFavoriteToUser(long userId)
         {
             var garments = _appDbContext.Garments
@@ -221,5 +217,14 @@ namespace Propertys.Repositories
             return garments;                
         }
 
+        public bool CheckGarmentIsLike(long garmentId, long userId)
+        {
+            var garments = _appDbContext.Garments
+                          .Where(g => g.Id == garmentId)
+                          .Include(g => g.Users)
+                          .Single();
+
+            return garments.Users.Any(u => u.Id == userId);
+        }
     }
 }
