@@ -271,8 +271,12 @@ namespace application.services
             return await _storeRepository.GetByUserId(userId);
         }
 
-        public bool Approved(long storeId)
+        public async Task<bool> Approved(long storeId)
         {
+             var store = await _storeRepository.GetById(storeId);
+        
+            await _mailingService.SendEmailAsync(store.User.Email, "Registration Accepted", "follow up the link to login  http://localhost:5001/auth/");
+           
             return _storeRepository.Approved(storeId);
         }
 
@@ -387,6 +391,10 @@ namespace application.services
 
         }
 
-        
+        public bool CheckApprove(long userId)
+        {
+            
+            return _storeRepository.CheckApprove(userId);
+        }
     }
 }

@@ -135,4 +135,11 @@ public class StoreRepository : IStoreRepository
                                    .Include(store => store.User)
                                    .Include(store => store.Locations).Single(); 
     }
+
+    public bool CheckApprove(long userId) {
+
+        var store = _appDbContext.Stores.SingleOrDefault(store => store.UserId == userId);
+                    
+        return store.IsApprove; 
+    } 
 }

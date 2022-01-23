@@ -11,6 +11,8 @@ namespace application.persistence
         Task<string> AddPhoto(string photo, long storeId);
         Task<Store> Profile(long storeId);
         Task<Store> GetByIdWithGarments(long id, List<long>garmentIds);
+
+        bool CheckApprove(long userId);
         //Task<bool> Cancel(long storeId);
     }
 }

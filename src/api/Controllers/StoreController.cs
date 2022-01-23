@@ -350,13 +350,13 @@ namespace api.Controllers
         }
 
         [HttpPut("Approved/{stroeId:long}")]
-        public IActionResult Approved(long stroeId)
+        public async Task<IActionResult> Approved(long stroeId)
         {
             var response = new ResponsApiDto<string, string>();
 
             try
             {
-            var data = _storeService.Approved(stroeId);
+            var data = await _storeService.Approved(stroeId);
                 response.Data = "Approved";
             }
             catch(Exception ex)

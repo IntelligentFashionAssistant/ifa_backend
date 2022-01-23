@@ -20,7 +20,7 @@ namespace api.ApiDTOs
         public ICollection<string> Images { get; set; }
         public ICollection<long> Properties { get; set; }
         public ICollection<string> Sizes { get; set; }
-        public StoreApiDto StoreApiDto { get; set; }
+        public StoreApiDto? StoreApiDto { get; set; }
         public ICollection<long> ColorsOfId { get; set; }
         public ICollection<long> SizesOfId { get; set; }
         public bool IsLike { get; set; }

@@ -12,9 +12,9 @@
         public string? StroePhoto { get; set; }
         public float Rank { get; set; }
         public string Username { get; set; }
-        public ICollection<LocationApiDto> Locations { get; set; }
+        public ICollection<LocationApiDto>? Locations { get; set; }
         public DateTime CreatedAt { get; set; }
-        public ICollection<StoreFeedbackApiDto> StoreFeedbacks { get; set; }
-        public ICollection<GarmentApiDto> Garments { get; set; }
+        public ICollection<StoreFeedbackApiDto>? StoreFeedbacks { get; set; }
+        public ICollection<GarmentApiDto>? Garments { get; set; }
     }
 }

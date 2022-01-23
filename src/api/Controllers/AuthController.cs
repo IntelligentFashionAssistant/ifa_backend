@@ -1,6 +1,9 @@
 using api.ApiDTOs;
 using application.services;
+using domain.Entitys;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using UAParser;
 
 namespace api.Controllers;
 
@@ -9,22 +12,63 @@ namespace api.Controllers;
 public class AuthController : Controller
 {
     private readonly IAuthService _authservice;
-
-    public AuthController(IAuthService authService)
+    private readonly IStoreService _storeService;
+    private readonly UserManager<User> _userManager;
+    public AuthController(IAuthService authService,
+                            IStoreService storeService,
+                            UserManager<User> userManager)
     {
-        this._authservice = authService;
+         _authservice = authService;
+         _storeService = storeService;
+         _userManager = userManager;
     }
 
     [HttpGet("login")]
     public async Task<IActionResult> Authenticate(string userEmail, string password)
     {
         var response = new ResponsApiDto<string, string>();
+        var userAgent = HttpContext.Request.Headers["User-Agent"];
+        var uaParser = Parser.GetDefault();
+        ClientInfo c = uaParser.Parse(userAgent);
 
-        if (!await _authservice.ValidateUser(userEmail, password))
+        try
         {
-            response.AddError("Username or Password Invalid");
+            var auth = await _authservice.ValidateUser(userEmail, password);
+            if (! auth )
+            {
+                response.AddError("Username or Password Invalid");
+                return BadRequest(response);
+            }
+
+              var user = await _userManager.FindByEmailAsync(userEmail);
+          
+              var role = await _userManager.GetRolesAsync(user);
+
+            //check user and clinet type
+             if(role[0].ToLower().Equals("ShopOwner".ToLower()) && c.ToString().ToLower().Contains("chrome"))
+            {
+                response.AddError("you are not allowed to login from the mobile client");
+                return BadRequest(response);
+            }
+
+            if (role[0].ToLower().Equals("ShopOwner".ToLower()))
+            {
+                var a = _storeService.CheckApprove(user.Id);
+
+                   if(! a)
+                {
+                    response.AddError("Wait while the admin approves of you");
+                    return BadRequest(response);
+                }
+            }
+           
+        }
+        catch(Exception ex)
+        {
+            response.AddError(ex.Message);
             return BadRequest(response);
         }
+        
 
         response.Data = await _authservice.CreateToken();
         return Ok(response);

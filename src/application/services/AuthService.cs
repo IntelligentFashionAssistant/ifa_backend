@@ -14,7 +14,7 @@ public class AuthService : IAuthService
     private readonly UserManager<User> _userManager;
     private readonly IConfiguration _configuration;
 
-    private User _user;
+    private User _user; 
     
     public AuthService(UserManager<User> userManager,
         IConfiguration configuration)
@@ -25,6 +25,7 @@ public class AuthService : IAuthService
     public async Task<bool> ValidateUser(string userEmail, string password)
     {
         _user = await _userManager.FindByEmailAsync(userEmail);
+        
         return (_user != null && await _userManager.CheckPasswordAsync(_user, password));
     }
 
