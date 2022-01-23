@@ -274,7 +274,7 @@ public class GarmentService : IGarmentService
             StoreId = garment.StoreId,
             Category = garment.Category.Name,
             CreatedAt = garment.CreatedAt,
-            Colors = garment.Colors.Select(color => color.Name).ToList(),
+            Colors = garment.Colors.Select(color => color.HEX).ToList(),
             Images = garment.Images.Select(photo => photo.Path).ToList(),
             StoreDto = new StoreDto
             {
