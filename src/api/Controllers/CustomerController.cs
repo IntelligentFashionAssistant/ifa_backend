@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc;
 namespace api.Controllers
 {
     [ApiController]
-    // TODO : add global prefix : /api/v-x
     [Route("/user")]
     public class CustomerController : Controller
     {
          private readonly ICustomerService _customerService;
          private readonly IAuthService _authservice;
-        public CustomerController(ICustomerService customerService, IAuthService authService)
+        private readonly IImageService _imageService;
+        public CustomerController(ICustomerService customerService,
+                                  IAuthService authService,
+                                  IImageService imageService)
         {
             _customerService = customerService;
-            this._authservice = authService;
+            _authservice = authService;
+            _imageService = imageService;
         }
 
         [HttpPost("/calculatebodyshape")]
@@ -286,6 +289,33 @@ namespace api.Controllers
             }
 
             return Ok(respons);
+        }
+
+
+        [HttpPost("AddPhoto")]
+        public async Task<IActionResult> AddPhoto(IFormFile photo)
+        {
+            var response = new ResponsApiDto<string, string>();
+
+            try
+            {
+                if (photo == null)
+                {
+                    response.AddError("the photo is required");
+                    return BadRequest(response);
+                }
+
+                var photoName = await _imageService.SaveOneIamge(photo);
+                response.Data = await _customerService.AddPhoto(photoName, User);
+
+            }
+            catch (Exception ex)
+            {
+                response.AddError(ex.Message);
+                return BadRequest(response);
+            }
+
+            return Ok(response);
         }
     }
 }

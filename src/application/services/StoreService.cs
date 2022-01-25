@@ -275,7 +275,8 @@ namespace application.services
         {
              var store = await _storeRepository.GetById(storeId);
         
-            await _mailingService.SendEmailAsync(store.User.Email, "Registration Accepted", "follow up the link to login  http://localhost:5001/auth/");
+            await _mailingService.SendEmailAsync(store.User.Email,
+                                    "Registration Accepted", "follow up the link to login  http://localhost:5001/auth/");
            
             return _storeRepository.Approved(storeId);
         }

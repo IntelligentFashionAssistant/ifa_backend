@@ -16,6 +16,18 @@ namespace Propertys.Repositories
             _appDbContext = appDbContext;
         }
 
+        public ICollection<Garment> GetAll()
+        {
+            var garments = _appDbContext.Garments
+                            .Include(g => g.Images)
+                            .Include(g => g.Category)
+                            .Include(g => g.Colors)
+                            .Include(g => g.Properties)
+                            .Include(g => g.Sizes)
+                            .AsNoTracking().ToList();
+            return garments;
+        }
+
         public Garment GetById(long id)
         {
             var garment = _appDbContext.Garments
@@ -42,17 +54,7 @@ namespace Propertys.Repositories
                          .Single();
             return garment;
         }
-        public ICollection<Garment> GetAll()
-        {
-            var garments = _appDbContext.Garments
-                            .Include(g => g.Images)
-                            .Include(g => g.Category)
-                            .Include(g => g.Colors)
-                            .Include(g => g.Properties)
-                            .Include(g => g.Sizes)
-                            .AsNoTracking().ToList();
-            return garments;
-        }
+       
 
         public Garment Create(Garment obj)
         {

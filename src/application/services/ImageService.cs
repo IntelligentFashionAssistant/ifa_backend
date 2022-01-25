@@ -34,14 +34,12 @@ namespace application.services
             {
                 throw new Exception("Extension photo invalid or photo is null");
             }
-
             return imgName;
         }
 
         public async Task<List<string>> SaveListOfImages(ICollection<IFormFile> images)
         {
             var imagesName = new List<string>();
-
             if (images.Count() > 0)
             {
                 foreach (var image in images)
@@ -57,7 +55,6 @@ namespace application.services
                             {
                                 await image.CopyToAsync(stream);
                             }
-
                             imagesName.Add($"{randomString + imageName}");
                         }
                         catch (Exception ex)
@@ -69,15 +66,12 @@ namespace application.services
                     {
                         throw new Exception("It must file type photo");
                     }
-
                 }
-
             }
             else
             {
                 throw new Exception("It must contain at least one photo");
             }
-
             return imagesName;
         }
 
@@ -90,7 +84,8 @@ namespace application.services
         private bool _isPicture(string fileName)
         {
             var ext = Path.GetExtension(fileName);
-            List<string> supportedTypes = new List<string>() { ".jpg", ".jpeg", ".jfif", ".pjpeg", ".pjp", ".png", ".svg", ".webp" };
+            List<string> supportedTypes = new List<string>() { ".jpg", ".jpeg", ".jfif", ".pjpeg",
+                                                                 ".pjp", ".png", ".svg", ".webp" };
             if (supportedTypes.Contains(ext))
             {
                 return true;

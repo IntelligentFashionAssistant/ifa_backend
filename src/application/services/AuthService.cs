@@ -47,20 +47,20 @@ public class AuthService : IAuthService
         else
             throw new Exception("The email is already in use");
     }
+
     private SigningCredentials GetSigningCredentials()
     {
-        // var key = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SECRET"));
-        var key = Encoding.UTF8.GetBytes("mysupersecretkey"); // todo configure key
+        var key = Encoding.UTF8.GetBytes("mysupersecretkey"); 
         var secret = new SymmetricSecurityKey(key);
-        return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256); // algorithm
+        return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256); 
     }
 
     private async Task<List<Claim>> GetClaims()
     {
         var fullName = _user.FirstName + ' ' + _user.LastName;
         var claims = new List<Claim> {new Claim("email", _user.Email)};
-        claims.Add(new Claim(ClaimTypes.NameIdentifier, _user.Id.ToString()));
         var roles = await _userManager.GetRolesAsync(_user);
+        claims.Add(new Claim(ClaimTypes.NameIdentifier, _user.Id.ToString()));
         claims.Add(new Claim("role", roles.First()));
         claims.Add(new Claim("FullName", fullName));
         return claims;
@@ -68,11 +68,8 @@ public class AuthService : IAuthService
 
     private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)
     {
-        // var jwtSettings = _configuration.GetSection("JwtSettings");
         var tokenOptions = new JwtSecurityToken
         (
-            // issuer: jwtSettings.GetSection("validIssuer").Value,
-            // audience: jwtSettings.GetSection("validAudience").Value,
             claims: claims,
             expires: DateTime.Now.AddHours(5),
             signingCredentials: signingCredentials

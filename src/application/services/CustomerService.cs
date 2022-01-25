@@ -10,9 +10,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace application.services
 {
-    // UserServices uses UserManager from Identity Framework 
-    // this is why there is no UserRepository
-    // TODO : implement ICustomerService
     public class CustomerService : ICustomerService
     {
         private readonly UserManager<User> _userManager;
@@ -34,23 +31,12 @@ namespace application.services
     public async Task<CustomerDto> CalculateBodyShape(ClaimsPrincipal userClaim, BodySizesDto bodySizesDto)
         {
             var  user = await _userManager.GetUserAsync(userClaim);
-            //var bodySizes = new BodySize()
-            //{
-            //     Id = bodySizesDto.Id, 
-            //     BustSize = bodySizesDto.BustSize,
-            //     HipSize = bodySizesDto.HipSize,
-            //     ShoulderSize =bodySizesDto.ShoulderSize, 
-            //     WaistSize = bodySizesDto.WaistSize, 
-            //};
             var bodySize = new BodySize() ;
-            // calculate body shape based on entered body Sizes 
-            // and throw an exception if the entered sizes are not valid
             var calculatedBodyShape = _calculateBodyShape(bodySizesDto);
             if (calculatedBodyShape == null)
             {
                 throw new ArgumentException("the enterd sizes are not valid");
             }
-            
             // calculate user sizes 
             user.Sizes = _calculateUserSizes(bodySizesDto);
             // save entered body sizes
@@ -108,9 +94,7 @@ namespace application.services
                 throw new CustomException(
                     "Entered body Sizes are not valid", 
                     res.Errors.Select(error => error.Description).ToList());
-            }
-            
-        }
+            } }
 
 
     private ICollection<Size> _calculateUserSizes(BodySizesDto bodySizes)
@@ -119,13 +103,11 @@ namespace application.services
         var sizes = new List<Size>();
 
         
-        // TODO : check category names 
         var topCategories = new List<string>() { "Jumpsuit", "Top", "Dress" };
         var bottomCategories = new List<string>() { "Pants", "Skirt" };
-        foreach (var category in categories) // pants, tops, dress
+        foreach (var category in categories) 
         {
-            // pants : 32 34  => 32
-            // tops : M L XL => M
+           
             if (topCategories.Contains(category.Name))
             {
                 sizes.Add(_sizeRepository.GetByCategoryId(category.Id).Where(s => Math.Abs(s.CM - bodySizes.BustSize) < 20).FirstOrDefault());
@@ -139,7 +121,6 @@ namespace application.services
         return sizes;
     }
           
-    // TODO check maxand min value and update BodySize
         /// <summary>
         /// Hourglass
         /// If (bust - hips) ≤ 1" AND (hips - bust) < 3.6" AND (bust - waist) ≥ 9" OR (hips - waist) ≥ 10"
@@ -158,11 +139,11 @@ namespace application.services
         /// </summary>
         /// <param name="b"></param>
         /// <returns></returns>
-        private Shape _calculateBodyShape(BodySizesDto b)
-        {
-            // TODO : return the correct shape
-            Shape shape = null; 
+        /// 
+       
 
+        private Shape _calculateBodyShape(BodySizesDto b)
+        {   Shape shape = null; 
             if (((b.BustSize - b.HipSize) <= 2.5) && ((b.HipSize - b.BustSize) < 9.14) &&
                 ((b.BustSize - b.WaistSize) >= 22.9) || ((b.HipSize - b.WaistSize) >= 25.4))
             {
@@ -171,7 +152,6 @@ namespace application.services
             else if (((b.HipSize - b.BustSize) > 9.14) && ((b.HipSize - b.WaistSize) < 22.9))
             {
                 shape = _shapeRepository.GetShapeByName("Apple");
-
             }
             else if (((b.HipSize - b.BustSize) >= 9.14) && ((b.HipSize - b.WaistSize) > 22.9))
             {
@@ -190,7 +170,6 @@ namespace application.services
             {
                 return null; 
             }
-
             return shape;
         }
         public async Task<CustomerDto> GetById(long id)
@@ -359,6 +338,29 @@ namespace application.services
              
             
      }
+
+        public async Task<string> AddPhoto(string photo, ClaimsPrincipal claimsPrincipal)
+        {
+            var user = await _userManager.GetUserAsync(claimsPrincipal);
+            user.Phtot = photo;
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                return photo;
+            }
+            else
+            {
+                string error = " ";
+                foreach (var e in result.Errors)
+                {
+                    error += e.Description + ",";
+                }
+
+                throw new NullReferenceException(error);
+            }
+           
+        }
 
     }
 }

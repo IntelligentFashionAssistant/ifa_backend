@@ -9,5 +9,6 @@ namespace application.services
     {
         Task<CustomerDto> CalculateBodyShape(ClaimsPrincipal userClaim, BodySizesDto bodySizesDto);
         Task<CustomerDto> Profile(ClaimsPrincipal userClaim);
+        Task<string> AddPhoto(string photo, ClaimsPrincipal claimsPrincipal);
     }
 }

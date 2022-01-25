@@ -33,19 +33,18 @@ public class GarmentService : IGarmentService
         if (user == null)
             throw new Exception("user not found");
 
-        if (_garmentRepository.UserExists(user , garmentId))
+        if (_garmentRepository.UserExists(user, garmentId))
         {
             _garmentRepository.RemoveUser(user, garmentId);
         }
         else
         {
-            _garmentRepository.AddUser(user , garmentId);
+            _garmentRepository.AddUser(user, garmentId);
         }
 
     }
 
 
-    // TODO : match garment properties
     public async Task<ICollection<GarmentDto>> GetUserGarmentsByKeyword(ClaimsPrincipal userClaim, string searchKeyword, int pageNumber, int pageSize)
     {
         return (await GetUserGarments(userClaim, pageNumber, pageSize))
@@ -60,27 +59,19 @@ public class GarmentService : IGarmentService
             .Where(garment => garment.CategoryId == categoryId).ToList();
     }
 
-    // TODO: move to repository 
     public async Task<ICollection<GarmentDto>> GetUserGarments(ClaimsPrincipal userClaim, int pageNumber, int pageSize)
-    {
-        var user = await _userManager.GetUserAsync(userClaim);
+    {   var user = await _userManager.GetUserAsync(userClaim);
         var userSizes = _sizeRepository.GetSizeByUserId(user.Id);
-
         if (user.ShapeId == null)
         {
             throw new Exception("you should enter the body sizes to get the appropriate garments for you");
         }
-
         var shape = _shapeRepository.GetById(user.ShapeId ?? 1);
         var shpeName = shape.Properties.Select(p => p.Name).ToList();
-
-        var data = _garmentRepository.GetAll();
-
-            data = data.Where(garment => garment.Properties.All(p => shpeName.Contains(p.Name))).ToList();
-
-           data = data.Where(garment =>
+        return _garmentRepository.GetAll()
+                   .Where(garment => garment.Properties.All(p => shpeName.Contains(p.Name)))
+                   .Where(garment =>
        {
-           // TODO : fix runtime
            foreach (var garmentSize in garment.Sizes)
            {
                foreach (var userSize in userSizes)
@@ -92,32 +83,27 @@ public class GarmentService : IGarmentService
                    }
                }
            }
-
            return false;
        })
             .Skip((pageNumber - 1) * pageSize)
-            .Take(pageSize).ToList();
-
-        var x = data.Select(garment =>
-        new GarmentDto()
-        {
-            Id = garment.Id,
-            Brand = garment.Brand,
-            Description = garment.Description,
-            Name = garment.Name,
-            Price = garment.Price,
-            Category = garment.Category.Name,
-            CategoryId = garment.CategoryId,
-            CreatedAt = garment.CreatedAt,
-            StoreId = garment.StoreId,
-            Colors = garment.Colors.Select(color => color.Name).ToList(),
-            Images = garment.Images.Select(photo => photo.Path).ToList(),
-            Sizes = garment.Sizes.Select(size => size.Name).ToList(),
-            IsLike = _garmentRepository.CheckGarmentIsLike(garment.Id, user.Id) ,
-        })
+            .Take(pageSize).ToList()
+            .Select(garment => new GarmentDto()
+            {
+                Id = garment.Id,
+                Brand = garment.Brand,
+                Description = garment.Description,
+                Name = garment.Name,
+                Price = garment.Price,
+                Category = garment.Category.Name,
+                CategoryId = garment.CategoryId,
+                CreatedAt = garment.CreatedAt,
+                StoreId = garment.StoreId,
+                Colors = garment.Colors.Select(color => color.Name).ToList(),
+                Images = garment.Images.Select(photo => photo.Path).ToList(),
+                Sizes = garment.Sizes.Select(size => size.Name).ToList(),
+                IsLike = _garmentRepository.CheckGarmentIsLike(garment.Id, user.Id),
+            })
       .ToList();
-
-        return x;
     }
 
     public async Task<ICollection<long>> GetUserGarmentsByStoreId(ClaimsPrincipal userClaim, long StoreId, int pageNumber, int pageSize)
@@ -292,7 +278,7 @@ public class GarmentService : IGarmentService
                         garment.Store.StoreFeedbacks
                         .Sum(feedback => feedback.Rate) / garment.Store.StoreFeedbacks
                         .Count() : 0
-            },        
+            },
         };
     }
 }

@@ -23,9 +23,7 @@ namespace application.services
                 };
 
                 email.To.Add(MailboxAddress.Parse(mailTo));
-
                 var builder = new BodyBuilder();
-
                 builder.HtmlBody = body;
                 email.Body = builder.ToMessageBody();
                 email.From.Add(new MailboxAddress(MailConstants.DisplayName, MailConstants.Email));
