@@ -24,6 +24,14 @@ namespace Propertys
                     .OnDelete(DeleteBehavior.NoAction);
             });
 
+            modelBuilder.Entity<Image>(entity =>
+            {
+                entity.HasOne(img => img.Garment)
+                    .WithMany(g => g.Images)
+                    .HasForeignKey(img => img.GarmentId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
             modelBuilder.Entity<User>(entity =>
             {
 
@@ -31,7 +39,7 @@ namespace Propertys
                .WithMany(x => x.Users)
                .UsingEntity<UserGarment>(
                 ug =>ug.HasOne(a => a.Garment).WithMany(g => g.UserGarments).HasForeignKey(u => u.UserId).OnDelete(DeleteBehavior.NoAction),
-                gg => gg.HasOne(a => a.User).WithMany(g => g.UserGarments).HasForeignKey(u => u.GarmentId).OnDelete(DeleteBehavior.NoAction)
+                gg => gg.HasOne(a => a.User).WithMany(g => g.UserGarments).HasForeignKey(u => u.GarmentId).OnDelete(DeleteBehavior.Cascade)
                );
 
             });

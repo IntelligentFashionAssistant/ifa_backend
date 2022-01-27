@@ -63,13 +63,13 @@ public class GarmentService : IGarmentService
     {   var user = await _userManager.GetUserAsync(userClaim);
         var userSizes = _sizeRepository.GetSizeByUserId(user.Id);
         if (user.ShapeId == null)
-        {
+        {//[[m s l ] [ s m l xl ]
             throw new Exception("you should enter the body sizes to get the appropriate garments for you");
         }
         var shape = _shapeRepository.GetById(user.ShapeId ?? 1);
-        var shpeName = shape.Properties.Select(p => p.Name).ToList();
+        var shpePropertieIds = shape.Properties.Select(p => p.Id).ToList();
         return _garmentRepository.GetAll()
-                   .Where(garment => garment.Properties.All(p => shpeName.Contains(p.Name)))
+                   .Where(garment => garment.Properties.All(p => shpePropertieIds.Contains(p.Id)))
                    .Where(garment =>
        {
            foreach (var garmentSize in garment.Sizes)

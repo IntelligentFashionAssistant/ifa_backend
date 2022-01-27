@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Propertys;
 
@@ -11,9 +12,10 @@ using Propertys;
 namespace repository.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220126182640_v15")]
+    partial class v15
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -501,14 +503,14 @@ namespace repository.Migrations
                         {
                             Id = 1L,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f6916bf8-835c-4c58-986b-6dd7f3718cc3",
-                            CreatedAt = new DateTime(2022, 1, 26, 22, 51, 30, 276, DateTimeKind.Local).AddTicks(2737),
+                            ConcurrencyStamp = "c3bc7117-469f-47b0-9e4c-34d0271c882b",
+                            CreatedAt = new DateTime(2022, 1, 26, 20, 26, 37, 132, DateTimeKind.Local).AddTicks(3789),
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFfNZTrHZmAzXTc6rSEOXZbmDCk7bo3jtYbVp9Q8JjV4cQ82t+tDwng4/8dVgcnEGA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPWDhf1ic/sBnMKuY5fsFYX4/XlhScoSYDFpEarZBcUdj70sQJ5Es0g6G7XQ4+WAGQ==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "admin"
@@ -608,21 +610,21 @@ namespace repository.Migrations
                         new
                         {
                             Id = 1L,
-                            ConcurrencyStamp = "98294833-81b5-4490-aaa6-70b24e6e99d9",
+                            ConcurrencyStamp = "fa4ebf03-7c92-4655-b670-14ab75bed2f4",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2L,
-                            ConcurrencyStamp = "165a38fd-9efb-475c-af9f-01d36797901d",
+                            ConcurrencyStamp = "a5a95235-b902-450f-9ee6-e0cab43f5fb3",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = 3L,
-                            ConcurrencyStamp = "0154bfc8-1f88-49d4-9af3-bde38bb62484",
+                            ConcurrencyStamp = "a7515c39-cdd3-4b67-ae16-1e54efd38c20",
                             Name = "ShopOwner",
                             NormalizedName = "SHOPOWNER"
                         });
@@ -821,8 +823,7 @@ namespace repository.Migrations
                 {
                     b.HasOne("domain.Entitys.Garment", "Garment")
                         .WithMany("Images")
-                        .HasForeignKey("GarmentId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("GarmentId");
 
                     b.HasOne("domain.Entitys.Property", "Property")
                         .WithMany("Images")

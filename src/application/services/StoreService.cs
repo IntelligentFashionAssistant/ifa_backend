@@ -397,5 +397,19 @@ namespace application.services
             
             return _storeRepository.CheckApprove(userId);
         }
+
+        public ICollection<StoreFeedbackDto> GetAllFeedbacks(long stroeId)
+        {
+            var data = _storeRepository.GetAllFeedbacks(stroeId);
+
+            return data.Select(s => new StoreFeedbackDto
+            {
+                Body = s.Body,
+                Rate = s.Rate,
+                Id = s.Id,
+                UserName = s.User.UserName,
+                UserImage = s.User.Phtot == null ? "user.png": s.User.Phtot,
+            }).ToList();
+        }
     }
 }

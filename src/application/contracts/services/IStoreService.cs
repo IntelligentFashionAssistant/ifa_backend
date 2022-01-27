@@ -16,6 +16,7 @@ namespace application.services
         bool CheckApprove(long userId);
         Task<StoreDto> Edit(StoreDto obj, ClaimsPrincipal claimsPrincipal);
         Task<StoreDto> GetByIdWithGarments( ClaimsPrincipal claimsPrincipal, long storeId, int pageNumber, int pageSize);
+        ICollection<StoreFeedbackDto> GetAllFeedbacks(long stroeId);
 
     }
 }

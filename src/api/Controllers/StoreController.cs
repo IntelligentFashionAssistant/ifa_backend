@@ -452,6 +452,32 @@ namespace api.Controllers
             return Ok(response);
         }
 
+        [HttpGet("GetAllFeedbacks/{storeId:long}")]
+        public IActionResult GetAllFeedbacks(long storeId)
+        {
+            var response = new ResponsApiDto<ICollection<StoreFeedbackApiDto>, string>();
+
+            try
+            {
+                var data =  _storeService.GetAllFeedbacks(storeId);
+
+                response.Data = data.Select(f => new StoreFeedbackApiDto
+                {
+                    Body = f.Body,
+                    Id = f.Id,
+                    Rate = f.Rate,
+                    UserName = f.UserName,
+                    UserImage = f.UserImage,
+                }).ToList();
+            }
+            catch (Exception ex)
+            {
+                response.AddError(ex.Message);
+                return NotFound(response);
+            }
+
+            return Ok(response);
+        }
     }
       
    

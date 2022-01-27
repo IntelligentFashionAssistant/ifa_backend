@@ -13,6 +13,7 @@ namespace application.persistence
         Task<Store> GetByIdWithGarments(long id, List<long>garmentIds);
 
         bool CheckApprove(long userId);
+        ICollection<StoreFeedback> GetAllFeedbacks(long stroeId);
         //Task<bool> Cancel(long storeId);
     }
 }

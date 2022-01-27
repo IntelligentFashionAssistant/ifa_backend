@@ -142,4 +142,10 @@ public class StoreRepository : IStoreRepository
                     
         return store.IsApprove; 
     } 
+
+    public ICollection<StoreFeedback> GetAllFeedbacks(long stroeId)
+    {
+       return _appDbContext.StoreFeedbacks.Where(s => s.StoreId == stroeId)
+                   .Include(s => s.User).ToList();
+    } 
 }
