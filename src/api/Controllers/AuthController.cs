@@ -44,8 +44,8 @@ public class AuthController : Controller
           
               var role = await _userManager.GetRolesAsync(user);
 
-            //check user and clinet type
-             if(role[0].ToLower().Equals("ShopOwner".ToLower()) && c.ToString().ToLower().Contains("chrome"))
+            
+             if(role[0].ToLower().Equals("ShopOwner".ToLower()) && c.String.ToLower().Contains("dart"))
             {
                 response.AddError("you are not allowed to login from the mobile client");
                 return BadRequest(response);

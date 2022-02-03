@@ -180,7 +180,7 @@ namespace api.Controllers
                     {
                         Id = data.StoreDto.Id,
                         StoreName = data.StoreDto.StoreName,
-
+                        StroePhoto = data.StoreDto.StorePhoto,
                         Locations = data.StoreDto.Locations.Select(l => new LocationApiDto()
                         {
                             City = l.City,

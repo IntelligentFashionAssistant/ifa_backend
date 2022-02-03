@@ -63,7 +63,7 @@ public class GarmentService : IGarmentService
     {   var user = await _userManager.GetUserAsync(userClaim);
         var userSizes = _sizeRepository.GetSizeByUserId(user.Id);
         if (user.ShapeId == null)
-        {//[[m s l ] [ s m l xl ]
+        {
             throw new Exception("you should enter the body sizes to get the appropriate garments for you");
         }
         var shape = _shapeRepository.GetById(user.ShapeId ?? 1);
@@ -266,6 +266,7 @@ public class GarmentService : IGarmentService
             {
                 Id = garment.Store.Id,
                 StoreName = garment.Store.Name,
+                StorePhoto = garment.Store.PhotoStore,
 
                 Locations = garment.Store.Locations.Select(l => new LocationDto()
                 {

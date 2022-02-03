@@ -144,7 +144,7 @@ namespace api.Controllers
             }
             catch(Exception ex)
             {
-                respons.AddError("Not Found");
+                respons.AddError(ex.Message);
                 return NotFound(respons);
             }
             return Ok(respons);
